@@ -1,0 +1,89 @@
+# ==========================================================
+# = Solver Results                                         =
+# ==========================================================
+# ----------------------------------------------------------
+#   Problem Information
+# ----------------------------------------------------------
+Problem: 
+- Name: tmpfsaei0op
+  Lower bound: 23110.0
+  Upper bound: 23110.0
+  Number of objectives: 1
+  Number of constraints: 47
+  Number of variables: 64
+  Number of nonzeros: 133
+  Sense: maximize
+# ----------------------------------------------------------
+#   Solver Information
+# ----------------------------------------------------------
+Solver: 
+- Status: ok
+  User time: 1.01
+  Termination condition: optimal
+  Termination message: MIP - Integer optimal solution\x3a Objective = 2.3110000000e+04
+  Statistics: 
+    Branch and bound: 
+      Number of bounded subproblems: 0
+      Number of created subproblems: 0
+  Error rc: 0
+  Time: 1.0695977210998535
+# ----------------------------------------------------------
+#   Solution Information
+# ----------------------------------------------------------
+Solution: 
+- number of solutions: 1
+  number of solutions displayed: 1
+- Gap: 0.0
+  Status: optimal
+  Message: None
+  Objective:
+    objective_function:
+      Value: 23110
+  Variable:
+    IC[propylene,2]:
+      Value: 120
+    IC[propylene,3]:
+      Value: 220
+    IH[PE1,1,2]:
+      Value: 35
+    IH[PE1,1,3]:
+      Value: 30
+    IH[PE1,2,3]:
+      Value: 5
+    IH[PE2,1,2]:
+      Value: 29
+    IH[PE2,1,3]:
+      Value: 23
+    IH[PE2,2,3]:
+      Value: 5
+    PO[i1,1]:
+      Value: 50
+    PO[i1,2]:
+      Value: 200
+    PO[i1,3]:
+      Value: 200
+    PP[PE1,j1,1]:
+      Value: 30
+    PP[PE2,j1,1]:
+      Value: 24
+    QC[PE1,1,c1,1]:
+      Value: 5
+    QC[PE1,1,c1,3]:
+      Value: 5
+    QC[PE1,2,c1,2]:
+      Value: 5
+    QC[PE2,1,c1,1]:
+      Value: 6
+    QC[PE2,1,c1,3]:
+      Value: 6
+    QC[PE2,2,c1,2]:
+      Value: 6
+    S[ethylene,2]:
+      Value: 120
+    S[ethylene,3]:
+      Value: 100
+    Y[PE1,j1,1]:
+      Value: 1
+    Y[PE2,j1,1]:
+      Value: 1
+  Constraint: No values

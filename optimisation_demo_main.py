@@ -114,7 +114,6 @@ def data_construction():
     'ethylene' : 0, 'propylene' : 0
     }
 
-    'lfd'
 
     fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu,
                                     n, LT, IC_low, IH_low)
@@ -148,8 +147,17 @@ def main():
     # constraint initialisation
     fcon.constraint_definition(PSE_model)
 
+    # set up the model
+    opt = SolverFactory('cplex')
+    opt.options['mipgap'] = 0.05
+    opt.options['threads'] = 0
 
+    results = opt.solve(PSE_model, tee = True,
+    symbolic_solver_labels = True)
+    PSE_model.solutions.store_to(results)
+    results.write(filename = 'solution.yml')
 
-
+    result_dict = faux.result_data_load(PSE_model, ['IH', 'Y'])
+    print(result_dict)
 if __name__ == '__main__':
     main()

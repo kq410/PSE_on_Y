@@ -48,3 +48,16 @@ class ParaVarInput():
         self.IC_ini_level = IC_ini_level
         self.IH_ini_level = IH_ini_level
         self.S_ini_level = S_ini_level
+
+def result_data_load(optimisation_model, var_list):
+    """
+    This function takes the model and the list of variables
+    and return the solutions as a dictionary
+    """
+    result_data = {}
+    for i in var_list:
+        var_obj = getattr(optimisation_model, i)
+        result_data[i] = {}
+        for k in var_obj.keys():
+            result_data[i][k] = var_obj[k].value
+    return result_data

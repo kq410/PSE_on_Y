@@ -31,14 +31,15 @@ def variable_initialisation(optimisation_model):
         """
         This function defines the bounds for IH
         """
-        return (optimisation_model.IH_low[g, h], None)
+        return (5, None)
+        #return (optimisation_model.IH_low[g, h], None)
 
 
     def ICini(optimisation_model, o, t):
         """
         This function takes the variable IC and sets its initial condition
         """
-        if t == tsetlist[0]:
+        if t == 1:
             optimisation_model.IC[o, t].fixed = True
             return optimisation_model.IC_ini_level[o]
         else:
@@ -48,9 +49,11 @@ def variable_initialisation(optimisation_model):
         """
         This function takes the variable IP and sets its initial condition
         """
-        if t == tsetlist[0]:
+        if t <= optimisation_model.LT[h] or t <= 1:
             optimisation_model.IH[g, h, t].fixed = True
-            return optimisation_model.IH_ini_level[g, h]
+
+            return 5
+            #return optimisation_model.IH_ini_level[g, h]
         else:
             return None
 
@@ -59,7 +62,7 @@ def variable_initialisation(optimisation_model):
         """
         This function takes the variable S and sets its initial condition
         """
-        if t == tsetlist[0]:
+        if t == 1:
             optimisation_model.S[o, t].fixed = True
             return optimisation_model.S_ini_level[o]
         else:
@@ -71,6 +74,9 @@ def variable_initialisation(optimisation_model):
         which forbids self shipment from h1 to h1
         """
         if h == 1:
+            optimisation_model.Q[g, h, t].fixed = True
+            return 0
+        elif t == 1:
             optimisation_model.Q[g, h, t].fixed = True
             return 0
 

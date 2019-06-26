@@ -66,7 +66,7 @@ def constraint_definition(model):
         This constraint defines the inventory level of UAE Gateway (h=1)
         and all the global IHPs (h>1)
         """
-        if t <= model.LT[h]:
+        if t <= model.LT[h] or t <= 1:
             return pyo.Constraint.Skip
         if h == 1:
             return \
