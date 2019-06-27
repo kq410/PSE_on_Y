@@ -1,0 +1,14 @@
+[PROJECT]
+
+[RP:PSE_V1]
+1=
+
+[OPENWINDOW_1]
+FILE0=Y:\github\PSE_on_Y\GAMS files\PSE_V1.gms
+FILE1=Y:\github\PSE_on_Y\GAMS files\PSE_V1.lst
+FILE2=Y:\github\PSE_on_Y\GAMS files\PSE_V1.lst
+MAXIM=0
+TOP=50
+LEFT=50
+HEIGHT=400
+WIDTH=400
