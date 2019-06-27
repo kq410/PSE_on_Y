@@ -1,0 +1,123 @@
+
+--- Job PSE_V1.gms Start 06/27/19 13:31:05 24.4.1 r50296 WEX-WEI x86 64bit/MS Windows
+GAMS 24.4.1   Copyright (C) 1987-2014 GAMS Development. All rights reserved
+Licensee: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
+          Free Demo,  202-342-0180,  sales@gams.com,  www.gams.com   DC0000
+--- Starting compilation
+--- PSE_V1.gms(52) 3 Mb
+--- call GDXXRW PSE_data.xlsx trace = 3 @tasks.txt
+
+GDXXRW           24.4.1 r50296 Released Dec 20, 2014 VS8 x86 32bit/MS Windows 
+Excel version 15.0
+Input file : Y:\github\PSE_on_Y\GAMS files\PSE_data.xlsx
+Output file: Y:\github\PSE_on_Y\GAMS files\PSE_data.gdx
+Type Symbol       Dim     Sheet                Data          RowHeader     ColHeader     
+Loading sheet Par
+Reading data from Excel: Width = 6  Height = 83
+Par  p_min          1     Par                  C4:C4         --:--         C3:C3         
+Par  p_max          1     Par                  C9:C9         --:--         C8:C8         
+Par  PR             2     Par                  D14:E15       C14:C15       D13:E13       
+Par  tao            2     Par                  D20:E21       C20:C21       D19:E19       
+Par  f              1     Par                  C26:E26       --:--         C25:E25       
+Par  phi            2     Par                  D31:G32       C31:C32       D30:G30       
+Par  miu            3     Par                  E37:G40       C37:D40       E36:G36       
+Par  n              2     Par                  D45:E46       C45:C46       D44:E44       
+Par  D              3     Par                  E51:G52       C51:D52       E50:G50       
+Par  SP             2     Par                  D57:D58       C57:C58       D56:D56       
+Par  SO             1     Par                  C63:D63       --:--         C62:D62       
+Par  PC             1     Par                  C68:D68       --:--         C67:D67       
+Par  OC             1     Par                  C73:C73       --:--         C72:C72       
+Par  OP             2     Par                  D78:E79       C78:C79       D77:E77       
+Par  LT             1     Par                  C84:D84       --:--         C83:D83       
+Total time = 11856 Ms
+--- PSE_V1.gms(53) 3 Mb
+--- GDXin=Y:\github\PSE_on_Y\GAMS files\PSE_data.gdx
+--- PSE_V1.gms(154) 3 Mb
+--- Starting execution: elapsed 0:00:12.426
+--- PSE_V1.gms(144) 4 Mb
+--- Generating MIP model test
+--- PSE_V1.gms(149) 4 Mb
+---   64 rows  147 columns  301 non-zeroes
+---   12 discrete-columns
+--- Executing CPLEX: elapsed 0:00:12.781
+
+IBM ILOG CPLEX   24.4.1 r50296 Released Dec 20, 2014 WEI x86 64bit/MS Windows 
+Cplex 12.6.1.0
+
+Reading data...
+Starting Cplex...
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+Found incumbent of value -43190.000000 after 0.00 sec. (0.01 ticks)
+Tried aggregator 2 times.
+MIP Presolve eliminated 34 rows and 111 columns.
+MIP Presolve modified 9 coefficients.
+Aggregator did 4 substitutions.
+Reduced MIP has 26 rows, 32 columns, and 75 nonzeros.
+Reduced MIP has 8 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.13 ticks)
+Probing time = 0.00 sec. (0.01 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 11 rows and 10 columns.
+Reduced MIP has 15 rows, 22 columns, and 51 nonzeros.
+Reduced MIP has 4 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.04 ticks)
+Probing time = 0.00 sec. (0.00 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 15 rows, 22 columns, and 51 nonzeros.
+Reduced MIP has 4 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.03 ticks)
+Probing time = 0.00 sec. (0.00 ticks)
+Clique table members: 1.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: none, using 1 thread.
+Tried aggregator 1 time.
+LP Presolve eliminated 11 rows and 18 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.02 ticks)
+Initializing dual steep norms . . .
+Root relaxation solution time = 0.00 sec. (0.03 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                       -30030.0000                            --- 
+Found incumbent of value -30030.000000 after 0.08 sec. (1.39 ticks)
+*     0     0      integral     0    26110.0000    26110.0000        0    0.00%
+Elapsed time = 0.08 sec. (1.39 ticks, tree = 0.00 MB, solutions = 2)
+Found incumbent of value 26110.000000 after 0.08 sec. (1.39 ticks)
+
+Root node processing (before b&c):
+  Real time             =    0.08 sec. (1.40 ticks)
+Sequential b&c:
+  Real time             =    0.00 sec. (0.00 ticks)
+                          ------------
+Total (root+branch&cut) =    0.08 sec. (1.40 ticks)
+MIP status(101): integer optimal solution
+Cplex Time: 0.09sec (det. 1.40 ticks)
+Fixing integer variables, and solving final LP...
+Tried aggregator 1 time.
+LP Presolve eliminated 64 rows and 147 columns.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.05 ticks)
+Fixed MIP status(1): optimal
+Cplex Time: 0.00sec (det. 0.08 ticks)
+
+Proven optimal solution.
+
+MIP Solution:        26110.000000    (0 iterations, 0 nodes)
+Final Solve:         26110.000000    (0 iterations)
+
+Best possible:       26110.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+--- Restarting execution
+--- PSE_V1.gms(149) 2 Mb
+--- Reading solution for model test
+--- Executing after solve: elapsed 0:00:14.280
+--- PSE_V1.gms(153) 3 Mb
+*** Status: Normal completion
+--- Job PSE_V1.gms Stop 06/27/19 13:31:19 elapsed 0:00:14.430

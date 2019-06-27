@@ -1,0 +1,16 @@
+par = p_min rng = Par!c3 cdim = 1
+par = p_max rng = Par!c8 cdim = 1
+par = PR   rng = Par!c13 rdim = 1 cdim = 1
+par = tao  rng = Par!c19 rdim = 1 cdim = 1
+par = f    rng = Par!c25 rdim = 0 cdim = 1
+par = phi  rng = Par!c30 rdim = 1 cdim = 1
+par = miu  rng = Par!c36 rdim = 2 cdim = 1
+par = n    rng = Par!c44 rdim = 1 cdim = 1
+par = D    rng = Par!c50 rdim = 2 cdim = 1
+par = SP   rng = Par!c56 rdim = 1 cdim = 1
+par = SO   rng = Par!c62 rdim = 0 cdim = 1
+par = PC   rng = Par!c67 rdim = 0 cdim = 1
+par = OC   rng = Par!c72 rdim = 0 cdim = 1
+par = OP   rng = Par!c77 rdim = 1 cdim = 1
+par = LT   rng = Par!c83 rdim = 0 cdim = 1
+
