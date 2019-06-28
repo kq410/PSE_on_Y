@@ -43,7 +43,8 @@ def parameter_initialisation(optimisation_model,
                              )
 
     optimisation_model.miu = pyo.Param(
-                             optimisation_model.o, optimisation_model.i,
+                             optimisation_model.i, optimisation_model.m,
+                             optimisation_model.m,
                              initialize = fixed_par_input.miu,
                              doc = 'production coefficient of olefin o in i'
                              )
@@ -55,7 +56,7 @@ def parameter_initialisation(optimisation_model,
                            )
 
     optimisation_model.D = pyo.Param(
-                           optimisation_model.c, optimisation_model.g, 
+                           optimisation_model.c, optimisation_model.g,
                            optimisation_model.t,
                            initialize = var_par_input.D,
                            doc = 'demand of grade g of customer c in period t'

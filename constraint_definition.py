@@ -56,7 +56,9 @@ def constraint_definition(model):
             return pyo.Constraint.Skip
         return \
         model.IC[m, t] == model.IC[m, t-1] \
-                + sum(model.miu[m, i] * model.PO[i,t] for i in model.i)\
+                + sum(model.miu[i, mp, m] * model.PM[i, m, t] \
+                for i in model.i for mp in model.m) \
+                - sum(model.PM[i, m, t] for i in model.i) \
                 + model.PU[m, t] - model.S[m, t]  \
                 - sum(model.n[m, g] * model.PP[g, j, t] \
                 for g in model.g for j in model.j)
