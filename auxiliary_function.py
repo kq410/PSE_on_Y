@@ -75,6 +75,8 @@ def read_par_from_excel(file_name, sheet_name, start_loc, end_loc, par_dim):
     of the parameter to be retrieved and the paramter dimention
     and return the dictionary that can be used for the optimisation model
     """
+    start_loc = cell_loc_conversion(start_loc)
+    end_loc = cell_loc_conversion(end_loc)
     if par_dim == (0, 1):
 
         for sheet in xlrd.open_workbook(file_name).sheets():
@@ -139,6 +141,8 @@ def read_set_from_excel(file_name, sheet_name, start_loc, end_loc):
     This function takes in the file_name, the sheet_name, and the start and
     end location of the set in the sheet and returns the designated set
     """
+    start_loc = cell_loc_conversion(start_loc)
+    end_loc = cell_loc_conversion(end_loc)
     for sheet in xlrd.open_workbook(file_name).sheets():
         if sheet.name == sheet_name:
             set_list = [
@@ -187,4 +191,4 @@ file_name = 'Borouge_Data_Scott_Demo.xlsx'
 # read_par_from_excel(file_name, sheet_name, start_loc, end_loc,
 # par_dim)
 
-# print(read_set_from_excel(file_name, 'set', (2, 4), (2, 9)))
+# print(read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J')))

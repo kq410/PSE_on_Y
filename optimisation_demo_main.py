@@ -11,22 +11,24 @@ import constraint_definition as fcon
 import auxiliary_function as faux
 
 
-def data_construction():
+def data_construction(file_name):
     """
     This function constructs the input data object
     """
-    i = ['i1']
-    #p = ['propane', 'ethane', 'ethylene', 'propylene', 'PE1', 'PE2']
-    j = ['j1', 'j2']
-    g = ['PE1', 'PE2']
-    t = [1, 2, 3]
-    m = ['ethylene', 'propylene']
-    c = ['c1']
-    h = [1, 2]
+
+    i = faux.read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J'))
+    j = faux.read_set_from_excel(file_name, 'set', (6, 'E'), (6, 'O'))
+    t = faux.read_set_from_excel(file_name, 'set', (9, 'E'), (9, 'J'))
+    h = faux.read_set_from_excel(file_name, 'set', (12, 'E'), (3, 'G'))
+    c = faux.read_set_from_excel(file_name, 'set', (15, 'E'), (15, 'J'))
+    g = faux.read_set_from_excel(file_name, 'set', (18, 'E'), (18, 'N'))
+    m = faux.read_set_from_excel(file_name, 'set', (21, 'E'), (21, 'L'))
 
     set_input = faux.SetInput(i, j, g, t, m, c, h)
 
-    p_min = {
+    p_min =  
+
+    {
     'i1' : 50
     }
 
