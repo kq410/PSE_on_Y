@@ -5,7 +5,7 @@ def constraint_definition(model):
     This function takes in the model object and initialise
     user-defined constraints
     """
-    tsetlist = list(model.t)
+    hsetlist = list(model.h)
 
     def objective_rule(model):
         """
@@ -44,7 +44,8 @@ def constraint_definition(model):
         produced in plant j over time period t
         """
         return \
-        sum(model.PP[g, j, t]/model.PR[g, j] for g in model.g) <= \
+        sum(model.PP[g, j, t]/model.PR[g, j]
+        for g in model.g if model.PR[g, j] != 0) <= \
         model.f[t] * model.phi[j, t]
 
     def constraint_rule_4(model, m, t):
@@ -56,7 +57,7 @@ def constraint_definition(model):
             return pyo.Constraint.Skip
         return \
         model.IC[m, t] == model.IC[m, t-1] \
-                + sum(model.miu[i, mp, m] * model.PM[i, m, t] \
+                + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
                 for i in model.i for mp in model.m) \
                 - sum(model.PM[i, m, t] for i in model.i) \
                 + model.PU[m, t] - model.S[m, t]  \
@@ -70,14 +71,14 @@ def constraint_definition(model):
         """
         if t <= model.LT[h] or t <= 1:
             return pyo.Constraint.Skip
-        if h == 1:
+        if h == hsetlist[0]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + sum(model.PP[g, j, t-model.LT[h]] for j in model.j) \
-            - sum(model.Q[g, hp, t] for hp in model.h if hp > h) \
+            - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
             - sum(model.QC[c, g, h, t] for c in model.c) \
 
-        elif h > 1:
+        elif h != hsetlist[0]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + model.Q[g, h, t-model.LT[h]] \

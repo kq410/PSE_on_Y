@@ -6,7 +6,7 @@ def variable_initialisation(optimisation_model):
     the variables, their characteristics and bounds
     """
     # get the set of time period as a list
-    tsetlist = list(optimisation_model.t)
+    hsetlist = list(optimisation_model.h)
 
     def PObounds(optimisation_model, i, t):
         """
@@ -20,12 +20,6 @@ def variable_initialisation(optimisation_model):
         This function defines the bounds for IC
         """
         return (optimisation_model.IC_low[m], optimisation_model.IC_upper[m])
-
-    def IPbounds(optimisation_model, g, t):
-        """
-        This function defines the bounds for IP
-        """
-        return (optimisation_model.IP_low[g], None)
 
     def IHbounds(optimisation_model, g, h, t):
         """
@@ -72,12 +66,12 @@ def variable_initialisation(optimisation_model):
         This function fix the value of Q at h = 1 to 0 at any time,
         which forbids self shipment from h1 to h1
         """
-        if h == 1:
+        if h == hsetlist[0]:
             optimisation_model.Q[g, h, t].fixed = True
             return 0
-        elif t == 1:
-            optimisation_model.Q[g, h, t].fixed = True
-            return 0
+        # elif t <= 1:
+        #     optimisation_model.Q[g, h, t].fixed = True
+        #     return 0
         else:
             return None
 
@@ -85,7 +79,7 @@ def variable_initialisation(optimisation_model):
         """This function fix the QC value of any customer/region pairs
         that is not feasible to zero
         """
-        if model.HC[h, c] != 1:
+        if optimisation_model.HC[h, c] != 1:
             optimisation_model.QC[c, g, h, t].fixed = True
             return 0
 

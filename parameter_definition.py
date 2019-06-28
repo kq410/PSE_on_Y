@@ -51,7 +51,7 @@ def parameter_initialisation(optimisation_model,
 
     optimisation_model.n = pyo.Param(
                            optimisation_model.m, optimisation_model.g,
-                           initialize = fixed_par_input.n,
+                           initialize = fixed_par_input.n, default = 0,
                            doc = 'consumption coefficient of o producing g'
                            )
 
@@ -76,7 +76,7 @@ def parameter_initialisation(optimisation_model,
                             )
 
     optimisation_model.PC = pyo.Param(
-                            optimisation_model.m, optimisation_model.t
+                            optimisation_model.m, optimisation_model.t,
                             initialize = var_par_input.PC,
                             doc = 'purchase price of olefin o'
                             )
@@ -120,14 +120,10 @@ def parameter_initialisation(optimisation_model,
     optimisation_model.IC_ini_level = pyo.Param(
                                 optimisation_model.m,
                                 initialize = var_par_input.IC_ini_level,
+                                default = 0,
                                 doc = 'initial level of plant inventory of o'
                                 )
 
-    optimisation_model.IH_ini_level = pyo.Param(
-                                optimisation_model.g, optimisation_model.h,
-                                initialize = var_par_input.IH_ini_level,
-                                doc = 'initial inventory level of g in h'
-                                )
 
     optimisation_model.S_ini_level = pyo.Param(
                                 optimisation_model.m,

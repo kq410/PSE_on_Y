@@ -110,7 +110,9 @@ Variables
          IH.lo(g,h,t) = IH_low(g,h);
          S.fx(m,'1') = 0;
 
+*Q.fx(g,h,t)$(ord(t) le 1) = 0;
          Q.fx(g,h,t)$(ord(h) = 1) = 0;
+
          QC.fx(c,g,h,t)$(not HC(h,c)) = 0;
 
 Equations
@@ -155,13 +157,13 @@ Equations
                              + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP(g,j,t));
 
 
-         grade_inv(g,h,t-1)$(ord(h) = 1).. IH(g,h,t) =E=
+         grade_inv(g,h,t-LT(h))$(ord(h) = 1).. IH(g,h,t) =E=
                              IH(g,h,t-1) + sum(j, PP(g,j,t-LT(h)))
-                             - sum(hp $(ord(hp) > ord(h)), Q(g,hp,t))
+                             - sum(hp $(ord(hp) ne ord(h)), Q(g,hp,t))
                              - sum(c, QC(c,g,h,t));
 
 *$ontext
-         IHP_inv(g,h,t-1)$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1)
+         IHP_inv(g,h,t-LT(h))$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1)
                                   + Q(g, h,t-LT(h))
                                   - sum(c, QC(c,g,h,t));
 
@@ -181,7 +183,7 @@ Option solprint = off, limrow = 0, limcol = 0 ;
 
 Solve test maximizing Z using MIP;
 
-Execute_Unload "testrun1.gdx" ;
+Execute_Unload "testrun5.gdx" ;
 
 Display  Z.l, Y.l, S.l, IH.l, PP.l, Q.l, QC.l, IC.l, D, IC.l;
 

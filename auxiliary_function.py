@@ -43,7 +43,7 @@ class ParaVarInput():
     This is an object that initialise the varying parameters
     """
     def __init__(self, f, phi, D, SP, SO, PC, OC, OP,
-    IC_ini_level, IH_ini_level, S_ini_level):
+    IC_ini_level, S_ini_level):
         self.f = f
         self.phi = phi
         self.D = D
@@ -53,7 +53,6 @@ class ParaVarInput():
         self.OC = OC
         self.OP = OP
         self.IC_ini_level = IC_ini_level
-        self.IH_ini_level = IH_ini_level
         self.S_ini_level = S_ini_level
 
 def result_data_load(optimisation_model, var_list):
@@ -160,35 +159,3 @@ def cell_loc_conversion(user_input_loc):
     tuple which python can read
     """
     return user_input_loc[0] - 1, ord(user_input_loc[1].lower()) - 97
-
-
-
-file_name = 'Borouge_Data_Scott_Demo.xlsx'
-# sheet_name = 'WarehousesShipping'
-# parameter_name = 'LT'
-# start_loc = (4, 2)
-# end_loc = (5, 4)
-# par_dim = (0, 1)
-
-
-
-# sheet_name = 'WarehousesShipping'
-# start_loc = (8, 2)
-# end_loc = (18, 5)
-# par_dim = (1, 1)
-
-# sheet_name = 'ScenarioSales'
-# start_loc = (6, 3)
-# end_loc = (66, 10)
-# par_dim = (2, 1)
-
-
-# sheet_name = 'ProductionOlefins'
-# start_loc = (21, 2)
-# end_loc = (69, 11)
-# par_dim = (2, 1)
-
-# read_par_from_excel(file_name, sheet_name, start_loc, end_loc,
-# par_dim)
-
-# print(read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J')))
