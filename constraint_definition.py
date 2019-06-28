@@ -12,7 +12,7 @@ def constraint_definition(model):
         This constraint defines the objective function
         """
         return \
-          sum (model.QC[g, h, c, t] * model.SP[g, c] for g in model.g \
+          sum (model.QC[c, g, h, t] * model.SP[g, c] for g in model.g \
           for h in model.h for c in model.c for t in model.t) \
         + sum(model.S[m, t] * model.SO[m] for m in model.m for t in model.t) \
         - sum(model.PU[m, t] * model.PC[m] for m in model.m for t in model.t) \
@@ -73,13 +73,13 @@ def constraint_definition(model):
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + sum(model.PP[g, j, t-model.LT[h]] for j in model.j) \
             - sum(model.Q[g, hp, t] for hp in model.h if hp > h) \
-            - sum(model.QC[g, h, c, t] for c in model.c) \
+            - sum(model.QC[c, g, h, t] for c in model.c) \
 
         elif h > 1:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + model.Q[g, h, t-model.LT[h]] \
-            - sum(model.QC[g, h, c, t] for c in model.c)
+            - sum(model.QC[c, g, h, t] for c in model.c)
 
 
     def constraint_rule_6(model, g, c, t):
@@ -87,7 +87,7 @@ def constraint_definition(model):
         This constraint specifies the maximum demand that cannot be exceeded
         """
         return \
-        sum(model.QC[g, h, c, t] for h in model.h) <= model.D[g, c, t]
+        sum(model.QC[c, g, h, t] for h in model.h) <= model.D[c, g, t]
 
 
 

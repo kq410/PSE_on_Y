@@ -141,8 +141,8 @@ def variable_initialisation(optimisation_model):
                             )
 
     optimisation_model.QC = pyo.Var(
-                           optimisation_model.g, optimisation_model.h,
-                           optimisation_model.c, optimisation_model.t,
+                           optimisation_model.c, optimisation_model.g,
+                           optimisation_model.h, optimisation_model.t,
                            within = pyo.NonNegativeReals,
                            doc = 'supply of g from h to customer c at period t'
                            )

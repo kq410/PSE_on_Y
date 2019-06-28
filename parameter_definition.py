@@ -55,7 +55,7 @@ def parameter_initialisation(optimisation_model,
                            )
 
     optimisation_model.D = pyo.Param(
-                           optimisation_model.g, optimisation_model.c,
+                           optimisation_model.c, optimisation_model.g, 
                            optimisation_model.t,
                            initialize = var_par_input.D,
                            doc = 'demand of grade g of customer c in period t'
