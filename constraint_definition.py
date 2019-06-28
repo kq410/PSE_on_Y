@@ -92,6 +92,15 @@ def constraint_definition(model):
         sum(model.QC[c, g, h, t] for h in model.h) <= model.D[c, g, t]
 
 
+    def constraint_rule_7(model, i, t):
+        """
+        This constraint connects PM(i,m,t) with the capacity of the monomer
+        plants PO(i,t)
+        """
+        return \
+        sum(model.PM[i, m, t] for m in model.m) == model.PO[i, t]
+
+
 
     model.objective_function = pyo.Objective(
                                rule = objective_rule,
@@ -127,4 +136,9 @@ def constraint_definition(model):
     model.constraint6 = pyo.Constraint(
                         model.g, model.c, model.t, rule = constraint_rule_6,
                         doc = 'refer to constraint_rule_6'
+                        )
+
+    model.constraint7 = pyo.Constraint(
+                        model.i, model.t, rule = constraint_rule_7,
+                        doc = 'refer to constraint_rule_7'
                         )
