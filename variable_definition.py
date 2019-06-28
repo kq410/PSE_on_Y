@@ -83,6 +83,14 @@ def variable_initialisation(optimisation_model):
         else:
             return None
 
+
+    optimisation_model.PM = pyo.Var(
+                            optimisation_model.i, optimisation_model.m,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'amount of m consumed in unit i over t'
+                            )
+
     optimisation_model.PO = pyo.Var(
                             optimisation_model.i, optimisation_model.t,
                             within = pyo.NonNegativeReals,
