@@ -7,12 +7,12 @@ class SetInput():
     """
     This is an object that initialise the input sets
     """
-    def __init__(self, i, j, g, t, o, c, h):
+    def __init__(self, i, j, g, t, m, c, h):
         self.i = i
         self.j = j
         self.g = g
         self.t = t
-        self.o = o
+        self.m = m
         self.c = c
         self.h = h
 

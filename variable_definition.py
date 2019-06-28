@@ -15,11 +15,11 @@ def variable_initialisation(optimisation_model):
         #return (20, 30)
         return (optimisation_model.p_min[i], optimisation_model.p_max[i])
 
-    def ICbounds(optimisation_model, o, t):
+    def ICbounds(optimisation_model, m, t):
         """
         This function defines the bounds for IC
         """
-        return (optimisation_model.IC_low[o], None)
+        return (optimisation_model.IC_low[m], None)
 
     def IPbounds(optimisation_model, g, t):
         """
@@ -35,13 +35,13 @@ def variable_initialisation(optimisation_model):
         #return (optimisation_model.IH_low[g, h], None)
 
 
-    def ICini(optimisation_model, o, t):
+    def ICini(optimisation_model, m, t):
         """
         This function takes the variable IC and sets its initial condition
         """
         if t == 1:
-            optimisation_model.IC[o, t].fixed = True
-            return optimisation_model.IC_ini_level[o]
+            optimisation_model.IC[m, t].fixed = True
+            return optimisation_model.IC_ini_level[m]
         else:
             return None
 
@@ -58,13 +58,13 @@ def variable_initialisation(optimisation_model):
             return None
 
 
-    def Sini(optimisation_model, o, t):
+    def Sini(optimisation_model, m, t):
         """
         This function takes the variable S and sets its initial condition
         """
         if t == 1:
-            optimisation_model.S[o, t].fixed = True
-            return optimisation_model.S_ini_level[o]
+            optimisation_model.S[m, t].fixed = True
+            return optimisation_model.S_ini_level[m]
         else:
             return None
 
@@ -98,20 +98,20 @@ def variable_initialisation(optimisation_model):
                             )
 
     optimisation_model.IC = pyo.Var(
-                            optimisation_model.o, optimisation_model.t,
+                            optimisation_model.m, optimisation_model.t,
                             within = pyo.NonNegativeReals, bounds = ICbounds,
                             initialize = ICini, doc = \
                             'plant inventory level of olefin o at t '
                             )
 
     optimisation_model.PU = pyo.Var(
-                            optimisation_model.o, optimisation_model.t,
+                            optimisation_model.m, optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'amount of olefin o purchased at period t'
                             )
 
     optimisation_model.S = pyo.Var(
-                           optimisation_model.o, optimisation_model.t,
+                           optimisation_model.m, optimisation_model.t,
                            within = pyo.NonNegativeReals, initialize = Sini,
                            doc = 'amount of olefin sold by export at period t'
                            )

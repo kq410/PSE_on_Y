@@ -14,8 +14,8 @@ def constraint_definition(model):
         return \
           sum (model.QC[g, h, c, t] * model.SP[g, c] for g in model.g \
           for h in model.h for c in model.c for t in model.t) \
-        + sum(model.S[o, t] * model.SO[o] for o in model.o for t in model.t) \
-        - sum(model.PU[o, t] * model.PC[o] for o in model.o for t in model.t) \
+        + sum(model.S[m, t] * model.SO[m] for m in model.m for t in model.t) \
+        - sum(model.PU[m, t] * model.PC[m] for m in model.m for t in model.t) \
         - sum(model.PO[i, t] * model.OC[i] for i in model.i for t in model.t) \
         - sum(model.PP[g, j, t] * model.OP[g, j] for g in model.g \
           for j in model.j for t in model.t)
@@ -47,7 +47,7 @@ def constraint_definition(model):
         sum(model.PP[g, j, t]/model.PR[g, j] for g in model.g) <= \
         model.f[t] * model.phi[j, t]
 
-    def constraint_rule_4(model, o, t):
+    def constraint_rule_4(model, m, t):
         """
         This constraint is the resource balance for the monomer inventory
         at the plant site
@@ -55,10 +55,10 @@ def constraint_definition(model):
         if t == 1:
             return pyo.Constraint.Skip
         return \
-        model.IC[o, t] == model.IC[o, t-1] \
-                + sum(model.miu[o, i] * model.PO[i,t] for i in model.i)\
-                + model.PU[o, t] - model.S[o, t]  \
-                - sum(model.n[o, g] * model.PP[g, j, t] \
+        model.IC[m, t] == model.IC[m, t-1] \
+                + sum(model.miu[m, i] * model.PO[i,t] for i in model.i)\
+                + model.PU[m, t] - model.S[m, t]  \
+                - sum(model.n[m, g] * model.PP[g, j, t] \
                 for g in model.g for j in model.j)
 
     def constraint_rule_5(model, g, h, t):
@@ -113,7 +113,7 @@ def constraint_definition(model):
                         )
 
     model.constraint4 = pyo.Constraint(
-                        model.o, model.t, rule = constraint_rule_4,
+                        model.m, model.t, rule = constraint_rule_4,
                         doc = 'refer to constraint_rule_4'
                         )
 

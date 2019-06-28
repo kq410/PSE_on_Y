@@ -20,11 +20,11 @@ def data_construction():
     j = ['j1', 'j2']
     g = ['PE1', 'PE2']
     t = [1, 2, 3]
-    o = ['ethylene', 'propylene']
+    m = ['ethylene', 'propylene']
     c = ['c1']
     h = [1, 2]
 
-    set_input = faux.SetInput(i, j, g, t, o, c, h)
+    set_input = faux.SetInput(i, j, g, t, m, c, h)
 
     p_min = {
     'i1' : 50
