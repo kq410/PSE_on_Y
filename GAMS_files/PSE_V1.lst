@@ -1,48 +1,50 @@
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 1
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
    1  Set
    2           i monomer plants /i1 cracking, i2 OCU, i3 BU/
-   3           p all chemicals /propane, ethane, ethylene, propylene, butene, PE
-      1, PE2/
-   4   
-   5           j polymer reactor /j1, j2/
-   6           t time period /1*3/
-   7           h IHP centres /h1, h2/
-   8           c customers /c1/
-   9   
-  10           g(p) grade products /PE1, PE2/
-  11           o(p) product intermediates /ethylene, propylene, butene/
-  12           m(p) monomer plant materials /propane, ethane, ethylene, propylen
-      e, butene/;
-  13   
-  14           alias(h,hp);
-  15           alias(m,mp);
-  16   
-  17  Parameters
-  18           p_min(i)  minimum production amount in olefin plant i
-  19           p_max(i)  maximum production amount in olefin plant i
-  20           PR(g,j)   production rate of grade g in polymer reactor j
-  21           tao(g,j)  minimum runtime for grade g to be produced in polymer r
-      eactor j
-  22           f(t)      length of time period t
-  23           phi(j,t)  available fraction of time in time period t
-  24           miu(i,mp,m) production coefficient of monomer o in terms of m in 
-      olefin plant i
-  25           n(m,g)    consumption coefficient of olefin o when producing grad
+   3           p all chemicals /propane, ethane, ethylene, propylene,
+   4                           butene, PE1, PE2/
+   5   
+   6           j polymer reactor /j1, j2/
+   7           t time period /1*3/
+   8           h IHP centres /h1, h2/
+   9           c customers /c1, c2/
+  10   
+  11           g(p) grade products /PE1, PE2/
+  12           o(p) product intermediates /ethylene, propylene, butene/
+  13           m(p) monomer plant materials /propane, ethane, ethylene,
+  14                                           propylene, butene/
+  15   
+  16           HC(h,c) IHP and customer mapping /h1.c1, h2.c2/
+  17   
+  18           alias(h,hp);
+  19           alias(m,mp);
+  20   
+  21  Parameters
+  22           p_min(i)  minimum production amount in olefin plant i
+  23           p_max(i)  maximum production amount in olefin plant i
+  24           PR(g,j)   production rate of grade g in polymer reactor j
+  25           tao(g,j)  minimum runtime for grade g to be produced in
+  26                     polymer reactor j
+  27           f(t)      length of time period t
+  28           phi(j,t)  available fraction of time in time period t
+  29           miu(i,mp,m) production coefficient of monomer o
+  30                       in terms of m in olefin plant i
+  31           n(m,g)    consumption coefficient of olefin o when producing grad
       e g
-  26           D(g,c,t)  demand of grade g of customer c in time period t
-  27           SP(g,c)   sale price of grade g to customer c
-  28           SO(m)     export price of olefin o
-  29           PC(m)     purchase price
-  30           OC(i)     coefficient for operation cost of olefin plant i
-  31           OP(g,j)   coefficient for operation cost of polymer reactor j for
-       producing grade g
-  32           LT(h)     lead time from UAE GATEWAY to IHP h;
-  33   
-GDXIN   Y:\github\PSE_on_Y\GAMS files\PSE_data.gdx
+  32           D(g,c,t)  demand of grade g of customer c in time period t
+  33           SP(g,c)   sale price of grade g to customer c
+  34           SO(m)     export price of olefin o
+  35           PC(m)     purchase price
+  36           OC(i)     coefficient for operation cost of olefin plant i
+  37           OP(g,j)   coefficient for operation cost of polymer reactor j for
+  38                     producing grade g
+  39           LT(h)     lead time from UAE GATEWAY to IHP h;
+  40   
+GDXIN   Y:\github\PSE_on_Y\GAMS_files\PSE_data.gdx
 --- LOAD  p_min = 1:p_min
 --- LOAD  p_max = 2:p_max
 --- LOAD  PR = 3:PR
@@ -58,133 +60,134 @@ GDXIN   Y:\github\PSE_on_Y\GAMS files\PSE_data.gdx
 --- LOAD  OC = 13:OC
 --- LOAD  OP = 14:OP
 --- LOAD  LT = 15:LT
-  56   
-  57  *Display p_min, p_max, PR, tao, f, phi, miu, n, D, SP, SO, PC, OC, OP, LT;
-  58   
-  59   
-  60  Positive Variables
-  61           PM(i,m,t) amount of material m consumed in unit i
-  62           PO(i,t)   production amount of olefin plant i in time period t
-  63           PP(g,j,t) produced amount of grade g in polymer reactor j over ti
-      me period t
-  64           IC(m,t)   plant inventory level of olefin o at time period t
-  65           PU(m,t)   amount of olefin o purchased at time period t
-  66           S(m,t)    amount of olefin sold by export at time period t
-  67           IP(g,t)   plant inventory level of grade g at time period t
-  68           Q(g,h,t)  shipment of grade g to IHP h at time period t
-  69           IH(g,h,t) inventory level of grade g at IHP h at time period t
-  70           QC(g,h,c,t) supply of grade g from IHP h to customer c at time pe
-      riod t;
-  71   
-  72  Binary Variables
-  73           Y(g,j,t) is = 1 if grade g is produced in polymer reactor j over 
-      time period t;
-  74   
-  75  Variables
-  76           Z objective value (the profit in this case) ;
+  63   
+  64  *Display p_min, p_max, PR, tao, f, phi, miu, n, D, SP, SO, PC, OC, OP, LT;
+  65   
+  66   
+  67  Positive Variables
+  68           PM(i,m,t) amount of material m consumed in unit i
+  69           PO(i,t)   production amount of olefin plant i in time period t
+  70           PP(g,j,t) produced amount of grade g in polymer reactor j over pe
+      riod t
+  71           IC(m,t)   plant inventory level of olefin o at time period t
+  72           PU(m,t)   amount of olefin o purchased at time period t
+  73           S(m,t)    amount of olefin sold by export at time period t
+  74           Q(g,h,t)  shipment of grade g to IHP h at time period t
+  75           IH(g,h,t) inventory level of grade g at IHP h at time period t
+  76           QC(g,h,c,t) supply of grade g from IHP h to customer c at period 
+      t;
   77   
-  78   
-  79           PO.up(i,t) = p_max(i);
-  80           PO.lo(i,t) = p_min(i);
-  81           IC.fx(m,'1') = 20;
-  82  *IP.fx(g,'1') = 20;
-  83           IH.fx(g,h,'1') = 5;
-  84           IH.lo(g,h,t) = 5;
-  85           S.fx(m,'1') = 0;
-  86   
-  87           Q.fx(g,'h1',t)= 0;
-  88   
-  89  Equations
-  90           obj    objective funciton
-  91   
-  92           min_amount minimal amount produced by each polymer reactor
-  93           max_amount maximal amount produced by each polymer reactor
-  94           sum_amount sum amount of each polymer reactor j
-  95           product_capacity capacity of each i must be maintained
-  96           olefin_inv inventory for olefins
-  97           grade_inv  inventory for grades
+  78  Binary Variables
+  79           Y(g,j,t) is = 1 if g is produced in polymer plant j over period t
+      ;
+  80   
+  81  Variables
+  82           Z objective value (the profit in this case) ;
+  83   
+  84   
+  85           PO.up(i,t) = p_max(i);
+  86           PO.lo(i,t) = p_min(i);
+  87           IC.fx(m,'1') = 20;
+  88  *IP.fx(g,'1') = 20;
+  89           IH.fx(g,h,'1') = 5;
+  90           IH.lo(g,h,t) = 5;
+  91           S.fx(m,'1') = 0;
+  92   
+  93           Q.fx(g,'h1',t)= 0;
+  94           QC.fx(g,h,c,t)$(not HC(h,c)) = 0;
+  95   
+  96  Equations
+  97           obj    objective funciton
   98   
-  99  *$ontext
- 100           IHP_inv    inventory for each IHP location
- 101           demand_con demand constraints
- 102   
- 103  *$offtext
- 104   
+  99           min_amount minimal amount produced by each polymer reactor
+ 100           max_amount maximal amount produced by each polymer reactor
+ 101           sum_amount sum amount of each polymer reactor j
+ 102           product_capacity capacity of each i must be maintained
+ 103           olefin_inv inventory for olefins
+ 104           grade_inv  inventory for grades
  105   
- 106  ;
- 107   
- 108   
- 109           obj..  Z =E= sum((g,h,c,t), QC(g,h,c,t) * SP(g,c))
- 110                           + sum((m,t), S(m,t) * SO(m))
- 111                           - sum((m,t), PU(m,t) * PC(m))
- 112                           - sum((i,t), PO(i,t) * OC(i))
- 113                           - sum((g,j,t), PP(g,j,t) * OP(g,j))
- 114  ;
+ 106  *$ontext
+ 107           IHP_inv    inventory for each IHP location
+ 108           demand_con demand constraints
+ 109   
+ 110  *$offtext
+ 111   
+ 112   
+ 113  ;
+ 114   
  115   
- 116           min_amount(g,j,t).. PP(g,j,t) =G= PR(g,j) * Y(g,j,t) * tao(g,j);
- 117   
- 118           max_amount(g,j,t).. PP(g,j,t) =L= PR(g,j) * Y(g,j,t) * f(t) * phi
+ 116           obj..  Z =E= sum((g,h,c,t), QC(g,h,c,t) * SP(g,c))
+ 117                           + sum((m,t), S(m,t) * SO(m))
+ 118                           - sum((m,t), PU(m,t) * PC(m))
+ 119                           - sum((i,t), PO(i,t) * OC(i))
+ 120                           - sum((g,j,t), PP(g,j,t) * OP(g,j))
+ 121  ;
+ 122   
+ 123           min_amount(g,j,t).. PP(g,j,t) =G= PR(g,j) * Y(g,j,t) * tao(g,j);
+ 124   
+ 125           max_amount(g,j,t).. PP(g,j,t) =L= PR(g,j) * Y(g,j,t) * f(t) * phi
       (j,t);
- 119   
- 120           sum_amount(j,t).. sum(g, PP(g,j,t)/PR(g,j)) =L= f(t) * phi(j,t);
- 121   
- 122           product_capacity(i,t).. sum(m, PM(i,m,t)) =E= PO(i,t);
- 123   
- 124           olefin_inv(m,t-1).. IC(m,t) =E= IC(m,t-1) + sum((i,mp), miu(i,mp,
-      m)*PM(i,mp,t)) - sum(i, PM(i,m,t))
- 125                                   + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP
-      (g,j,t));
  126   
- 127   
- 128           grade_inv(g,h,t-1)$(ord(h) = 1).. IH(g,h,t) =E= IH(g,h,t-1) + sum
-      (j, PP(g,j,t-LT(h))) -
- 129                                   sum(hp $(ord(hp) > ord(h)), Q(g,hp,t)) - 
-      sum(c, QC(g,h,c,t));
+ 127           sum_amount(j,t).. sum(g, PP(g,j,t)/PR(g,j)) =L= f(t) * phi(j,t);
+ 128   
+ 129           product_capacity(i,t).. sum(m, PM(i,m,t)) =E= PO(i,t);
  130   
- 131  *$ontext
- 132           IHP_inv(g,h,t-1)$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1) + Q(g, 
-      h,t-LT(h)) -
- 133                                   sum(c, QC(g,h,c,t));
- 134   
+ 131           olefin_inv(m,t-1).. IC(m,t) =E= IC(m,t-1)
+ 132                               + sum((i,mp), miu(i,mp,m)*PM(i,mp,t))
+ 133                               - sum(i, PM(i,m,t))
+ 134                               + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP(g,j
+      ,t));
  135   
- 136           demand_con(g,c,t).. sum(h, QC(g,h,c,t)) =L= D(g,c,t);
- 137  *$offtext
- 138   
- 139   
- 140  Model test /all/;
+ 136   
+ 137           grade_inv(g,h,t-1)$(ord(h) = 1).. IH(g,h,t) =E=
+ 138                               IH(g,h,t-1) + sum(j, PP(g,j,t-LT(h)))
+ 139                               - sum(hp $(ord(hp) > ord(h)), Q(g,hp,t))
+ 140                               - sum(c, QC(g,h,c,t));
  141   
- 142  Option optcr = 0.01;
- 143   
- 144  option MIP = cplex  ;
- 145   
- 146  *Option solslack = 1;
- 147  *Option solprint = off, limrow = 0, limcol = 0 ;
- 148   
- 149  Solve test maximizing Z using MIP;
+ 142  *$ontext
+ 143           IHP_inv(g,h,t-1)$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1)
+ 144                                    + Q(g, h,t-LT(h))
+ 145                                    - sum(c, QC(g,h,c,t));
+ 146   
+ 147   
+ 148           demand_con(g,c,t).. sum(h, QC(g,h,c,t)) =L= D(g,c,t);
+ 149  *$offtext
  150   
- 151  Execute_Unload "test.gdx" ;
- 152   
- 153  Display  Z.l, Y.l, S.l, IH.l, PP.l, Q.l, QC.l, IC.l, D, IC.l;
- 154   
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 2
+ 151   
+ 152  Model test /all/;
+ 153   
+ 154  Option optcr = 0.01;
+ 155   
+ 156  option MIP = cplex  ;
+ 157   
+ 158  *Option solslack = 1;
+ 159  *Option solprint = off, limrow = 0, limcol = 0 ;
+ 160   
+ 161  Solve test maximizing Z using MIP;
+ 162   
+ 163  Execute_Unload "test.gdx" ;
+ 164   
+ 165  Display  Z.l, Y.l, S.l, IH.l, PP.l, Q.l, QC.l, IC.l, D, IC.l;
+ 166   
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
 
    SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
 
-     1        1 INPUT          0       0  Y:\github\PSE_on_Y\GAMS files\PSE_V1.g
+     1        1 INPUT          0       0  Y:\github\PSE_on_Y\GAMS_files\PSE_V1.g
                                           ms
-     2       52 CALL           1      52  GDXXRW PSE_data.xlsx trace = 3 @tasks.
+     2       59 CALL           1      59  GDXXRW PSE_data.xlsx trace = 3 @tasks.
                                           txt
-     3       53 GDXIN          1      53  Y:\github\PSE_on_Y\GAMS files\PSE_data
+     3       60 GDXIN          1      60  Y:\github\PSE_on_Y\GAMS_files\PSE_data
                                           .gdx
 
 
-COMPILATION TIME     =       12.339 SECONDS      3 MB  24.4.1 r50296 WEX-WEI
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 3
+COMPILATION TIME     =       11.918 SECONDS      3 MB  24.4.1 r50296 WEX-WEI
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE test Using MIP From line 149
+Equation Listing    SOLVE test Using MIP From line 161
 
 
 ---- obj  =E=  objective funciton
@@ -203,13 +206,21 @@ obj..  5*PO(i1,1) + 5*PO(i1,2) + 5*PO(i1,3) + 4*PP(PE1,j1,1) + 4*PP(PE1,j1,2)
      
       - 25*S(ethylene,2) - 25*S(ethylene,3) - 500*QC(PE1,h1,c1,1)
      
-      - 500*QC(PE1,h1,c1,2) - 500*QC(PE1,h1,c1,3) - 500*QC(PE1,h2,c1,1)
+      - 500*QC(PE1,h1,c1,2) - 500*QC(PE1,h1,c1,3) - 1000*QC(PE1,h1,c2,1)
      
-      - 500*QC(PE1,h2,c1,2) - 500*QC(PE1,h2,c1,3) - 700*QC(PE2,h1,c1,1)
+      - 1000*QC(PE1,h1,c2,2) - 1000*QC(PE1,h1,c2,3) - 500*QC(PE1,h2,c1,1)
      
-      - 700*QC(PE2,h1,c1,2) - 700*QC(PE2,h1,c1,3) - 700*QC(PE2,h2,c1,1)
+      - 500*QC(PE1,h2,c1,2) - 500*QC(PE1,h2,c1,3) - 1000*QC(PE1,h2,c2,1)
      
-      - 700*QC(PE2,h2,c1,2) - 700*QC(PE2,h2,c1,3) + Z =E= 0 ;
+      - 1000*QC(PE1,h2,c2,2) - 1000*QC(PE1,h2,c2,3) - 700*QC(PE2,h1,c1,1)
+     
+      - 700*QC(PE2,h1,c1,2) - 700*QC(PE2,h1,c1,3) - 500*QC(PE2,h1,c2,1)
+     
+      - 500*QC(PE2,h1,c2,2) - 500*QC(PE2,h1,c2,3) - 700*QC(PE2,h2,c1,1)
+     
+      - 700*QC(PE2,h2,c1,2) - 700*QC(PE2,h2,c1,3) - 500*QC(PE2,h2,c2,1)
+     
+      - 500*QC(PE2,h2,c2,2) - 500*QC(PE2,h2,c2,3) + Z =E= 0 ;
      
       (LHS = 750, INFES = 750 ****)
      
@@ -297,32 +308,38 @@ REMAINING 7 ENTRIES SKIPPED
 
 grade_inv(PE1,h1,1)..  - PP(PE1,j1,1) - PP(PE1,j2,1) + Q(PE1,h2,2)
      
-      - IH(PE1,h1,1) + IH(PE1,h1,2) + QC(PE1,h1,c1,2) =E= 0 ; (LHS = 0)
+      - IH(PE1,h1,1) + IH(PE1,h1,2) + QC(PE1,h1,c1,2) + QC(PE1,h1,c2,2) =E= 0 ;
+     
+      (LHS = 0)
      
 grade_inv(PE1,h1,2)..  - PP(PE1,j1,2) - PP(PE1,j2,2) + Q(PE1,h2,3)
      
-      - IH(PE1,h1,2) + IH(PE1,h1,3) + QC(PE1,h1,c1,3) =E= 0 ; (LHS = 0)
+      - IH(PE1,h1,2) + IH(PE1,h1,3) + QC(PE1,h1,c1,3) + QC(PE1,h1,c2,3) =E= 0 ;
+     
+      (LHS = 0)
      
 grade_inv(PE2,h1,1)..  - PP(PE2,j1,1) - PP(PE2,j2,1) + Q(PE2,h2,2)
      
-      - IH(PE2,h1,1) + IH(PE2,h1,2) + QC(PE2,h1,c1,2) =E= 0 ; (LHS = 0)
+      - IH(PE2,h1,1) + IH(PE2,h1,2) + QC(PE2,h1,c1,2) + QC(PE2,h1,c2,2) =E= 0 ;
+     
+      (LHS = 0)
      
 REMAINING ENTRY SKIPPED
 
 
 ---- IHP_inv  =E=  inventory for each IHP location
 
-IHP_inv(PE1,h2,1)..  - IH(PE1,h2,1) + IH(PE1,h2,2) + QC(PE1,h2,c1,2) =E= 0 ;
+IHP_inv(PE1,h2,1)..  - IH(PE1,h2,1) + IH(PE1,h2,2) + QC(PE1,h2,c1,2)
      
-      (LHS = 0)
+      + QC(PE1,h2,c2,2) =E= 0 ; (LHS = 0)
      
 IHP_inv(PE1,h2,2)..  - Q(PE1,h2,1) - IH(PE1,h2,2) + IH(PE1,h2,3)
      
-      + QC(PE1,h2,c1,3) =E= 0 ; (LHS = 0)
+      + QC(PE1,h2,c1,3) + QC(PE1,h2,c2,3) =E= 0 ; (LHS = 0)
      
-IHP_inv(PE2,h2,1)..  - IH(PE2,h2,1) + IH(PE2,h2,2) + QC(PE2,h2,c1,2) =E= 0 ;
+IHP_inv(PE2,h2,1)..  - IH(PE2,h2,1) + IH(PE2,h2,2) + QC(PE2,h2,c1,2)
      
-      (LHS = 0)
+      + QC(PE2,h2,c2,2) =E= 0 ; (LHS = 0)
      
 REMAINING ENTRY SKIPPED
 
@@ -335,11 +352,11 @@ demand_con(PE1,c1,2)..  QC(PE1,h1,c1,2) + QC(PE1,h2,c1,2) =L= 5 ; (LHS = 0)
      
 demand_con(PE1,c1,3)..  QC(PE1,h1,c1,3) + QC(PE1,h2,c1,3) =L= 5 ; (LHS = 0)
      
-REMAINING 3 ENTRIES SKIPPED
+REMAINING 9 ENTRIES SKIPPED
 
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 4
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE test Using MIP From line 149
+Column Listing      SOLVE test Using MIP From line 161
 
 
 ---- PM  amount of material m consumed in unit i
@@ -386,7 +403,7 @@ PO(i1,3)
 
 REMAINING 6 ENTRIES SKIPPED
 
----- PP  produced amount of grade g in polymer reactor j over time period t
+---- PP  produced amount of grade g in polymer reactor j over period t
 
 PP(PE1,j1,1)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
@@ -501,7 +518,7 @@ IH(PE1,h1,3)
 
 REMAINING 9 ENTRIES SKIPPED
 
----- QC  supply of grade g from IHP h to customer c at time period t
+---- QC  supply of grade g from IHP h to customer c at period t
 
 QC(PE1,h1,c1,1)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
@@ -520,9 +537,9 @@ QC(PE1,h1,c1,3)
         1       grade_inv(PE1,h1,2)
         1       demand_con(PE1,c1,3)
 
-REMAINING 9 ENTRIES SKIPPED
+REMAINING 21 ENTRIES SKIPPED
 
----- Y  is = 1 if grade g is produced in polymer reactor j over time period t
+---- Y  is = 1 if g is produced in polymer plant j over period t
 
 Y(PE1,j1,1)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
@@ -547,56 +564,56 @@ Z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 5
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE test Using MIP From line 149
+Model Statistics    SOLVE test Using MIP From line 161
 
 
 MODEL STATISTICS
 
-BLOCKS OF EQUATIONS           9     SINGLE EQUATIONS           64
-BLOCKS OF VARIABLES          11     SINGLE VARIABLES          147  11 projected
-NON ZERO ELEMENTS           301     DISCRETE VARIABLES         12
+BLOCKS OF EQUATIONS           9     SINGLE EQUATIONS           70
+BLOCKS OF VARIABLES          11     SINGLE VARIABLES          159  11 projected
+NON ZERO ELEMENTS           333     DISCRETE VARIABLES         12
 
 
-GENERATION TIME      =        0.359 SECONDS      4 MB  24.4.1 r50296 WEX-WEI
+GENERATION TIME      =        0.390 SECONDS      4 MB  24.4.1 r50296 WEX-WEI
 
 
-EXECUTION TIME       =        0.359 SECONDS      4 MB  24.4.1 r50296 WEX-WEI
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 6
+EXECUTION TIME       =        0.390 SECONDS      4 MB  24.4.1 r50296 WEX-WEI
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE test Using MIP From line 149
+Solution Report     SOLVE test Using MIP From line 161
 
 
                S O L V E      S U M M A R Y
 
      MODEL   test                OBJECTIVE  Z
      TYPE    MIP                 DIRECTION  MAXIMIZE
-     SOLVER  CPLEX               FROM LINE  149
+     SOLVER  CPLEX               FROM LINE  161
 
 **** SOLVER STATUS     1 Normal Completion         
 **** MODEL STATUS      1 Optimal                   
-**** OBJECTIVE VALUE            26110.0000
+**** OBJECTIVE VALUE            42110.0000
 
- RESOURCE USAGE, LIMIT          0.171      1000.000
- ITERATION COUNT, LIMIT         0    2000000000
+ RESOURCE USAGE, LIMIT          0.110      1000.000
+ ITERATION COUNT, LIMIT        20    2000000000
 
 IBM ILOG CPLEX   24.4.1 r50296 Released Dec 20, 2014 WEI x86 64bit/MS Windows 
 Cplex 12.6.1.0
 
-Space for names approximately 0.00 Mb
+Space for names approximately 0.01 Mb
 Use option 'names no' to turn use of names off
 MIP status(101): integer optimal solution
-Cplex Time: 0.09sec (det. 1.40 ticks)
+Cplex Time: 0.05sec (det. 0.49 ticks)
 Fixing integer variables, and solving final LP...
 Fixed MIP status(1): optimal
-Cplex Time: 0.00sec (det. 0.08 ticks)
+Cplex Time: 0.00sec (det. 0.09 ticks)
 Proven optimal solution.
 
-MIP Solution:        26110.000000    (0 iterations, 0 nodes)
-Final Solve:         26110.000000    (0 iterations)
+MIP Solution:        42110.000000    (20 iterations, 0 nodes)
+Final Solve:         42110.000000    (0 iterations)
 
-Best possible:       26110.000000
+Best possible:       42110.000000
 Absolute gap:            0.000000
 Relative gap:            0.000000
 
@@ -694,9 +711,9 @@ PE2.h1.2      .         .         .         EPS
 
             LOWER     LEVEL     UPPER    MARGINAL
 
-PE1.h2.1      .         .         .         .         
+PE1.h2.1      .         .         .     1000.000      
 PE1.h2.2      .         .         .         EPS       
-PE2.h2.1      .         .         .         .         
+PE2.h2.1      .         .         .      500.000      
 PE2.h2.2      .         .         .         EPS       
 
 ---- EQU demand_con  demand constraints
@@ -706,9 +723,15 @@ PE2.h2.2      .         .         .         EPS
 PE1.c1.1     -INF      5.000     5.000   500.000      
 PE1.c1.2     -INF      5.000     5.000   500.000      
 PE1.c1.3     -INF      5.000     5.000   500.000      
+PE1.c2.1     -INF      5.000     5.000  1000.000      
+PE1.c2.2     -INF       .        5.000      .         
+PE1.c2.3     -INF      5.000     5.000  1000.000      
 PE2.c1.1     -INF      6.000     6.000   700.000      
 PE2.c1.2     -INF      6.000     6.000   700.000      
 PE2.c1.3     -INF      6.000     6.000   700.000      
+PE2.c2.1     -INF      6.000     6.000   500.000      
+PE2.c2.2     -INF       .        6.000      .         
+PE2.c2.3     -INF      6.000     6.000   500.000      
 
 ---- VAR PM  amount of material m consumed in unit i
 
@@ -774,7 +797,7 @@ i3.1      .         .         .         EPS
 i3.2      .         .         .         EPS       
 i3.3      .         .         .         EPS       
 
----- VAR PP  produced amount of grade g in polymer reactor j over time period t
+---- VAR PP  produced amount of grade g in polymer reactor j over period t
 
             LOWER     LEVEL     UPPER    MARGINAL
 
@@ -802,7 +825,7 @@ ethane   .1    20.000    20.000    20.000      EPS
 ethane   .2      .      200.000     +INF       .         
 ethane   .3      .         .        +INF       EPS       
 ethylene .1    20.000    20.000    20.000    25.000      
-ethylene .2      .      180.000     +INF       .         
+ethylene .2      .         .        +INF       EPS       
 ethylene .3      .         .        +INF    -25.000      
 propylene.1    20.000    20.000    20.000      EPS       
 propylene.2      .       24.000     +INF       .         
@@ -837,8 +860,8 @@ propane  .3      .         .        +INF       EPS
 ethane   .2      .         .        +INF       EPS       
 ethane   .3      .         .        +INF       EPS       
 ethylene .1      .         .         .       25.000      
-ethylene .2      .         .        +INF       EPS       
-ethylene .3      .      340.000     +INF       .         
+ethylene .2      .      180.000     +INF       .         
+ethylene .3      .      160.000     +INF       .         
 propylene.2      .         .        +INF       EPS       
 propylene.3      .         .        +INF       EPS       
 butene   .2      .         .        +INF       EPS       
@@ -848,12 +871,12 @@ butene   .3      .         .        +INF       EPS
 
             LOWER     LEVEL     UPPER    MARGINAL
 
-PE1.h2.1      .         .        +INF       .         
+PE1.h2.1      .        5.000     +INF       .         
 PE1.h2.2      .         .        +INF       EPS       
 PE1.h2.3      .       20.000     +INF       .         
 PE2.h2.1      .        6.000     +INF       .         
 PE2.h2.2      .         .        +INF       EPS       
-PE2.h2.3      .       18.000     +INF       .         
+PE2.h2.3      .       12.000     +INF       .         
 
 ---- VAR IH  inventory level of grade g at IHP h at time period t
 
@@ -862,35 +885,46 @@ PE2.h2.3      .       18.000     +INF       .
 PE1.h1.1     5.000     5.000     5.000      EPS       
 PE1.h1.2     5.000    30.000     +INF       .         
 PE1.h1.3     5.000     5.000     +INF       EPS       
-PE1.h2.1     5.000     5.000     5.000      EPS       
-PE1.h2.2     5.000     5.000     +INF       EPS       
+PE1.h2.1     5.000     5.000     5.000  1000.000      
+PE1.h2.2     5.000     5.000     +INF  -1000.000      
 PE1.h2.3     5.000     5.000     +INF       EPS       
 PE2.h1.1     5.000     5.000     5.000      EPS       
 PE2.h1.2     5.000    23.000     +INF       .         
 PE2.h1.3     5.000     5.000     +INF       EPS       
-PE2.h2.1     5.000     5.000     5.000      EPS       
-PE2.h2.2     5.000     5.000     +INF       EPS       
+PE2.h2.1     5.000     5.000     5.000   500.000      
+PE2.h2.2     5.000     5.000     +INF   -500.000      
 PE2.h2.3     5.000     5.000     +INF       EPS       
 
----- VAR QC  supply of grade g from IHP h to customer c at time period t
+---- VAR QC  supply of grade g from IHP h to customer c at period t
 
                LOWER     LEVEL     UPPER    MARGINAL
 
-PE1.h1.c1.1      .         .        +INF       EPS       
+PE1.h1.c1.1      .        5.000     +INF       .         
 PE1.h1.c1.2      .        5.000     +INF       .         
 PE1.h1.c1.3      .        5.000     +INF       .         
-PE1.h2.c1.1      .        5.000     +INF       .         
-PE1.h2.c1.2      .         .        +INF       EPS       
-PE1.h2.c1.3      .         .        +INF       EPS       
-PE2.h1.c1.1      .         .        +INF       EPS       
+PE1.h1.c2.1      .         .         .         EPS       
+PE1.h1.c2.2      .         .         .     1000.000      
+PE1.h1.c2.3      .         .         .         EPS       
+PE1.h2.c1.1      .         .         .         EPS       
+PE1.h2.c1.2      .         .         .    -1000.000      
+PE1.h2.c1.3      .         .         .         EPS       
+PE1.h2.c2.1      .        5.000     +INF       .         
+PE1.h2.c2.2      .         .        +INF       .         
+PE1.h2.c2.3      .        5.000     +INF       .         
+PE2.h1.c1.1      .        6.000     +INF       .         
 PE2.h1.c1.2      .        6.000     +INF       .         
-PE2.h1.c1.3      .         .        +INF       EPS       
-PE2.h2.c1.1      .        6.000     +INF       .         
-PE2.h2.c1.2      .         .        +INF       EPS       
-PE2.h2.c1.3      .        6.000     +INF       .         
+PE2.h1.c1.3      .        6.000     +INF       .         
+PE2.h1.c2.1      .         .         .         EPS       
+PE2.h1.c2.2      .         .         .      500.000      
+PE2.h1.c2.3      .         .         .         EPS       
+PE2.h2.c1.1      .         .         .         EPS       
+PE2.h2.c1.2      .         .         .     -500.000      
+PE2.h2.c1.3      .         .         .         EPS       
+PE2.h2.c2.1      .        6.000     +INF       .         
+PE2.h2.c2.2      .         .        +INF       .         
+PE2.h2.c2.3      .        6.000     +INF       .         
 
----- VAR Y  is = 1 if grade g is produced in polymer reactor j over time period 
-            t
+---- VAR Y  is = 1 if g is produced in polymer plant j over period t
 
             LOWER     LEVEL     UPPER    MARGINAL
 
@@ -909,7 +943,7 @@ PE2.j2.3      .         .        1.000      EPS
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR Z              -INF  26110.000     +INF       .         
+---- VAR Z              -INF  42110.000     +INF       .         
 
   Z  objective value (the profit in this case)
 
@@ -917,16 +951,16 @@ PE2.j2.3      .         .        1.000      EPS
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 13:31:05 Page 7
+GAMS 24.4.1  r50296 Released Dec 20, 2014 WEX-WEI x86 64bit/MS Windows 06/27/19 14:30:52 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    153 VARIABLE Z.L                   =    26110.000  objective value (the 
+----    165 VARIABLE Z.L                   =    42110.000  objective value (the 
                                                            profit in this case)
 
-----    153 VARIABLE Y.L  is = 1 if grade g is produced in polymer reactor j ove
-                          r time period t
+----    165 VARIABLE Y.L  is = 1 if g is produced in polymer plant j over period
+                          t
 
                  1
 
@@ -934,14 +968,14 @@ PE1.j1       1.000
 PE2.j1       1.000
 
 
-----    153 VARIABLE S.L  amount of olefin sold by export at time period t
+----    165 VARIABLE S.L  amount of olefin sold by export at time period t
 
-                    3
+                    2           3
 
-ethylene      340.000
+ethylene      180.000     160.000
 
 
-----    153 VARIABLE IH.L  inventory level of grade g at IHP h at time period t
+----    165 VARIABLE IH.L  inventory level of grade g at IHP h at time period t
 
                  1           2           3
 
@@ -951,8 +985,8 @@ PE2.h1       5.000      23.000       5.000
 PE2.h2       5.000       5.000       5.000
 
 
-----    153 VARIABLE PP.L  produced amount of grade g in polymer reactor j over 
-                           time period t
+----    165 VARIABLE PP.L  produced amount of grade g in polymer reactor j over 
+                           period t
 
                  1
 
@@ -960,64 +994,66 @@ PE1.j1      30.000
 PE2.j1      24.000
 
 
-----    153 VARIABLE Q.L  shipment of grade g to IHP h at time period t
+----    165 VARIABLE Q.L  shipment of grade g to IHP h at time period t
 
                  1           3
 
-PE1.h2                  20.000
-PE2.h2       6.000      18.000
+PE1.h2       5.000      20.000
+PE2.h2       6.000      12.000
 
 
-----    153 VARIABLE QC.L  supply of grade g from IHP h to customer c at time pe
-                           riod t
+----    165 VARIABLE QC.L  supply of grade g from IHP h to customer c at period 
+                           t
 
 INDEX 1 = PE1
 
                 1           2           3
 
-h1.c1                   5.000       5.000
-h2.c1       5.000
+h1.c1       5.000       5.000       5.000
+h2.c2       5.000                   5.000
 
 INDEX 1 = PE2
 
                 1           2           3
 
-h1.c1                   6.000
-h2.c1       6.000                   6.000
+h1.c1       6.000       6.000       6.000
+h2.c2       6.000                   6.000
 
 
-----    153 VARIABLE IC.L  plant inventory level of olefin o at time period t
+----    165 VARIABLE IC.L  plant inventory level of olefin o at time period t
 
                     1           2           3
 
 propane        20.000      20.000      20.000
 ethane         20.000     200.000
-ethylene       20.000     180.000
+ethylene       20.000
 propylene      20.000      24.000      28.000
 butene         20.000      20.000      20.000
 
 
-----    153 PARAMETER D  demand of grade g of customer c in time period t
+----    165 PARAMETER D  demand of grade g of customer c in time period t
 
                  1           2           3
 
 PE1.c1       5.000       5.000       5.000
+PE1.c2       5.000       5.000       5.000
 PE2.c1       6.000       6.000       6.000
+PE2.c2       6.000       6.000       6.000
 
 
-----    153 VARIABLE IC.L  plant inventory level of olefin o at time period t
+----    165 VARIABLE IC.L  plant inventory level of olefin o at time period t
 
                     1           2           3
 
 propane        20.000      20.000      20.000
 ethane         20.000     200.000
-ethylene       20.000     180.000
+ethylene       20.000
 propylene      20.000      24.000      28.000
 butene         20.000      20.000      20.000
 
 
 
-EXECUTION TIME       =        0.156 SECONDS      3 MB  24.4.1 r50296 WEX-WEI
+EXECUTION TIME       =        0.125 SECONDS      3 MB  24.4.1 r50296 WEX-WEI
 
 
 USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
@@ -1026,5 +1062,5 @@ USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
 
 **** FILE SUMMARY
 
-Input      Y:\github\PSE_on_Y\GAMS files\PSE_V1.gms
-Output     Y:\github\PSE_on_Y\GAMS files\PSE_V1.lst
+Input      Y:\github\PSE_on_Y\GAMS_files\PSE_V1.gms
+Output     Y:\github\PSE_on_Y\GAMS_files\PSE_V1.lst

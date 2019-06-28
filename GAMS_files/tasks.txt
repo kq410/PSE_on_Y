@@ -1,16 +1,33 @@
-par = p_min rng = Par!c3 cdim = 1
-par = p_max rng = Par!c8 cdim = 1
-par = PR   rng = Par!c13 rdim = 1 cdim = 1
-par = tao  rng = Par!c19 rdim = 1 cdim = 1
-par = f    rng = Par!c25 rdim = 0 cdim = 1
-par = phi  rng = Par!c30 rdim = 1 cdim = 1
-par = miu  rng = Par!c36 rdim = 2 cdim = 1
-par = n    rng = Par!c44 rdim = 1 cdim = 1
-par = D    rng = Par!c50 rdim = 2 cdim = 1
-par = SP   rng = Par!c56 rdim = 1 cdim = 1
-par = SO   rng = Par!c62 rdim = 0 cdim = 1
-par = PC   rng = Par!c67 rdim = 0 cdim = 1
-par = OC   rng = Par!c72 rdim = 0 cdim = 1
-par = OP   rng = Par!c77 rdim = 1 cdim = 1
-par = LT   rng = Par!c83 rdim = 0 cdim = 1
+set = i rng = set!E3 cdim = 1
+set = j rng = set!E6 cdim = 1
+set = t rng = set!E9 cdim = 1
+set = h rng = set!E12 cdim = 1
+set = c rng = set!E15 cdim = 1
+set = g rng = set!E18 cdim = 1
+set = m rng = set!E21 cdim = 1
+set = HC rng = set!E25 rdim = 1 cdim = 1
+
+par = p_min rng = ProductionOlefins!c5 cdim = 1
+par = p_max rng = ProductionOlefins!c10 cdim = 1
+par = OC   rng = ProductionOlefins!c15 cdim = 1
+par = miu  rng = ProductionOlefins!c22 rdim = 2 cdim = 1
+par = IC_upper  rng = ProductionOlefins!c74 cdim = 1
+
+par = PR   rng = ProductionPolyolefins!D4 rdim = 1 cdim = 1
+par = tao  rng = ProductionPolyolefins!D18 rdim = 1 cdim = 1
+par = n    rng = ProductionPolyolefins!D32 rdim = 1 cdim = 1
+par = OP   rng = ProductionPolyolefins!D47 rdim = 1 cdim = 1
+
+par = LT   rng = WarehousesShipping!c5 cdim = 1
+par = IH_low rng = WarehousesShipping!c9 rdim = 1 cdim = 1
+
+par = f    rng = ScenarioAvailability!D15 cdim = 1
+par = phi  rng = ScenarioAvailability!D19 rdim = 1 cdim = 1
+
+par = D    rng = ScenarioSales!D7 rdim = 2 cdim = 1
+par = SP   rng = ScenarioSales!D74 rdim = 2 cdim = 1
+par = SO   rng = ScenarioSales!D137 rdim = 1 cdim = 1
+
+par = PC   rng = ScenarioPurchases!D26 rdim = 1 cdim = 1
+par = IC_ini_level rng = ScenarioPurchases!D38 cdim = 1
 

@@ -1,57 +1,57 @@
 B 2 C o m p i l a t i o n
-B 170 Include File Summary
-B 186 Equation Listing    SOLVE test Using MIP From line 149
-D 187 obj
-D 215 min_amount
-D 226 max_amount
-D 237 sum_amount
-D 248 product_capacity
-D 271 olefin_inv
-D 294 grade_inv
-D 311 IHP_inv
-D 328 demand_con
-B 341 Column Listing      SOLVE test Using MIP From line 149
-E 342 PM
-E 365 PO
-E 387 PP
-E 418 IC
-E 435 PU
-E 451 S
-E 467 Q
-E 483 IH
-E 502 QC
-E 523 Y
-E 542 Z
-B 551 Model Statistics    SOLVE test Using MIP From line 149
-B 567 Solution Report     SOLVE test Using MIP From line 149
-F 605 obj
-F 613 min_amount
-F 630 max_amount
-F 647 sum_amount
-F 658 product_capacity
-F 672 olefin_inv
-F 687 grade_inv
-F 696 IHP_inv
-F 705 demand_con
-G 711 PM
-G 761 PO
-G 775 PP
-G 792 IC
-G 812 PU
-G 829 S
-G 845 Q
-G 856 IH
-G 873 QC
-G 890 Y
-G 908 Z
-B 921 E x e c u t i o n
-I 924 Z
-I 926 Y
-I 935 S
-I 942 IH
-I 952 PP
-I 961 Q
-I 969 QC
-I 987 IC
-I 998 D
-I 1006 IC
+B 173 Include File Summary
+B 189 Equation Listing    SOLVE test Using MIP From line 161
+D 190 obj
+D 226 min_amount
+D 237 max_amount
+D 248 sum_amount
+D 259 product_capacity
+D 282 olefin_inv
+D 305 grade_inv
+D 328 IHP_inv
+D 345 demand_con
+B 358 Column Listing      SOLVE test Using MIP From line 161
+E 359 PM
+E 382 PO
+E 404 PP
+E 435 IC
+E 452 PU
+E 468 S
+E 484 Q
+E 500 IH
+E 519 QC
+E 540 Y
+E 559 Z
+B 568 Model Statistics    SOLVE test Using MIP From line 161
+B 584 Solution Report     SOLVE test Using MIP From line 161
+F 622 obj
+F 630 min_amount
+F 647 max_amount
+F 664 sum_amount
+F 675 product_capacity
+F 689 olefin_inv
+F 704 grade_inv
+F 713 IHP_inv
+F 722 demand_con
+G 734 PM
+G 784 PO
+G 798 PP
+G 815 IC
+G 835 PU
+G 852 S
+G 868 Q
+G 879 IH
+G 896 QC
+G 925 Y
+G 942 Z
+B 955 E x e c u t i o n
+I 958 Z
+I 960 Y
+I 969 S
+I 976 IH
+I 986 PP
+I 995 Q
+I 1003 QC
+I 1021 IC
+I 1032 D
+I 1042 IC

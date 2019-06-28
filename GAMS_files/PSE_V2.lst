@@ -1,0 +1,617 @@
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  Set
+   2           i monomer plants
+   3           j polymer reactor
+   4           t time period
+   5           h IHP centres
+   6           c customers
+   7   
+   8           g grade products
+   9           o product intermediates
+  10           m monomer plant materials
+  11   
+  12   
+  13           HC(h,c) IHP and customer mapping
+  14   
+  15           alias(h,hp);
+  16           alias(m,mp);
+  17   
+  18  Parameters
+  19           p_min(i)    minimum production amount in olefin plant i
+  20           p_max(i)    maximum production amount in olefin plant i
+  21           PR(g,j)     production rate of grade g in polymer reactor j
+  22           tao(g,j)    minimum runtime for grade g to be produced in
+  23                       polymer reactor j
+  24           f(t)        length of time period t
+  25           phi(j,t)    available fraction of time in time period t
+  26           miu(i,mp,m) production coefficient of monomer o
+  27                       in terms of m in olefin plant i
+  28           n(m,g)      consumption coefficient of olefin o when producing grade g
+  29           D(c,g,t)    demand of grade g of customer c in time period t
+  30           SP(c,g,t)   sale price of grade g to customer c
+  31           SO(m,t)     export price of olefin o
+  32           PC(m,t)     purchase price
+  33           OC(i)       coefficient for operation cost of olefin plant i
+  34           OP(g,j)     coefficient for operation cost of polymer reactor j for
+  35                       producing grade g
+  36           LT(h)       lead time from UAE GATEWAY to IHP h
+  37           IC_upper(m) upper bound of the material inventory of m
+  38           IH_low(g,h) lower bound of grade g at h
+  39           IC_ini_level(m) initial level of raw material;
+  40   
+  41   
+  77  *$call GDXXRW Borouge_Data_Scott_Demo.xlsx trace = 3 @tasks.txt
+GDXIN   /home/ps/ce-fs1/kq410/github/PSE_on_Y/GAMS_files/Borouge_Data_Scott_Demo.gdx
+--- LOAD  i = 1:i
+--- LOAD  j = 2:j
+--- LOAD  t = 3:t
+--- LOAD  h = 4:h
+--- LOAD  c = 5:c
+--- LOAD  g = 6:g
+--- LOAD  m = 7:m
+--- LOAD  HC = 8:HC
+  80   
+--- LOAD  p_min = 9:p_min
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+--- LOAD  p_max = 10:p_max
+--- LOAD  PR = 14:PR
+--- LOAD  tao = 15:tao
+--- LOAD  f = 20:f
+--- LOAD  phi = 21:phi
+--- LOAD  miu = 12:miu
+--- LOAD  n = 16:n
+--- LOAD  D = 22:D
+--- LOAD  SP = 23:SP
+--- LOAD  SO = 24:SO
+--- LOAD  PC = 25:PC
+--- LOAD  OC = 11:OC
+--- LOAD  OP = 17:OP
+--- LOAD  LT = 18:LT
+--- LOAD  IC_upper = 13:IC_upper
+--- LOAD  IH_low = 19:IH_low
+--- LOAD  IC_ini_level = 26:IC_ini_level
+  84   
+  85   
+  86   
+  87  Positive Variables
+  88           PM(i,m,t) amount of material m consumed in unit i
+  89           PO(i,t)   production amount of olefin plant i in time period t
+  90           PP(g,j,t) produced amount of grade g in polymer reactor j over period t
+  91           IC(m,t)   plant inventory level of olefin o at time period t
+  92           PU(m,t)   amount of olefin o purchased at time period t
+  93           S(m,t)    amount of olefin sold by export at time period t
+  94           Q(g,h,t)  shipment of grade g to IHP h at time period t
+  95           IH(g,h,t) inventory level of grade g at IHP h at time period t
+  96           QC(c,g,h,t) supply of grade g from IHP h to customer c at period t;
+  97   
+  98  Binary Variables
+  99           Y(g,j,t) is = 1 if g is produced in polymer plant j over period t;
+ 100   
+ 101  Variables
+ 102           Z objective value (the profit in this case) ;
+ 103   
+ 104   
+ 105           PO.up(i,t) = p_max(i);
+ 106           PO.lo(i,t) = p_min(i);
+ 107           IC.fx(m,'1') = IC_ini_level(m);
+ 108           IC.up(m,t) = IC_upper(m);
+ 109           IH.fx(g,h,'1') = IH_low(g,h);
+ 110           IH.lo(g,h,t) = IH_low(g,h);
+ 111           S.fx(m,'1') = 0;
+ 112   
+ 113           Q.fx(g,h,t)$(ord(h) = 1) = 0;
+ 114           QC.fx(c,g,h,t)$(not HC(h,c)) = 0;
+ 115   
+ 116  Equations
+ 117           obj    objective funciton
+ 118   
+ 119           min_amount minimal amount produced by each polymer reactor
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 120           max_amount maximal amount produced by each polymer reactor
+ 121           sum_amount sum amount of each polymer reactor j
+ 122           product_capacity capacity of each i must be maintained
+ 123           olefin_inv inventory for olefins
+ 124           grade_inv  inventory for grades
+ 125   
+ 126  *$ontext
+ 127           IHP_inv    inventory for each IHP location
+ 128           demand_con demand constraints
+ 129   
+ 130  *$offtext
+ 131   
+ 132   
+ 133  ;
+ 134   
+ 135   
+ 136           obj..  Z =E= sum((g,h,c,t), QC(c,g,h,t) * SP(c,g,t))
+ 137                           + sum((m,t), S(m,t) * SO(m,t))
+ 138                           - sum((m,t), PU(m,t) * PC(m,t))
+ 139                           - sum((i,t), PO(i,t) * OC(i))
+ 140                           - sum((g,j,t), PP(g,j,t) * OP(g,j))
+ 141  ;
+ 142   
+ 143           min_amount(g,j,t).. PP(g,j,t) =G= PR(g,j) * Y(g,j,t) * tao(g,j);
+ 144   
+ 145           max_amount(g,j,t).. PP(g,j,t) =L= PR(g,j) * Y(g,j,t) * f(t) * phi(j,t);
+ 146   
+ 147           sum_amount(j,t).. sum(g$(PR(g,j) ne 0), PP(g,j,t)/PR(g,j)) =L=
+ 148                                                                  f(t) * phi(j,t);
+ 149   
+ 150           product_capacity(i,t).. sum(m, PM(i,m,t)) =E= PO(i,t);
+ 151   
+ 152           olefin_inv(m,t-1).. IC(m,t) =E= IC(m,t-1)
+ 153                               + sum((i,mp), miu(i,mp,m)*PM(i,mp,t))
+ 154                               - sum(i, PM(i,m,t))
+ 155                               + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP(g,j,t));
+ 156   
+ 157   
+ 158           grade_inv(g,h,t-1)$(ord(h) = 1).. IH(g,h,t) =E=
+ 159                               IH(g,h,t-1) + sum(j, PP(g,j,t-LT(h)))
+ 160                               - sum(hp $(ord(hp) > ord(h)), Q(g,hp,t))
+ 161                               - sum(c, QC(c,g,h,t));
+ 162   
+ 163  *$ontext
+ 164           IHP_inv(g,h,t-1)$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1)
+ 165                                    + Q(g, h,t-LT(h))
+ 166                                    - sum(c, QC(c,g,h,t));
+ 167   
+ 168   
+ 169           demand_con(g,c,t).. sum(h, QC(c,g,h,t)) =L= D(c,g,t);
+ 170  *$offtext
+ 171   
+ 172   
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 173  Model test /all/;
+ 174   
+ 175  Option optcr = 0.01;
+ 176   
+ 177  option MIP = cplex  ;
+ 178   
+ 179  Option solslack = 1;
+ 180  Option solprint = off, limrow = 0, limcol = 0 ;
+ 181   
+ 182  Solve test maximizing Z using MIP;
+ 183   
+ 184  Execute_Unload "testrun1.gdx" ;
+ 185   
+ 186  Display  Z.l, Y.l, S.l, IH.l, PP.l, Q.l, QC.l, IC.l, D, IC.l;
+ 187   
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  /home/ps/ce-fs1/kq410/github/PSE_on_Y/GAMS_files/PSE_V2.gms
+     2       78 GDXIN          1      78  /home/ps/ce-fs1/kq410/github/PSE_on_Y/GAMS_files/Borouge_Data_Scott_Demo.gdx
+
+
+COMPILATION TIME     =        0.013 SECONDS      3 MB  25.0.3 r65947 LEX-LEG
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE test Using MIP From line 182
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           9     SINGLE EQUATIONS        1,973
+BLOCKS OF VARIABLES          11     SINGLE VARIABLES        2,688  186 projected
+NON ZERO ELEMENTS         7,716     DISCRETE VARIABLES        186
+
+
+GENERATION TIME      =        0.131 SECONDS      4 MB  25.0.3 r65947 LEX-LEG
+
+
+EXECUTION TIME       =        0.132 SECONDS      4 MB  25.0.3 r65947 LEX-LEG
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE test Using MIP From line 182
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   test                OBJECTIVE  Z
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  182
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      8 Integer Solution          
+**** OBJECTIVE VALUE           273081.4999
+
+ RESOURCE USAGE, LIMIT          0.059      1000.000
+ ITERATION COUNT, LIMIT       325    2000000000
+
+IBM ILOG CPLEX   25.0.3 r65947 Released Mar 21, 2018 LEG x86 64bit/Linux      
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.8.0.0
+
+Space for names approximately 0.15 Mb
+Use option 'names no' to turn use of names off
+MIP status(102): integer optimal, tolerance
+Cplex Time: 0.03sec (det. 10.36 ticks)
+Fixing integer variables, and solving final LP...
+Fixed MIP status(1): optimal
+Cplex Time: 0.01sec (det. 2.83 ticks)
+Solution satisfies tolerances.
+
+MIP Solution:       273081.499875    (195 iterations, 0 nodes)
+Final Solve:        273081.499875    (130 iterations)
+
+Best possible:      274744.735319
+Absolute gap:         1663.235445
+Relative gap:            0.006054
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----    186 VARIABLE Z.L                   =   273081.500  objective value (the profit in this case)
+
+----    186 VARIABLE Y.L  is = 1 if g is produced in polymer plant j over period t
+
+                       1           2           3           4           5
+
+gPE1  .pe2         1.000
+gPE1  .pe4         1.000
+gPE2  .pe1                                 1.000                   1.000
+gPE2  .pe5         1.000
+gPE3  .pe1         1.000
+gPE3  .pe3         1.000
+gLDPE1.ldpe1       1.000       1.000       1.000       1.000       1.000
+gLDPE2.ldpe1       1.000       1.000       1.000       1.000       1.000
+gXLPE1.xlpe1       1.000       1.000                   1.000       1.000
+gXLPE2.xlpe1       1.000                   1.000                   1.000
+gPP1  .pp1         1.000
+gPP1  .pp3         1.000
+gPP2  .pp1                                 1.000
+gPP2  .pp3                                 1.000
+gPP2  .pp4         1.000
+gPP3  .pp1                                             1.000       1.000
+gPP3  .pp2         1.000       1.000
+
+
+----    186 VARIABLE S.L  amount of olefin sold by export at time period t
+
+                    6
+
+Ethylene      171.000
+
+
+----    186 VARIABLE IH.L  inventory level of grade g at IHP h at time period t
+
+                            1           2           3           4           5           6
+
+gPE1  .UAE             10.000     168.000     123.000      91.000      52.000      10.000
+gPE1  .Asia North      10.000      10.000      10.000      10.000      52.000      10.000
+gPE1  .Asia South       9.000       9.000       9.000      90.000      51.000       9.000
+gPE2  .UAE             10.000      74.000      34.000      50.000      10.000      10.000
+gPE2  .Asia North      10.000      10.000      10.000      10.000      50.000      10.000
+gPE2  .Asia South       9.000       9.000       9.000      89.000      49.000       9.000
+gPE3  .UAE             10.000     163.000     132.000      92.000      49.000      10.000
+gPE3  .Asia North      10.000      10.000      10.000      10.000      49.000      10.000
+gPE3  .Asia South       9.000       9.000       9.000      91.000      48.000       9.000
+gLDPE1.UAE              5.000       5.000      11.545       5.000       9.636       5.000
+gLDPE1.Asia North       6.000       6.000       6.000       6.000      48.000       6.000
+gLDPE1.Asia South       8.000       8.000       8.000      86.000      50.000       8.000
+gLDPE2.UAE              5.000       5.000       5.000      10.250       5.000       5.000
+gLDPE2.Asia North       6.000       6.000       6.000       6.000      47.000       6.000
+gLDPE2.Asia South       8.000       8.000       8.000      94.000      49.000       8.000
+gXLPE1.UAE              1.000       1.000      26.000       1.000      21.000       1.000
+gXLPE1.Asia North       1.000       1.000       1.000       1.000      40.000       1.000
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                      06/27/19 18:31:42 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+        186 VARIABLE IH.L  inventory level of grade g at IHP h at time period t
+
+                            1           2           3           4           5           6
+
+gXLPE1.Asia South       1.000       1.000       1.000      83.000      40.000       1.000
+gXLPE2.UAE              2.000       7.000       7.000      37.000       2.000       2.000
+gXLPE2.Asia North       1.000       1.000       1.000       1.000      45.000       1.000
+gXLPE2.Asia South       2.000       2.000       2.000      87.000      46.000       2.000
+gPP1  .UAE             10.000     166.000     130.000      91.000      56.000      10.000
+gPP1  .Asia North      10.000      10.000      10.000      10.000      56.000      10.000
+gPP1  .Asia South       9.000       9.000       9.000      90.000      55.000       9.000
+gPP2  .UAE             10.000      56.000      21.000     101.000      55.000      10.000
+gPP2  .Asia North      10.000      10.000      10.000      10.000      55.000      10.000
+gPP2  .Asia South       9.000       9.000       9.000     100.000      54.000       9.000
+gPP3  .UAE             10.000      54.000      55.000      10.000      18.000      10.000
+gPP3  .Asia North      10.000      10.000      10.000      10.000      46.000      10.000
+gPP3  .Asia South       9.000       9.000       9.000      89.000      45.000       9.000
+
+
+----    186 VARIABLE PP.L  produced amount of grade g in polymer reactor j over period t
+
+                       1           2           3           4           5
+
+gPE1  .pe2       112.000
+gPE1  .pe4        87.000
+gPE2  .pe1                                56.000                  40.000
+gPE2  .pe5        84.000
+gPE3  .pe1        84.000
+gPE3  .pe3        91.000
+gLDPE1.ldpe1      40.364      42.545      32.455      40.636      37.364
+gLDPE2.ldpe1      40.000      38.000      47.250      39.750      41.000
+gXLPE1.xlpe1      18.000      63.000                  63.000      19.000
+gXLPE2.xlpe1      50.000                  70.000                  44.000
+gPP1  .pp1       112.000
+gPP1  .pp3        86.000
+gPP2  .pp1                                77.000
+gPP2  .pp3                                42.000
+gPP2  .pp4        84.000
+gPP3  .pp1                                            52.000      28.000
+gPP3  .pp2        91.000      43.000
+
+
+----    186 VARIABLE Q.L  shipment of grade g to IHP h at time period t
+
+                            1
+
+gPE1  .Asia North      81.000
+gPE1  .Asia South     113.000
+gPE2  .Asia North      80.000
+gPE2  .Asia South     120.000
+gPE3  .Asia North      82.000
+gPE3  .Asia South     122.000
+gLDPE1.Asia North      78.000
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                     06/27/19 18:31:42 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+        186 VARIABLE Q.L  shipment of grade g to IHP h at time period t
+
+                            1
+
+gLDPE1.Asia South     117.000
+gLDPE2.Asia North      86.000
+gLDPE2.Asia South     128.000
+gXLPE1.Asia North      82.000
+gXLPE1.Asia South     116.000
+gXLPE2.Asia North      85.000
+gXLPE2.Asia South     125.000
+gPP1  .Asia North      81.000
+gPP1  .Asia South     120.000
+gPP2  .Asia North      91.000
+gPP2  .Asia South     130.000
+gPP3  .Asia North      80.000
+gPP3  .Asia South     125.000
+
+
+----    186 VARIABLE QC.L  supply of grade g from IHP h to customer c at period t
+
+INDEX 1 = KSC (UAE)
+
+                            1           2           3           4           5           6
+
+gPE1  .UAE             30.000      32.000      37.000      30.000      39.000      35.000
+gPE2  .UAE             34.000      20.000      34.000      34.000      39.000      37.000
+gPE3  .UAE             35.000      22.000      31.000      32.000      37.000      32.000
+gLDPE1.UAE             38.000      33.000      34.000      38.000      36.000      33.000
+gLDPE2.UAE             39.000      36.000      38.000      37.000      39.000      36.000
+gXLPE1.UAE             35.000      18.000      37.000      25.000      38.000      30.000
+gXLPE2.UAE             34.000      39.000                  38.000      35.000      35.000
+gPP1  .UAE             35.000      36.000      32.000      33.000      32.000      37.000
+gPP2  .UAE             36.000      36.000      35.000      35.000      37.000      37.000
+gPP3  .UAE             33.000      39.000      36.000      36.000      36.000      32.000
+
+INDEX 1 = NC(UAE)
+
+                            1           2           3           4           5           6
+
+gPE1  .UAE              3.000       9.000       8.000       2.000                   7.000
+gPE2  .UAE              4.000                   6.000       6.000       1.000       3.000
+gPE3  .UAE              4.000                               8.000       6.000       7.000
+gLDPE1.UAE              5.000       7.364       2.000       1.000                   9.000
+gLDPE2.UAE              2.000       4.000                   5.000       6.000       5.000
+gXLPE1.UAE              9.000                   1.000                   5.000       9.000
+gXLPE2.UAE              1.000       6.000                   2.000                   9.000
+gPP1  .UAE              7.000       6.000       4.000       6.000       3.000       9.000
+gPP2  .UAE              9.000       2.000                   4.000       9.000       8.000
+gPP3  .UAE              6.000       8.000       6.000       9.000       8.000       4.000
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                     06/27/19 18:31:42 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+        186 VARIABLE QC.L  supply of grade g from IHP h to customer c at period t
+
+INDEX 1 = KSC (Asia North)
+
+                            1           5           6
+
+gPE1  .Asia North      30.000      39.000      35.000
+gPE2  .Asia North      34.000      39.000      37.000
+gPE3  .Asia North      35.000      37.000      32.000
+gLDPE1.Asia North      38.000      36.000      33.000
+gLDPE2.Asia North      39.000      39.000      36.000
+gXLPE1.Asia North      35.000      38.000      30.000
+gXLPE2.Asia North      34.000      37.000      35.000
+gPP1  .Asia North      35.000      32.000      37.000
+gPP2  .Asia North      36.000      37.000      37.000
+gPP3  .Asia North      33.000      36.000      32.000
+
+INDEX 1 = NC(Asia North)
+
+                            1           5           6
+
+gPE1  .Asia North       3.000                   7.000
+gPE2  .Asia North       4.000       1.000       3.000
+gPE3  .Asia North       4.000       6.000       7.000
+gLDPE1.Asia North       5.000                   9.000
+gLDPE2.Asia North       2.000       6.000       5.000
+gXLPE1.Asia North       9.000       5.000       9.000
+gXLPE2.Asia North       1.000       4.000       9.000
+gPP1  .Asia North       7.000       3.000       9.000
+gPP2  .Asia North       9.000       9.000       8.000
+gPP3  .Asia North       6.000       8.000       4.000
+
+INDEX 1 = KSC (Asia South)
+
+                            1           4           5           6
+
+gPE1  .Asia South      30.000      30.000      39.000      35.000
+gPE2  .Asia South      34.000      34.000      39.000      37.000
+gPE3  .Asia South      35.000      32.000      37.000      32.000
+gLDPE1.Asia South      38.000      38.000      36.000      33.000
+gLDPE2.Asia South      39.000      37.000      39.000      36.000
+gXLPE1.Asia South      35.000      30.000      38.000      30.000
+gXLPE2.Asia South      34.000      38.000      37.000      35.000
+gPP1  .Asia South      35.000      33.000      32.000      37.000
+gPP2  .Asia South      36.000      35.000      37.000      37.000
+gPP3  .Asia South      33.000      36.000      36.000      32.000
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                     06/27/19 18:31:42 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+        186 VARIABLE QC.L  supply of grade g from IHP h to customer c at period t
+
+INDEX 1 = NC(Asia South)
+
+                            1           4           5           6
+
+gPE1  .Asia South       3.000       2.000                   7.000
+gPE2  .Asia South       4.000       6.000       1.000       3.000
+gPE3  .Asia South       4.000       8.000       6.000       7.000
+gLDPE1.Asia South       5.000       1.000                   9.000
+gLDPE2.Asia South       2.000       5.000       6.000       5.000
+gXLPE1.Asia South       9.000       4.000       5.000       9.000
+gXLPE2.Asia South       1.000       2.000       4.000       9.000
+gPP1  .Asia South       7.000       6.000       3.000       9.000
+gPP2  .Asia South       9.000       4.000       9.000       8.000
+gPP3  .Asia South       6.000       9.000       8.000       4.000
+
+
+----    186 VARIABLE IC.L  plant inventory level of olefin o at time period t
+
+                    1           2           3           4
+
+Ethane         50.000                  50.000
+Propane        30.000      23.027      19.061      19.061
+
+
+----    186 PARAMETER D  demand of grade g of customer c in time period t
+
+                                  1           2           3           4           5           6
+
+KSC (UAE)       .gPE1        30.000      32.000      37.000      30.000      39.000      35.000
+KSC (UAE)       .gPE2        34.000      33.000      34.000      34.000      39.000      37.000
+KSC (UAE)       .gPE3        35.000      30.000      31.000      32.000      37.000      32.000
+KSC (UAE)       .gLDPE1      38.000      33.000      34.000      38.000      36.000      33.000
+KSC (UAE)       .gLDPE2      39.000      36.000      38.000      37.000      39.000      36.000
+KSC (UAE)       .gXLPE1      35.000      35.000      37.000      30.000      38.000      30.000
+KSC (UAE)       .gXLPE2      34.000      39.000      33.000      38.000      37.000      35.000
+KSC (UAE)       .gPP1        35.000      36.000      32.000      33.000      32.000      37.000
+KSC (UAE)       .gPP2        36.000      36.000      35.000      35.000      37.000      37.000
+KSC (UAE)       .gPP3        33.000      39.000      36.000      36.000      36.000      32.000
+NC(UAE)         .gPE1         3.000       9.000       8.000       2.000                   7.000
+NC(UAE)         .gPE2         4.000       2.000       6.000       6.000       1.000       3.000
+NC(UAE)         .gPE3         4.000                   7.000       8.000       6.000       7.000
+NC(UAE)         .gLDPE1       5.000       9.000       2.000       1.000                   9.000
+NC(UAE)         .gLDPE2       2.000       4.000                   5.000       6.000       5.000
+NC(UAE)         .gXLPE1       9.000       7.000       1.000       4.000       5.000       9.000
+NC(UAE)         .gXLPE2       1.000       6.000       5.000       2.000       4.000       9.000
+NC(UAE)         .gPP1         7.000       6.000       4.000       6.000       3.000       9.000
+NC(UAE)         .gPP2         9.000       2.000                   4.000       9.000       8.000
+NC(UAE)         .gPP3         6.000       8.000       6.000       9.000       8.000       4.000
+KSC (Asia North).gPE1        30.000      32.000      37.000      30.000      39.000      35.000
+KSC (Asia North).gPE2        34.000      33.000      34.000      34.000      39.000      37.000
+KSC (Asia North).gPE3        35.000      30.000      31.000      32.000      37.000      32.000
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                     06/27/19 18:31:42 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+        186 PARAMETER D  demand of grade g of customer c in time period t
+
+                                  1           2           3           4           5           6
+
+KSC (Asia North).gLDPE1      38.000      33.000      34.000      38.000      36.000      33.000
+KSC (Asia North).gLDPE2      39.000      36.000      38.000      37.000      39.000      36.000
+KSC (Asia North).gXLPE1      35.000      35.000      37.000      30.000      38.000      30.000
+KSC (Asia North).gXLPE2      34.000      39.000      33.000      38.000      37.000      35.000
+KSC (Asia North).gPP1        35.000      36.000      32.000      33.000      32.000      37.000
+KSC (Asia North).gPP2        36.000      36.000      35.000      35.000      37.000      37.000
+KSC (Asia North).gPP3        33.000      39.000      36.000      36.000      36.000      32.000
+NC(Asia North)  .gPE1         3.000       9.000       8.000       2.000                   7.000
+NC(Asia North)  .gPE2         4.000       2.000       6.000       6.000       1.000       3.000
+NC(Asia North)  .gPE3         4.000                   7.000       8.000       6.000       7.000
+NC(Asia North)  .gLDPE1       5.000       9.000       2.000       1.000                   9.000
+NC(Asia North)  .gLDPE2       2.000       4.000                   5.000       6.000       5.000
+NC(Asia North)  .gXLPE1       9.000       7.000       1.000       4.000       5.000       9.000
+NC(Asia North)  .gXLPE2       1.000       6.000       5.000       2.000       4.000       9.000
+NC(Asia North)  .gPP1         7.000       6.000       4.000       6.000       3.000       9.000
+NC(Asia North)  .gPP2         9.000       2.000                   4.000       9.000       8.000
+NC(Asia North)  .gPP3         6.000       8.000       6.000       9.000       8.000       4.000
+KSC (Asia South).gPE1        30.000      32.000      37.000      30.000      39.000      35.000
+KSC (Asia South).gPE2        34.000      33.000      34.000      34.000      39.000      37.000
+KSC (Asia South).gPE3        35.000      30.000      31.000      32.000      37.000      32.000
+KSC (Asia South).gLDPE1      38.000      33.000      34.000      38.000      36.000      33.000
+KSC (Asia South).gLDPE2      39.000      36.000      38.000      37.000      39.000      36.000
+KSC (Asia South).gXLPE1      35.000      35.000      37.000      30.000      38.000      30.000
+KSC (Asia South).gXLPE2      34.000      39.000      33.000      38.000      37.000      35.000
+KSC (Asia South).gPP1        35.000      36.000      32.000      33.000      32.000      37.000
+KSC (Asia South).gPP2        36.000      36.000      35.000      35.000      37.000      37.000
+KSC (Asia South).gPP3        33.000      39.000      36.000      36.000      36.000      32.000
+NC(Asia South)  .gPE1         3.000       9.000       8.000       2.000                   7.000
+NC(Asia South)  .gPE2         4.000       2.000       6.000       6.000       1.000       3.000
+NC(Asia South)  .gPE3         4.000                   7.000       8.000       6.000       7.000
+NC(Asia South)  .gLDPE1       5.000       9.000       2.000       1.000                   9.000
+NC(Asia South)  .gLDPE2       2.000       4.000                   5.000       6.000       5.000
+NC(Asia South)  .gXLPE1       9.000       7.000       1.000       4.000       5.000       9.000
+NC(Asia South)  .gXLPE2       1.000       6.000       5.000       2.000       4.000       9.000
+NC(Asia South)  .gPP1         7.000       6.000       4.000       6.000       3.000       9.000
+NC(Asia South)  .gPP2         9.000       2.000                   4.000       9.000       8.000
+NC(Asia South)  .gPP3         6.000       8.000       6.000       9.000       8.000       4.000
+
+
+----    186 VARIABLE IC.L  plant inventory level of olefin o at time period t
+
+                    1           2           3           4
+
+Ethane         50.000                  50.000
+Propane        30.000      23.027      19.061      19.061
+
+
+
+EXECUTION TIME       =        0.031 SECONDS      3 MB  25.0.3 r65947 LEX-LEG
+GAMS 25.0.3  r65947 Released Mar 21, 2018 LEX-LEG x86 64bit/Linux                                                                                                                                                                     06/27/19 18:31:42 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+USER: Medium MUD - 10 User License                   S170517:0518AO-LNX
+      Imperial College London, Centre for Process Systems EngineerDC621
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      /home/ps/ce-fs1/kq410/github/PSE_on_Y/GAMS_files/PSE_V2.gms
+Output     /home/ps/ce-fs1/kq410/github/PSE_on_Y/GAMS_files/PSE_V2.lst

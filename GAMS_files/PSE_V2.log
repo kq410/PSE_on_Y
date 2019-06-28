@@ -1,0 +1,19 @@
+
+--- Job PSE_V2.gms Start 06/27/19 18:30:55 24.4.1 r50296 WEX-WEI x86 64bit/MS Windows
+GAMS 24.4.1   Copyright (C) 1987-2014 GAMS Development. All rights reserved
+Licensee: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
+          Free Demo,  202-342-0180,  sales@gams.com,  www.gams.com   DC0000
+--- Starting compilation
+--- PSE_V2.gms(78) 2 Mb
+--- GDXin=Y:\github\PSE_on_Y\GAMS_files\Borouge_Data_Scott_Demo.gdx
+--- PSE_V2.gms(187) 3 Mb
+--- Starting execution: elapsed 0:00:00.188
+--- PSE_V2.gms(180) 4 Mb
+--- Generating MIP model test
+--- PSE_V2.gms(182) 4 Mb
+---   1,973 rows  2,688 columns  7,716 non-zeroes
+---   186 discrete-columns
+*** Status: Terminated due to a licensing error
+***         Inspect listing file for more information
+--- Job PSE_V2.gms Stop 06/27/19 18:30:56 elapsed 0:00:00.658
+Exit code = 7
