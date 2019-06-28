@@ -134,3 +134,9 @@ def parameter_initialisation(optimisation_model,
                                 initialize = var_par_input.S_ini_level,
                                 doc = 'initial level of sale of product o'
                                 )
+
+    optimisation_model.HC = pyo.Param(
+                                optimisation_model.h, optimisation_model.c,
+                                initialize = fixed_par_input.HC,
+                                doc = 'HC pair parameter'
+                                )

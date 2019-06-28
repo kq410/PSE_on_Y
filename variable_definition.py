@@ -19,7 +19,7 @@ def variable_initialisation(optimisation_model):
         """
         This function defines the bounds for IC
         """
-        return (optimisation_model.IC_low[m], None)
+        return (optimisation_model.IC_low[m], optimisation_model.IC_upper[m])
 
     def IPbounds(optimisation_model, g, t):
         """
@@ -31,7 +31,7 @@ def variable_initialisation(optimisation_model):
         """
         This function defines the bounds for IH
         """
-        return (5, None)
+        return (optimisation_model.IH_low[g, h], None)
         #return (optimisation_model.IH_low[g, h], None)
 
 
@@ -52,8 +52,7 @@ def variable_initialisation(optimisation_model):
         if t <= optimisation_model.LT[h] or t <= 1:
             optimisation_model.IH[g, h, t].fixed = True
 
-            return 5
-            #return optimisation_model.IH_ini_level[g, h]
+            return optimisation_model.IH_low[g, h]
         else:
             return None
 
@@ -64,7 +63,7 @@ def variable_initialisation(optimisation_model):
         """
         if t == 1:
             optimisation_model.S[m, t].fixed = True
-            return optimisation_model.S_ini_level[m]
+            return 0
         else:
             return None
 
@@ -78,6 +77,16 @@ def variable_initialisation(optimisation_model):
             return 0
         elif t == 1:
             optimisation_model.Q[g, h, t].fixed = True
+            return 0
+        else:
+            return None
+
+    def QCfx(optimisation_model, c, g, h, t):
+        """This function fix the QC value of any customer/region pairs
+        that is not feasible to zero
+        """
+        if model.HC[h, c] != 1:
+            optimisation_model.QC[c, g, h, t].fixed = True
             return 0
 
         else:
@@ -144,6 +153,7 @@ def variable_initialisation(optimisation_model):
                            optimisation_model.c, optimisation_model.g,
                            optimisation_model.h, optimisation_model.t,
                            within = pyo.NonNegativeReals,
+                           initialize = QCfx,
                            doc = 'supply of g from h to customer c at period t'
                            )
     optimisation_model.Y = pyo.Var(
