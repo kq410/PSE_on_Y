@@ -12,10 +12,10 @@ def constraint_definition(model):
         This constraint defines the objective function
         """
         return \
-          sum (model.QC[c, g, h, t] * model.SP[g, c] for g in model.g \
-          for h in model.h for c in model.c for t in model.t) \
-        + sum(model.S[m, t] * model.SO[m] for m in model.m for t in model.t) \
-        - sum(model.PU[m, t] * model.PC[m] for m in model.m for t in model.t) \
+          sum (model.QC[c, g, h, t] * model.SP[c, g, t] for g in model.g \
+          for c in model.c for h in model.h for t in model.t) \
+        + sum(model.S[m, t] * model.SO[m, t] for m in model.m for t in model.t)\
+        - sum(model.PU[m, t] * model.PC[m,t] for m in model.m for t in model.t)\
         - sum(model.PO[i, t] * model.OC[i] for i in model.i for t in model.t) \
         - sum(model.PP[g, j, t] * model.OP[g, j] for g in model.g \
           for j in model.j for t in model.t)

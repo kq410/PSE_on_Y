@@ -50,7 +50,7 @@ def parameter_initialisation(optimisation_model,
                              )
 
     optimisation_model.n = pyo.Param(
-                           optimisation_model.o, optimisation_model.g,
+                           optimisation_model.m, optimisation_model.g,
                            initialize = fixed_par_input.n,
                            doc = 'consumption coefficient of o producing g'
                            )
@@ -63,19 +63,20 @@ def parameter_initialisation(optimisation_model,
                            )
 
     optimisation_model.SP = pyo.Param(
-                            optimisation_model.g, optimisation_model.c,
+                            optimisation_model.c, optimisation_model.g,
+                            optimisation_model.t,
                             initialize = var_par_input.SP,
                             doc = 'sale price of grade g to customer c'
                             )
 
     optimisation_model.SO = pyo.Param(
-                            optimisation_model.o,
+                            optimisation_model.m, optimisation_model.t,
                             initialize = var_par_input.SO,
                             doc = 'export price of olefin o'
                             )
 
     optimisation_model.PC = pyo.Param(
-                            optimisation_model.o,
+                            optimisation_model.m, optimisation_model.t
                             initialize = var_par_input.PC,
                             doc = 'purchase price of olefin o'
                             )
@@ -99,7 +100,7 @@ def parameter_initialisation(optimisation_model,
                             )
 
     optimisation_model.IC_low = pyo.Param(
-                                optimisation_model.o,
+                                optimisation_model.m,
                                 initialize = fixed_par_input.IC_low,
                                 doc = 'lower bound for plant inventory of o'
                                 )
@@ -111,7 +112,7 @@ def parameter_initialisation(optimisation_model,
                                 )
 
     optimisation_model.IC_ini_level = pyo.Param(
-                                optimisation_model.o,
+                                optimisation_model.m,
                                 initialize = var_par_input.IC_ini_level,
                                 doc = 'initial level of plant inventory of o'
                                 )
@@ -123,7 +124,7 @@ def parameter_initialisation(optimisation_model,
                                 )
 
     optimisation_model.S_ini_level = pyo.Param(
-                                optimisation_model.o,
+                                optimisation_model.m,
                                 initialize = var_par_input.S_ini_level,
                                 doc = 'initial level of sale of product o'
                                 )
