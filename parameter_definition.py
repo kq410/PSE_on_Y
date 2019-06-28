@@ -105,6 +105,12 @@ def parameter_initialisation(optimisation_model,
                                 doc = 'lower bound for plant inventory of o'
                                 )
 
+    optimisation_model.IC_upper = pyo.Param(
+                                optimisation_model.m,
+                                initialize = fixed_par_input.IC_upper,
+                                doc = 'upper bound for plant inventory of o'
+                                )
+
     optimisation_model.IH_low = pyo.Param(
                                 optimisation_model.g, optimisation_model.h,
                                 initialize = fixed_par_input.IH_low,
