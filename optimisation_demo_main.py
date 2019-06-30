@@ -126,7 +126,7 @@ def main():
     Excel_file = 'Borouge_Data_Scott_Demo.xlsx'
     set_input, fixed_par, variable_par = data_construction(Excel_file)
     #print(fixed_par.IH_low)
-    #print(variable_par.SO)
+    #print(variable_par.SP)
     # set initialisation
     fset.set_initialisation(PSE_model, set_input)
 
@@ -140,15 +140,37 @@ def main():
     fcon.constraint_definition(PSE_model)
 
     # set up the model
-    opt = SolverFactory('cplex')
-    opt.options['mipgap'] = 0.01
-    opt.options['threads'] = 0
+    opt = SolverFactory('cbc')
+    #opt.options['mipgap'] = 0.001
+    #opt.options['threads'] = 0
 
     results = opt.solve(PSE_model, tee = True,
     symbolic_solver_labels = True)
+
     PSE_model.solutions.store_to(results)
     results.write(filename = 'solution.yml')
 
+    # for m in PSE_model.m:
+    #     for t in PSE_model.t:
+    print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
+    for g in PSE_model.g for c in PSE_model.c
+    for h in PSE_model.h for t in PSE_model.t))
+    print(sum(PSE_model.S[m, t].value * PSE_model.SO[m, t]
+        for m in PSE_model.m
+        for t in PSE_model.t))
+
+    print(sum (PSE_model.QC[c, g, h, t].value
+    for g in PSE_model.g for c in PSE_model.c
+    for h in PSE_model.h for t in PSE_model.t))
+
+    print(sum(PSE_model.tao[g, j]
+                for g in PSE_model.g for j in PSE_model.j))
+    #total_Psale = PSE_model.QC#['KSC (UAE)', 'gPE1', 'UAE', '3'].value
+    # total_Psale = sum (
+    # PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t].value \
+    # for g in PSE_model.g for c in PSE_model.c
+    # for h in PSE_model.h for t in PSE_model.t)
+    #print(total_Psale)
     # result_dict = faux.result_data_load(PSE_model, ['PP'])
     # print(result_dict)
 if __name__ == '__main__':

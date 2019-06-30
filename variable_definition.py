@@ -69,9 +69,6 @@ def variable_initialisation(optimisation_model):
         if h == hsetlist[0]:
             optimisation_model.Q[g, h, t].fixed = True
             return 0
-        # elif t <= 1:
-        #     optimisation_model.Q[g, h, t].fixed = True
-        #     return 0
         else:
             return None
 

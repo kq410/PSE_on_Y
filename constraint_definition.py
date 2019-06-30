@@ -69,16 +69,36 @@ def constraint_definition(model):
         This constraint defines the inventory level of UAE Gateway (h=1)
         and all the global IHPs (h>1)
         """
-        if t <= model.LT[h] or t <= 1:
-            return pyo.Constraint.Skip
-        if h == hsetlist[0]:
+        if h == hsetlist[0] and t == 1:
+            return \
+            model.IH[g, h, t] >= sum(model.Q[g, hp, t]
+            for hp in model.h if hp != h) + sum(model.QC[c, g, h, t]
+            for c in model.c)
+
+        elif h != hsetlist[0] and t == 1:
+            return \
+            model.IH[g, h, t] >= sum(model.QC[c, g, h, t]
+            for c in model.c)
+
+        elif h == hsetlist[0] and 1 < t and t <= model.LT[h]:
+            return\
+            model.IH[g, h, t] == model.IH[g, h, t-1] \
+            - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
+            - sum(model.QC[c, g, h, t] for c in model.c)
+            
+        elif h != hsetlist[0] and 1 < t and t <= model.LT[h]:
+            return \
+            model.IH[g, h, t] == model.IH[g, h, t-1] \
+            - sum(model.QC[c, g, h, t] for c in model.c)
+
+        elif h == hsetlist[0] and t > model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + sum(model.PP[g, j, t-model.LT[h]] for j in model.j) \
             - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
             - sum(model.QC[c, g, h, t] for c in model.c) \
 
-        elif h != hsetlist[0]:
+        elif h != hsetlist[0] and t > model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + model.Q[g, h, t-model.LT[h]] \

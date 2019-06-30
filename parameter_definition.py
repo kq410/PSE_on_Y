@@ -71,7 +71,7 @@ def parameter_initialisation(optimisation_model,
 
     optimisation_model.SO = pyo.Param(
                             optimisation_model.m, optimisation_model.t,
-                            initialize = var_par_input.SO,
+                            initialize = var_par_input.SO, default = 0,
                             doc = 'export price of olefin o'
                             )
 
