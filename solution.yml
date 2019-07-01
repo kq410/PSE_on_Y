@@ -5,28 +5,28 @@
 #   Problem Information
 # ----------------------------------------------------------
 Problem: 
-- Name: tmpodezwpro
-  Lower bound: 9930.650025649351
-  Upper bound: 9930.650025649351
+- Name: tmp7furopon
+  Lower bound: 7251.325263636364
+  Upper bound: 7251.325263636364
   Number of objectives: 1
-  Number of constraints: 2003
-  Number of variables: 1879
-  Number of nonzeros: 4982
+  Number of constraints: 2011
+  Number of variables: 1975
+  Number of nonzeros: 5378
   Sense: maximize
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  User time: 0.08
+  User time: 4.86
   Termination condition: optimal
-  Termination message: MIP - Integer optimal solution\x3a Objective = 9.9306500256e+03
+  Termination message: MIP - Integer optimal solution\x3a Objective = 7.2513252636e+03
   Statistics: 
     Branch and bound: 
       Number of bounded subproblems: 0
       Number of created subproblems: 0
   Error rc: 0
-  Time: 0.5515339374542236
+  Time: 4.954004287719727
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -38,26 +38,46 @@ Solution:
   Message: None
   Objective:
     objective_function:
-      Value: 9930.650025649355
+      Value: 7251.3252636363695
   Variable:
+    IC[Ethane,2.0]:
+      Value: 50
     IC[Ethane,3.0]:
       Value: 50
     IC[Ethane,5.0]:
       Value: 50
+    IC[Propane,1.0]:
+      Value: 4.200000000000003
     IC[Propane,2.0]:
-      Value: 7.997863636363633
+      Value: 4.200000000000003
     IC[Propane,3.0]:
-      Value: 7.997863636363633
+      Value: 4.200000000000003
+    IH[gLDPE1,Asia North,1.0]:
+      Value: 6
+    IH[gLDPE1,Asia North,2.0]:
+      Value: 6
+    IH[gLDPE1,Asia North,3.0]:
+      Value: 6
+    IH[gLDPE1,Asia North,4.0]:
+      Value: 6
     IH[gLDPE1,Asia North,5.0]:
       Value: 6
     IH[gLDPE1,Asia North,6.0]:
       Value: 6
+    IH[gLDPE1,Asia South,1.0]:
+      Value: 8
+    IH[gLDPE1,Asia South,2.0]:
+      Value: 8
+    IH[gLDPE1,Asia South,3.0]:
+      Value: 8
     IH[gLDPE1,Asia South,4.0]:
-      Value: 7.9999999999999964
+      Value: 8
     IH[gLDPE1,Asia South,5.0]:
       Value: 8
     IH[gLDPE1,Asia South,6.0]:
       Value: 8
+    IH[gLDPE1,UAE,1.0]:
+      Value: 5
     IH[gLDPE1,UAE,2.0]:
       Value: 5
     IH[gLDPE1,UAE,3.0]:
@@ -68,16 +88,32 @@ Solution:
       Value: 5
     IH[gLDPE1,UAE,6.0]:
       Value: 5
+    IH[gLDPE2,Asia North,1.0]:
+      Value: 6
+    IH[gLDPE2,Asia North,2.0]:
+      Value: 6
+    IH[gLDPE2,Asia North,3.0]:
+      Value: 6
+    IH[gLDPE2,Asia North,4.0]:
+      Value: 6
     IH[gLDPE2,Asia North,5.0]:
       Value: 6
     IH[gLDPE2,Asia North,6.0]:
       Value: 6
+    IH[gLDPE2,Asia South,1.0]:
+      Value: 8
+    IH[gLDPE2,Asia South,2.0]:
+      Value: 8
+    IH[gLDPE2,Asia South,3.0]:
+      Value: 8
     IH[gLDPE2,Asia South,4.0]:
       Value: 8
     IH[gLDPE2,Asia South,5.0]:
       Value: 8
     IH[gLDPE2,Asia South,6.0]:
       Value: 8
+    IH[gLDPE2,UAE,1.0]:
+      Value: 5
     IH[gLDPE2,UAE,2.0]:
       Value: 5
     IH[gLDPE2,UAE,3.0]:
@@ -88,155 +124,283 @@ Solution:
       Value: 5
     IH[gLDPE2,UAE,6.0]:
       Value: 5
+    IH[gPE1,Asia North,1.0]:
+      Value: 10
+    IH[gPE1,Asia North,2.0]:
+      Value: 10
+    IH[gPE1,Asia North,3.0]:
+      Value: 10
+    IH[gPE1,Asia North,4.0]:
+      Value: 10
     IH[gPE1,Asia North,5.0]:
       Value: 10
     IH[gPE1,Asia North,6.0]:
       Value: 10
+    IH[gPE1,Asia South,1.0]:
+      Value: 9
+    IH[gPE1,Asia South,2.0]:
+      Value: 9
+    IH[gPE1,Asia South,3.0]:
+      Value: 9
     IH[gPE1,Asia South,4.0]:
-      Value: 8.999999999999993
+      Value: 9
     IH[gPE1,Asia South,5.0]:
       Value: 9
     IH[gPE1,Asia South,6.0]:
       Value: 9
+    IH[gPE1,UAE,1.0]:
+      Value: 10
     IH[gPE1,UAE,2.0]:
-      Value: 178
+      Value: 10
     IH[gPE1,UAE,3.0]:
-      Value: 91
+      Value: 10
     IH[gPE1,UAE,4.0]:
-      Value: 91
+      Value: 10
     IH[gPE1,UAE,5.0]:
-      Value: 52
+      Value: 10
     IH[gPE1,UAE,6.0]:
+      Value: 10
+    IH[gPE2,Asia North,1.0]:
+      Value: 10
+    IH[gPE2,Asia North,2.0]:
+      Value: 10
+    IH[gPE2,Asia North,3.0]:
+      Value: 10
+    IH[gPE2,Asia North,4.0]:
       Value: 10
     IH[gPE2,Asia North,5.0]:
       Value: 10
     IH[gPE2,Asia North,6.0]:
       Value: 10
+    IH[gPE2,Asia South,1.0]:
+      Value: 9
+    IH[gPE2,Asia South,2.0]:
+      Value: 9
+    IH[gPE2,Asia South,3.0]:
+      Value: 9
     IH[gPE2,Asia South,4.0]:
-      Value: 8.999999999999993
+      Value: 9
     IH[gPE2,Asia South,5.0]:
       Value: 9
     IH[gPE2,Asia South,6.0]:
       Value: 9
-    IH[gPE2,UAE,2.0]:
-      Value: 51.57142857142858
-    IH[gPE2,UAE,3.0]:
-      Value: 27.571428571428577
-    IH[gPE2,UAE,4.0]:
+    IH[gPE2,UAE,1.0]:
       Value: 10
+    IH[gPE2,UAE,2.0]:
+      Value: 10
+    IH[gPE2,UAE,3.0]:
+      Value: 10
+    IH[gPE2,UAE,4.0]:
+      Value: 50
     IH[gPE2,UAE,5.0]:
       Value: 10
     IH[gPE2,UAE,6.0]:
+      Value: 10
+    IH[gPE3,Asia North,1.0]:
+      Value: 10
+    IH[gPE3,Asia North,2.0]:
+      Value: 10
+    IH[gPE3,Asia North,3.0]:
+      Value: 10
+    IH[gPE3,Asia North,4.0]:
       Value: 10
     IH[gPE3,Asia North,5.0]:
       Value: 10
     IH[gPE3,Asia North,6.0]:
       Value: 10
+    IH[gPE3,Asia South,1.0]:
+      Value: 9
+    IH[gPE3,Asia South,2.0]:
+      Value: 9
+    IH[gPE3,Asia South,3.0]:
+      Value: 9
     IH[gPE3,Asia South,4.0]:
-      Value: 8.999999999999993
+      Value: 9
     IH[gPE3,Asia South,5.0]:
       Value: 9
     IH[gPE3,Asia South,6.0]:
       Value: 9
+    IH[gPE3,UAE,1.0]:
+      Value: 10
     IH[gPE3,UAE,2.0]:
-      Value: 53
+      Value: 10
     IH[gPE3,UAE,3.0]:
-      Value: 53
+      Value: 10
     IH[gPE3,UAE,4.0]:
-      Value: 53
+      Value: 10
     IH[gPE3,UAE,5.0]:
       Value: 10
     IH[gPE3,UAE,6.0]:
+      Value: 10
+    IH[gPP1,Asia North,1.0]:
+      Value: 10
+    IH[gPP1,Asia North,2.0]:
+      Value: 10
+    IH[gPP1,Asia North,3.0]:
+      Value: 10
+    IH[gPP1,Asia North,4.0]:
       Value: 10
     IH[gPP1,Asia North,5.0]:
       Value: 10
     IH[gPP1,Asia North,6.0]:
       Value: 10
+    IH[gPP1,Asia South,1.0]:
+      Value: 9
+    IH[gPP1,Asia South,2.0]:
+      Value: 9
+    IH[gPP1,Asia South,3.0]:
+      Value: 9
     IH[gPP1,Asia South,4.0]:
       Value: 9
     IH[gPP1,Asia South,5.0]:
       Value: 9
     IH[gPP1,Asia South,6.0]:
       Value: 9
+    IH[gPP1,UAE,1.0]:
+      Value: 10
     IH[gPP1,UAE,2.0]:
-      Value: 71.81818181818181
+      Value: 10
     IH[gPP1,UAE,3.0]:
-      Value: 49
+      Value: 10
     IH[gPP1,UAE,4.0]:
       Value: 10
     IH[gPP1,UAE,5.0]:
       Value: 10
     IH[gPP1,UAE,6.0]:
       Value: 10
+    IH[gPP2,Asia North,1.0]:
+      Value: 10
+    IH[gPP2,Asia North,2.0]:
+      Value: 10
+    IH[gPP2,Asia North,3.0]:
+      Value: 10
+    IH[gPP2,Asia North,4.0]:
+      Value: 10
     IH[gPP2,Asia North,5.0]:
       Value: 10
     IH[gPP2,Asia North,6.0]:
       Value: 10
+    IH[gPP2,Asia South,1.0]:
+      Value: 9
+    IH[gPP2,Asia South,2.0]:
+      Value: 9
+    IH[gPP2,Asia South,3.0]:
+      Value: 9
     IH[gPP2,Asia South,4.0]:
-      Value: 8.999999999999993
+      Value: 9
     IH[gPP2,Asia South,5.0]:
       Value: 9
     IH[gPP2,Asia South,6.0]:
       Value: 9
+    IH[gPP2,UAE,1.0]:
+      Value: 10
     IH[gPP2,UAE,2.0]:
       Value: 10
     IH[gPP2,UAE,3.0]:
       Value: 10
     IH[gPP2,UAE,4.0]:
-      Value: 48
+      Value: 10
     IH[gPP2,UAE,5.0]:
-      Value: 55
+      Value: 10
     IH[gPP2,UAE,6.0]:
+      Value: 10
+    IH[gPP3,Asia North,1.0]:
+      Value: 10
+    IH[gPP3,Asia North,2.0]:
+      Value: 10
+    IH[gPP3,Asia North,3.0]:
+      Value: 10
+    IH[gPP3,Asia North,4.0]:
       Value: 10
     IH[gPP3,Asia North,5.0]:
       Value: 10
     IH[gPP3,Asia North,6.0]:
       Value: 10
+    IH[gPP3,Asia South,1.0]:
+      Value: 9
+    IH[gPP3,Asia South,2.0]:
+      Value: 9
+    IH[gPP3,Asia South,3.0]:
+      Value: 9
     IH[gPP3,Asia South,4.0]:
-      Value: 8.999999999999993
+      Value: 9
     IH[gPP3,Asia South,5.0]:
       Value: 9
     IH[gPP3,Asia South,6.0]:
       Value: 9
+    IH[gPP3,UAE,1.0]:
+      Value: 10
     IH[gPP3,UAE,2.0]:
       Value: 10
     IH[gPP3,UAE,3.0]:
-      Value: 99
+      Value: 10
     IH[gPP3,UAE,4.0]:
-      Value: 54
+      Value: 10
     IH[gPP3,UAE,5.0]:
       Value: 10
     IH[gPP3,UAE,6.0]:
       Value: 10
+    IH[gXLPE1,Asia North,1.0]:
+      Value: 1
+    IH[gXLPE1,Asia North,2.0]:
+      Value: 1
+    IH[gXLPE1,Asia North,3.0]:
+      Value: 1
+    IH[gXLPE1,Asia North,4.0]:
+      Value: 1
     IH[gXLPE1,Asia North,5.0]:
-      Value: 0.9999999999999996
+      Value: 1
     IH[gXLPE1,Asia North,6.0]:
-      Value: 0.9999999999999996
+      Value: 1
+    IH[gXLPE1,Asia South,1.0]:
+      Value: 1
+    IH[gXLPE1,Asia South,2.0]:
+      Value: 1
+    IH[gXLPE1,Asia South,3.0]:
+      Value: 1
     IH[gXLPE1,Asia South,4.0]:
-      Value: 2.0000000000000004
+      Value: 1
     IH[gXLPE1,Asia South,5.0]:
       Value: 1
     IH[gXLPE1,Asia South,6.0]:
+      Value: 1
+    IH[gXLPE1,UAE,1.0]:
       Value: 1
     IH[gXLPE1,UAE,2.0]:
       Value: 1
     IH[gXLPE1,UAE,3.0]:
       Value: 1
     IH[gXLPE1,UAE,4.0]:
-      Value: 24.08545454545454
+      Value: 26
     IH[gXLPE1,UAE,5.0]:
       Value: 1
     IH[gXLPE1,UAE,6.0]:
+      Value: 1
+    IH[gXLPE2,Asia North,1.0]:
+      Value: 1
+    IH[gXLPE2,Asia North,2.0]:
+      Value: 1
+    IH[gXLPE2,Asia North,3.0]:
+      Value: 1
+    IH[gXLPE2,Asia North,4.0]:
       Value: 1
     IH[gXLPE2,Asia North,5.0]:
       Value: 1
     IH[gXLPE2,Asia North,6.0]:
       Value: 1
+    IH[gXLPE2,Asia South,1.0]:
+      Value: 2
+    IH[gXLPE2,Asia South,2.0]:
+      Value: 2
+    IH[gXLPE2,Asia South,3.0]:
+      Value: 2
     IH[gXLPE2,Asia South,4.0]:
       Value: 2
     IH[gXLPE2,Asia South,5.0]:
       Value: 2
     IH[gXLPE2,Asia South,6.0]:
+      Value: 2
+    IH[gXLPE2,UAE,1.0]:
       Value: 2
     IH[gXLPE2,UAE,2.0]:
       Value: 2
@@ -245,75 +409,67 @@ Solution:
     IH[gXLPE2,UAE,4.0]:
       Value: 2
     IH[gXLPE2,UAE,5.0]:
-      Value: 8.872727272727268
+      Value: 2
     IH[gXLPE2,UAE,6.0]:
       Value: 2
-    PM[BU1,Butene,1.0]:
-      Value: 30
-    PM[BU1,Butene,2.0]:
-      Value: 1.5
-    PM[BU1,Butene,3.0]:
-      Value: 1.5
-    PM[BU1,Butene,4.0]:
-      Value: 1.5
     PM[BU1,Butene,5.0]:
       Value: 1.5
+    PM[BU1,Ethane,1.0]:
+      Value: 1.6000000000000014
     PM[BU1,Ethane,2.0]:
-      Value: 0.0018863636363626313
+      Value: 13.634999999999998
     PM[BU1,Ethane,3.0]:
-      Value: 6.476547077922081
+      Value: 9.207500000000003
     PM[BU1,Ethane,5.0]:
-      Value: 6.900000000000002
+      Value: 1.4018181818181858
     PM[BU1,Ethylene,6.0]:
       Value: 10.5
+    PM[BU1,Fuel Gas,1.0]:
+      Value: 25.5
     PM[BU1,Fuel Gas,2.0]:
-      Value: 27.497045454545454
+      Value: 16.365000000000002
     PM[BU1,Fuel Gas,3.0]:
-      Value: 22.02345292207792
+      Value: 20.792499999999997
     PM[BU1,Fuel Gas,4.0]:
-      Value: 24.501068181818184
+      Value: 27.9
     PM[BU1,Fuel Gas,5.0]:
-      Value: 21.599999999999998
+      Value: 27.098181818181814
     PM[BU1,Fuel Gas,6.0]:
       Value: 19.5
-    PM[BU1,Propane,2.0]:
-      Value: 1.0010681818181837
+    PM[BU1,Propane,1.0]:
+      Value: 2.8999999999999986
     PM[BU1,Propane,4.0]:
-      Value: 3.9989318181818163
-    PM[BU2,Butene,1.0]:
-      Value: 30
-    PM[BU2,Butene,2.0]:
-      Value: 1.5
-    PM[BU2,Butene,3.0]:
-      Value: 1.5
-    PM[BU2,Butene,4.0]:
-      Value: 1.5
+      Value: 2.1000000000000014
     PM[BU2,Butene,5.0]:
       Value: 1.5
+    PM[BU2,Ethane,1.0]:
+      Value: 1.6000000000000014
     PM[BU2,Ethane,2.0]:
-      Value: 0.0018863636363626313
+      Value: 13.634999999999998
     PM[BU2,Ethane,3.0]:
-      Value: 6.476547077922081
+      Value: 9.207500000000003
     PM[BU2,Ethane,5.0]:
-      Value: 6.900000000000002
+      Value: 1.4018181818181858
     PM[BU2,Ethylene,6.0]:
       Value: 10.5
+    PM[BU2,Fuel Gas,1.0]:
+      Value: 25.5
     PM[BU2,Fuel Gas,2.0]:
-      Value: 27.497045454545454
+      Value: 16.365000000000002
     PM[BU2,Fuel Gas,3.0]:
-      Value: 22.02345292207792
+      Value: 20.792499999999997
     PM[BU2,Fuel Gas,4.0]:
-      Value: 24.501068181818184
+      Value: 27.9
     PM[BU2,Fuel Gas,5.0]:
-      Value: 21.599999999999998
+      Value: 27.098181818181814
     PM[BU2,Fuel Gas,6.0]:
       Value: 19.5
-    PM[BU2,Propane,2.0]:
-      Value: 1.0010681818181837
+    PM[BU2,Propane,1.0]:
+      Value: 2.8999999999999986
     PM[BU2,Propane,4.0]:
-      Value: 3.9989318181818163
-    PM[EU1,Butene,1.0]:
-      Value: 80
+      Value: 2.1000000000000014
+    PM[EU1,Ethane,1.0]:
+      Value: 150
     PM[EU1,Ethane,2.0]:
       Value: 80
     PM[EU1,Ethane,3.0]:
@@ -324,10 +480,10 @@ Solution:
       Value: 80
     PM[EU1,Ethane,6.0]:
       Value: 80
-    PM[EU2,Butene,1.0]:
-      Value: 80
+    PM[EU2,Ethane,1.0]:
+      Value: 150
     PM[EU2,Ethane,2.0]:
-      Value: 80
+      Value: 118.49999999999997
     PM[EU2,Ethane,3.0]:
       Value: 80
     PM[EU2,Ethane,4.0]:
@@ -336,30 +492,38 @@ Solution:
       Value: 80
     PM[EU2,Ethane,6.0]:
       Value: 80
-    PM[EU3,Butene,1.0]:
-      Value: 80
+    PM[EU3,Ethane,1.0]:
+      Value: 150
     PM[EU3,Ethane,2.0]:
-      Value: 145.52272727272728
+      Value: 150.00000000000003
     PM[EU3,Ethane,3.0]:
-      Value: 84.70503246753245
+      Value: 150
     PM[EU3,Ethane,4.0]:
-      Value: 112.23409090909092
+      Value: 150
     PM[EU3,Ethane,5.0]:
-      Value: 80
+      Value: 141.0909090909091
     PM[EU3,Ethane,6.0]:
       Value: 80
-    PM[OCU,Butene,1.0]:
-      Value: 30
+    PM[OCU,Butene,3.0]:
+      Value: 1.4349999999999996
+    PM[OCU,Butene,4.0]:
+      Value: 2.2599999999999993
     PM[OCU,Butene,6.0]:
       Value: 18.375
-    PM[OCU,Ethylene,2.0]:
-      Value: 30
+    PM[OCU,Ethane,4.0]:
+      Value: 5.140000000000006
     PM[OCU,Ethylene,3.0]:
-      Value: 30
+      Value: 14.349999999999994
     PM[OCU,Ethylene,4.0]:
-      Value: 30
+      Value: 22.599999999999994
     PM[OCU,Ethylene,5.0]:
       Value: 30
+    PM[OCU,Fuel Gas,1.0]:
+      Value: 30
+    PM[OCU,Fuel Gas,2.0]:
+      Value: 30
+    PM[OCU,Fuel Gas,3.0]:
+      Value: 14.215000000000007
     PM[OCU,Fuel Gas,6.0]:
       Value: 6.824999999999999
     PM[OCU,Propylene,6.0]:
@@ -389,7 +553,7 @@ Solution:
     PO[BU2,6.0]:
       Value: 30
     PO[EU1,1.0]:
-      Value: 80
+      Value: 150
     PO[EU1,2.0]:
       Value: 80
     PO[EU1,3.0]:
@@ -401,9 +565,9 @@ Solution:
     PO[EU1,6.0]:
       Value: 80
     PO[EU2,1.0]:
-      Value: 80
+      Value: 150
     PO[EU2,2.0]:
-      Value: 80
+      Value: 118.49999999999997
     PO[EU2,3.0]:
       Value: 80
     PO[EU2,4.0]:
@@ -413,15 +577,15 @@ Solution:
     PO[EU2,6.0]:
       Value: 80
     PO[EU3,1.0]:
-      Value: 80
+      Value: 150
     PO[EU3,2.0]:
-      Value: 145.52272727272728
+      Value: 150.00000000000003
     PO[EU3,3.0]:
-      Value: 84.70503246753245
+      Value: 150
     PO[EU3,4.0]:
-      Value: 112.23409090909092
+      Value: 150
     PO[EU3,5.0]:
-      Value: 80
+      Value: 141.0909090909091
     PO[EU3,6.0]:
       Value: 80
     PO[OCU,1.0]:
@@ -454,188 +618,140 @@ Solution:
       Value: 44
     PP[gLDPE2,ldpe1,5.0]:
       Value: 41
-    PP[gPE1,pe2,1.0]:
-      Value: 112
+    PP[gPE1,pe3,4.0]:
+      Value: 39
     PP[gPE1,pe4,1.0]:
-      Value: 91
-    PP[gPE1,pe5,1.0]:
-      Value: 46
+      Value: 71.69090909090909
+    PP[gPE1,pe4,2.0]:
+      Value: 87
+    PP[gPE1,pe5,5.0]:
+      Value: 42
     PP[gPE2,pe1,2.0]:
-      Value: 56
-    PP[gPE2,pe1,5.0]:
       Value: 40
-    PP[gPE2,pe3,1.0]:
-      Value: 77
-    PP[gPE2,pe3,4.0]:
+    PP[gPE2,pe4,5.0]:
       Value: 40
-    PP[gPE2,pe4,3.0]:
-      Value: 22.428571428571423
     PP[gPE2,pe5,1.0]:
-      Value: 44.57142857142858
+      Value: 80
+    PP[gPE2,pe5,3.0]:
+      Value: 80
     PP[gPE3,pe1,1.0]:
-      Value: 84
+      Value: 43
+    PP[gPE3,pe2,4.0]:
+      Value: 43
     PP[gPP1,pp1,1.0]:
-      Value: 112
-    PP[gPP1,pp1,2.0]:
-      Value: 23.181818181818187
+      Value: 88
     PP[gPP1,pp1,5.0]:
       Value: 46
-    PP[gPP1,pp3,1.0]:
-      Value: 37.818181818181806
+    PP[gPP1,pp2,3.0]:
+      Value: 39
+    PP[gPP1,pp3,2.0]:
+      Value: 46
+    PP[gPP2,pp1,1.0]:
+      Value: 16.5
     PP[gPP2,pp1,2.0]:
-      Value: 47.00000000000011
-    PP[gPP2,pp2,3.0]:
-      Value: 77
-    PP[gPP2,pp2,4.0]:
-      Value: 53
+      Value: 41.92307692307693
+    PP[gPP2,pp1,3.0]:
+      Value: 39
+    PP[gPP2,pp1,4.0]:
+      Value: 46
+    PP[gPP2,pp1,5.0]:
+      Value: 45
     PP[gPP2,pp3,1.0]:
-      Value: 45.00000000000001
+      Value: 76.5
     PP[gPP2,pp3,2.0]:
-      Value: 32.99999999999989
+      Value: 38.07692307692307
     PP[gPP2,pp4,1.0]:
-      Value: 84
+      Value: 36
     PP[gPP3,pp2,1.0]:
       Value: 91
     PP[gPP3,pp2,2.0]:
-      Value: 91
-    PP[gPP3,pp3,2.0]:
-      Value: 40
+      Value: 42
+    PP[gPP3,pp2,3.0]:
+      Value: 45
+    PP[gPP3,pp3,4.0]:
+      Value: 44
     PP[gXLPE1,xlpe1,1.0]:
       Value: 22.5
     PP[gXLPE1,xlpe1,2.0]:
-      Value: 35.99999999999999
+      Value: 36
     PP[gXLPE1,xlpe1,3.0]:
-      Value: 23.08545454545454
+      Value: 25
     PP[gXLPE1,xlpe1,4.0]:
-      Value: 19.91454545454546
+      Value: 18
     PP[gXLPE2,xlpe1,1.0]:
       Value: 45
     PP[gXLPE2,xlpe1,2.0]:
-      Value: 30.000000000000007
+      Value: 30
     PP[gXLPE2,xlpe1,3.0]:
       Value: 40
     PP[gXLPE2,xlpe1,4.0]:
-      Value: 47.87272727272727
+      Value: 41
     PP[gXLPE2,xlpe1,5.0]:
-      Value: 37.12727272727273
+      Value: 44
+    PU[Ethane,1.0]:
+      Value: 428.2
     PU[Ethane,2.0]:
-      Value: 280.5265
+      Value: 425.77
     PU[Ethane,3.0]:
-      Value: 307.6581266233766
+      Value: 328.415
     PU[Ethane,4.0]:
-      Value: 222.23409090909092
+      Value: 265.14
     PU[Ethane,5.0]:
-      Value: 303.8
+      Value: 353.8945454545455
     PU[Ethane,6.0]:
       Value: 190
+    PU[Propylene,1.0]:
+      Value: 281.1
     PU[Propylene,2.0]:
-      Value: 185.65318181818185
+      Value: 152.23
     PU[Propylene,3.0]:
-      Value: 45.105899350649345
+      Value: 95.48500000000001
     PU[Propylene,4.0]:
-      Value: 20.55531818181818
+      Value: 59.06000000000001
     PU[Propylene,5.0]:
-      Value: 9.599999999999998
-    QC[KSC (Asia North),gLDPE1,Asia North,1.0]:
-      Value: 6
-    QC[KSC (Asia North),gLDPE2,Asia North,1.0]:
-      Value: 6
-    QC[KSC (Asia North),gPE1,Asia North,1.0]:
-      Value: 10
-    QC[KSC (Asia North),gPE1,Asia North,5.0]:
-      Value: 10.000000000000005
+      Value: 53.378181818181815
     QC[KSC (Asia North),gPE1,Asia North,6.0]:
-      Value: 35
-    QC[KSC (Asia North),gPE2,Asia North,1.0]:
-      Value: 10
-    QC[KSC (Asia North),gPE2,Asia North,5.0]:
-      Value: 10.000000000000005
+      Value: 32.69090909090909
     QC[KSC (Asia North),gPE2,Asia North,6.0]:
       Value: 37
-    QC[KSC (Asia North),gPE3,Asia North,1.0]:
-      Value: 10
-    QC[KSC (Asia North),gPE3,Asia North,5.0]:
-      Value: 10.000000000000005
-    QC[KSC (Asia North),gPP1,Asia North,1.0]:
-      Value: 10
     QC[KSC (Asia North),gPP1,Asia North,6.0]:
       Value: 37
-    QC[KSC (Asia North),gPP2,Asia North,1.0]:
-      Value: 10
-    QC[KSC (Asia North),gPP2,Asia North,5.0]:
-      Value: 10.000000000000005
     QC[KSC (Asia North),gPP2,Asia North,6.0]:
       Value: 37
-    QC[KSC (Asia North),gPP3,Asia North,1.0]:
-      Value: 10
-    QC[KSC (Asia North),gPP3,Asia North,5.0]:
-      Value: 10.000000000000005
-    QC[KSC (Asia North),gXLPE1,Asia North,1.0]:
-      Value: 1
-    QC[KSC (Asia North),gXLPE2,Asia North,1.0]:
-      Value: 1
-    QC[KSC (Asia South),gLDPE1,Asia South,1.0]:
-      Value: 8
-    QC[KSC (Asia South),gLDPE1,Asia South,4.0]:
-      Value: 5.0000000000000036
     QC[KSC (Asia South),gLDPE1,Asia South,5.0]:
-      Value: 34.90909090909091
-    QC[KSC (Asia South),gLDPE2,Asia South,1.0]:
-      Value: 8
+      Value: 34.909090909090914
     QC[KSC (Asia South),gLDPE2,Asia South,5.0]:
       Value: 39
     QC[KSC (Asia South),gLDPE2,Asia South,6.0]:
       Value: 36
-    QC[KSC (Asia South),gPE1,Asia South,1.0]:
-      Value: 9
     QC[KSC (Asia South),gPE1,Asia South,5.0]:
       Value: 39
     QC[KSC (Asia South),gPE1,Asia South,6.0]:
       Value: 35
-    QC[KSC (Asia South),gPE2,Asia South,1.0]:
-      Value: 9
     QC[KSC (Asia South),gPE2,Asia South,5.0]:
       Value: 39
     QC[KSC (Asia South),gPE2,Asia South,6.0]:
       Value: 37
-    QC[KSC (Asia South),gPE3,Asia South,1.0]:
-      Value: 9
     QC[KSC (Asia South),gPE3,Asia South,5.0]:
       Value: 37
-    QC[KSC (Asia South),gPP1,Asia South,1.0]:
-      Value: 9
     QC[KSC (Asia South),gPP1,Asia South,6.0]:
       Value: 37
-    QC[KSC (Asia South),gPP2,Asia South,1.0]:
-      Value: 9
     QC[KSC (Asia South),gPP2,Asia South,5.0]:
       Value: 37
     QC[KSC (Asia South),gPP2,Asia South,6.0]:
       Value: 37
-    QC[KSC (Asia South),gPP3,Asia South,1.0]:
-      Value: 9
-    QC[KSC (Asia South),gPP3,Asia South,4.0]:
-      Value: 1.7763568394002505e-15
     QC[KSC (Asia South),gPP3,Asia South,5.0]:
       Value: 36
-    QC[KSC (Asia South),gXLPE1,Asia South,1.0]:
-      Value: 1
     QC[KSC (Asia South),gXLPE1,Asia South,5.0]:
-      Value: 23.5
-    QC[KSC (Asia South),gXLPE2,Asia South,1.0]:
-      Value: 2
-    QC[KSC (Asia South),gXLPE2,Asia South,4.0]:
-      Value: 2
+      Value: 22.5
     QC[KSC (Asia South),gXLPE2,Asia South,6.0]:
-      Value: 30.000000000000007
+      Value: 30
     QC[KSC (UAE),gLDPE1,UAE,4.0]:
       Value: 38
     QC[KSC (UAE),gLDPE1,UAE,5.0]:
       Value: 36
     QC[KSC (UAE),gLDPE1,UAE,6.0]:
       Value: 33
-    QC[KSC (UAE),gLDPE2,UAE,1.0]:
-      Value: 5
     QC[KSC (UAE),gLDPE2,UAE,3.0]:
       Value: 38
     QC[KSC (UAE),gLDPE2,UAE,4.0]:
@@ -650,8 +766,6 @@ Solution:
       Value: 39
     QC[KSC (UAE),gPE1,UAE,6.0]:
       Value: 35
-    QC[KSC (UAE),gPE2,UAE,3.0]:
-      Value: 34
     QC[KSC (UAE),gPE2,UAE,4.0]:
       Value: 34
     QC[KSC (UAE),gPE2,UAE,5.0]:
@@ -660,8 +774,6 @@ Solution:
       Value: 37
     QC[KSC (UAE),gPE3,UAE,5.0]:
       Value: 37
-    QC[KSC (UAE),gPP1,UAE,1.0]:
-      Value: 10
     QC[KSC (UAE),gPP1,UAE,2.0]:
       Value: 36
     QC[KSC (UAE),gPP1,UAE,4.0]:
@@ -687,7 +799,7 @@ Solution:
     QC[KSC (UAE),gPP3,UAE,5.0]:
       Value: 36
     QC[KSC (UAE),gXLPE1,UAE,3.0]:
-      Value: 35.99999999999999
+      Value: 36
     QC[KSC (UAE),gXLPE1,UAE,5.0]:
       Value: 38
     QC[KSC (UAE),gXLPE2,UAE,2.0]:
@@ -698,8 +810,6 @@ Solution:
       Value: 37
     QC[KSC (UAE),gXLPE2,UAE,6.0]:
       Value: 35
-    QC[NC(Asia North),gPE1,Asia North,6.0]:
-      Value: 7
     QC[NC(Asia North),gPE2,Asia North,6.0]:
       Value: 3
     QC[NC(Asia North),gPP1,Asia North,6.0]:
@@ -717,7 +827,7 @@ Solution:
     QC[NC(Asia South),gPE2,Asia South,6.0]:
       Value: 3
     QC[NC(Asia South),gPE3,Asia South,5.0]:
-      Value: 3.999999999999993
+      Value: 6
     QC[NC(Asia South),gPP1,Asia South,6.0]:
       Value: 9
     QC[NC(Asia South),gPP2,Asia South,5.0]:
@@ -740,8 +850,6 @@ Solution:
       Value: 8
     QC[NC(UAE),gPE1,UAE,6.0]:
       Value: 7
-    QC[NC(UAE),gPE2,UAE,3.0]:
-      Value: 6
     QC[NC(UAE),gPE2,UAE,4.0]:
       Value: 6
     QC[NC(UAE),gPE2,UAE,5.0]:
@@ -782,86 +890,66 @@ Solution:
       Value: 4
     QC[NC(UAE),gXLPE2,UAE,6.0]:
       Value: 9
-    Q[gLDPE1,Asia South,1.0]:
-      Value: 5
     Q[gLDPE1,Asia South,2.0]:
       Value: 34.909090909090914
     Q[gLDPE2,Asia South,2.0]:
       Value: 45
     Q[gLDPE2,Asia South,3.0]:
       Value: 37.25
-    Q[gPE1,Asia North,1.0]:
-      Value: 10.000000000000005
     Q[gPE1,Asia North,2.0]:
-      Value: 42
-    Q[gPE1,Asia South,1.0]:
-      Value: -7.105427357601002e-15
+      Value: 32.69090909090909
     Q[gPE1,Asia South,2.0]:
-      Value: 39.00000000000001
+      Value: 39
     Q[gPE1,Asia South,3.0]:
       Value: 42
-    Q[gPE2,Asia North,1.0]:
-      Value: 10.000000000000005
     Q[gPE2,Asia North,2.0]:
       Value: 40
-    Q[gPE2,Asia South,1.0]:
-      Value: -7.105427357601002e-15
     Q[gPE2,Asia South,2.0]:
-      Value: 40.00000000000001
+      Value: 40
     Q[gPE2,Asia South,3.0]:
       Value: 40
-    Q[gPE3,Asia North,1.0]:
-      Value: 10.000000000000005
-    Q[gPE3,Asia South,1.0]:
-      Value: -7.105427357601002e-15
     Q[gPE3,Asia South,2.0]:
-      Value: 41
+      Value: 43
     Q[gPP1,Asia North,2.0]:
       Value: 46
     Q[gPP1,Asia South,3.0]:
       Value: 46
-    Q[gPP2,Asia North,1.0]:
-      Value: 10.000000000000005
     Q[gPP2,Asia North,2.0]:
       Value: 45
-    Q[gPP2,Asia South,1.0]:
-      Value: -7.105427357601002e-15
     Q[gPP2,Asia South,2.0]:
-      Value: 46.00000000000001
+      Value: 46
     Q[gPP2,Asia South,3.0]:
       Value: 45
-    Q[gPP3,Asia North,1.0]:
-      Value: 10.000000000000005
-    Q[gPP3,Asia South,1.0]:
-      Value: -5.329070518200751e-15
     Q[gPP3,Asia South,2.0]:
-      Value: 44.00000000000001
-    Q[gXLPE1,Asia North,1.0]:
-      Value: -4.440892098500626e-16
-    Q[gXLPE1,Asia South,1.0]:
-      Value: 1.0000000000000004
+      Value: 44
     Q[gXLPE1,Asia South,2.0]:
       Value: 22.5
-    Q[gXLPE2,Asia South,1.0]:
-      Value: 2
     Q[gXLPE2,Asia South,3.0]:
-      Value: 30.000000000000007
-    S[Ethane,2.0]:
-      Value: 2.842170943040401e-14
-    S[Ethane,3.0]:
+      Value: 30
+    S[Ethane,1.0]:
       Value: -2.842170943040401e-14
-    S[Ethane,5.0]:
+    S[Ethane,3.0]:
       Value: 2.842170943040401e-14
+    S[Ethane,4.0]:
+      Value: -1.9539925233402755e-14
     S[Ethylene,6.0]:
       Value: 171
-    S[Fuel Gas,4.0]:
-      Value: -7.105427357601002e-15
+    S[Fuel Gas,3.0]:
+      Value: -3.552713678800501e-15
+    S[Fuel Gas,5.0]:
+      Value: 7.105427357601002e-15
     S[Fuel Gas,6.0]:
       Value: -3.552713678800501e-15
+    S[Propylene,1.0]:
+      Value: 1.4210854715202004e-14
+    S[Propylene,2.0]:
+      Value: -2.1316282072803006e-14
     S[Propylene,3.0]:
-      Value: -1.4210854715202004e-14
+      Value: 1.4210854715202004e-14
+    S[Propylene,4.0]:
+      Value: 3.552713678800501e-15
     S[Propylene,5.0]:
-      Value: -8.881784197001252e-16
+      Value: -1.7763568394002505e-15
     Y[gLDPE1,ldpe1,1.0]:
       Value: 1
     Y[gLDPE1,ldpe1,3.0]:
@@ -880,51 +968,57 @@ Solution:
       Value: 1
     Y[gLDPE2,ldpe1,5.0]:
       Value: 1
-    Y[gPE1,pe2,1.0]:
+    Y[gPE1,pe3,4.0]:
       Value: 1
     Y[gPE1,pe4,1.0]:
       Value: 1
-    Y[gPE1,pe5,1.0]:
+    Y[gPE1,pe4,2.0]:
+      Value: 1
+    Y[gPE1,pe5,5.0]:
       Value: 1
     Y[gPE2,pe1,2.0]:
       Value: 1
-    Y[gPE2,pe1,5.0]:
-      Value: 1
-    Y[gPE2,pe3,1.0]:
-      Value: 1
-    Y[gPE2,pe3,4.0]:
-      Value: 1
-    Y[gPE2,pe4,3.0]:
+    Y[gPE2,pe4,5.0]:
       Value: 1
     Y[gPE2,pe5,1.0]:
       Value: 1
+    Y[gPE2,pe5,3.0]:
+      Value: 1
     Y[gPE3,pe1,1.0]:
+      Value: 1
+    Y[gPE3,pe2,4.0]:
       Value: 1
     Y[gPP1,pp1,1.0]:
       Value: 1
-    Y[gPP1,pp1,2.0]:
-      Value: 1
     Y[gPP1,pp1,5.0]:
       Value: 1
-    Y[gPP1,pp3,1.0]:
+    Y[gPP1,pp2,3.0]:
+      Value: 1
+    Y[gPP1,pp3,2.0]:
+      Value: 1
+    Y[gPP2,pp1,1.0]:
       Value: 1
     Y[gPP2,pp1,2.0]:
       Value: 1
-    Y[gPP2,pp2,3.0]:
+    Y[gPP2,pp1,3.0]:
       Value: 1
-    Y[gPP2,pp2,4.0]:
+    Y[gPP2,pp1,4.0]:
       Value: 1
+    Y[gPP2,pp1,5.0]:
+      Value: 0.9999999999999996
     Y[gPP2,pp3,1.0]:
       Value: 1
     Y[gPP2,pp3,2.0]:
-      Value: 0.9999999999999968
+      Value: 1
     Y[gPP2,pp4,1.0]:
       Value: 1
     Y[gPP3,pp2,1.0]:
       Value: 1
     Y[gPP3,pp2,2.0]:
       Value: 1
-    Y[gPP3,pp3,2.0]:
+    Y[gPP3,pp2,3.0]:
+      Value: 1
+    Y[gPP3,pp3,4.0]:
       Value: 1
     Y[gXLPE1,xlpe1,1.0]:
       Value: 1
@@ -937,7 +1031,7 @@ Solution:
     Y[gXLPE2,xlpe1,1.0]:
       Value: 1
     Y[gXLPE2,xlpe1,2.0]:
-      Value: 1.0000000000000002
+      Value: 1
     Y[gXLPE2,xlpe1,3.0]:
       Value: 1
     Y[gXLPE2,xlpe1,4.0]:

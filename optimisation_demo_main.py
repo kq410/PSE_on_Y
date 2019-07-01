@@ -140,7 +140,7 @@ def main():
     fcon.constraint_definition(PSE_model)
 
     # set up the model
-    opt = SolverFactory('cbc')
+    opt = SolverFactory('cplex')
     #opt.options['mipgap'] = 0.001
     #opt.options['threads'] = 0
 

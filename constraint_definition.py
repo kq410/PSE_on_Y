@@ -54,7 +54,14 @@ def constraint_definition(model):
         at the plant site
         """
         if t == 1:
-            return pyo.Constraint.Skip
+            return \
+            model.IC[m, t] == model.IC_ini_level[m] \
+                    + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
+                    for i in model.i for mp in model.m) \
+                    - sum(model.PM[i, m, t] for i in model.i) \
+                    + model.PU[m, t] - model.S[m, t]  \
+                    - sum(model.n[m, g] * model.PP[g, j, t] \
+                    for g in model.g for j in model.j)
         return \
         model.IC[m, t] == model.IC[m, t-1] \
                 + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
@@ -71,13 +78,13 @@ def constraint_definition(model):
         """
         if h == hsetlist[0] and t == 1:
             return \
-            model.IH[g, h, t] >= sum(model.Q[g, hp, t]
-            for hp in model.h if hp != h) + sum(model.QC[c, g, h, t]
+            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.Q[g, hp, t]
+            for hp in model.h if hp != h) - sum(model.QC[c, g, h, t]
             for c in model.c)
 
         elif h != hsetlist[0] and t == 1:
             return \
-            model.IH[g, h, t] >= sum(model.QC[c, g, h, t]
+            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.QC[c, g, h, t]
             for c in model.c)
 
         elif h == hsetlist[0] and 1 < t and t <= model.LT[h]:
@@ -85,7 +92,7 @@ def constraint_definition(model):
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
             - sum(model.QC[c, g, h, t] for c in model.c)
-            
+
         elif h != hsetlist[0] and 1 < t and t <= model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \

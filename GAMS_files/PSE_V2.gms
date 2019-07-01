@@ -104,13 +104,10 @@ Variables
 
          PO.up(i,t) = p_max(i);
          PO.lo(i,t) = p_min(i);
-         IC.fx(m,'1') = IC_ini_level(m);
          IC.up(m,t) = IC_upper(m);
-         IH.fx(g,h,'1') = IH_low(g,h);
-         IH.lo(g,h,t) = IH_low(g,h);
-         S.fx(m,'1') = 0;
 
-*Q.fx(g,h,t)$(ord(t) le 1) = 0;
+         IH.lo(g,h,t) = IH_low(g,h);
+
          Q.fx(g,h,t)$(ord(h) = 1) = 0;
 
          QC.fx(c,g,h,t)$(not HC(h,c)) = 0;
@@ -122,11 +119,17 @@ Equations
          max_amount maximal amount produced by each polymer reactor
          sum_amount sum amount of each polymer reactor j
          product_capacity capacity of each i must be maintained
-         olefin_inv inventory for olefins
-         grade_inv  inventory for grades
+         olefin_inv1 inventory for olefins
+         olefin_inv2
+
+         grade_inv1  inventory for grades
+         grade_inv2
+         grade_inv3
 
 *$ontext
-         IHP_inv    inventory for each IHP location
+         IHP_inv1    inventory for each IHP location
+         IHP_inv2
+         IHP_inv3
          demand_con demand constraints
 
 *$offtext
@@ -151,21 +154,46 @@ Equations
 
          product_capacity(i,t).. sum(m, PM(i,m,t)) =E= PO(i,t);
 
-         olefin_inv(m,t-1).. IC(m,t) =E= IC(m,t-1)
+         olefin_inv1(m,t)$(ord(t) > 1).. IC(m,t) =E= IC(m,t-1)
                              + sum((i,mp), miu(i,mp,m)*PM(i,mp,t))
                              - sum(i, PM(i,m,t))
                              + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP(g,j,t));
 
 
-         grade_inv(g,h,t-LT(h))$(ord(h) = 1).. IH(g,h,t) =E=
+         olefin_inv2(m,t)$(ord(t) = 1).. IC(m,t) =E= IC_ini_level(m)
+                             + sum((i,mp), miu(i,mp,m)*PM(i,mp,t))
+                             - sum(i, PM(i,m,t))
+                             + PU(m,t) - S(m,t) - sum((g,j), n(m,g)*PP(g,j,t));
+
+
+         grade_inv1(g,h,t)$(ord(h) = 1 and ord(t) > LT(h)).. IH(g,h,t) =E=
                              IH(g,h,t-1) + sum(j, PP(g,j,t-LT(h)))
                              - sum(hp $(ord(hp) ne ord(h)), Q(g,hp,t))
                              - sum(c, QC(c,g,h,t));
 
+
+         grade_inv2(g,h,t)$((ord(h) = 1) and (ord(t) le LT(h)) and (ord(t) > 1))
+                             .. IH(g,h,t) =E= IH(g,h,t-1)
+                             - sum(hp $(ord(hp) ne ord(h)), Q(g,hp,t))
+                             - sum(c, QC(c,g,h,t));
+
+         grade_inv3(g,h,t)$(ord(h) = 1 and ord(t) = 1).. IH(g,h,t) =E=
+                               IH_low(g,h)
+                             - sum(hp $(ord(hp) ne ord(h)), Q(g,hp,t))
+                             - sum(c, QC(c,g,h,t));
+
 *$ontext
-         IHP_inv(g,h,t-LT(h))$(ord(h) > 1).. IH(g,h,t) =E= IH(g,h,t-1)
+         IHP_inv1(g,h,t)$(ord(h) > 1 and ord(t) > LT(h)).. IH(g,h,t) =E=
+                                    IH(g,h,t-1)
                                   + Q(g, h,t-LT(h))
                                   - sum(c, QC(c,g,h,t));
+
+         IHP_inv2(g,h,t)$(ord(h) > 1 and (ord(t) le LT(h)) and (ord(t) > 1))..
+                                  IH(g,h,t) =E= IH(g,h,t-1)
+                                  - sum(c, QC(c,g,h,t));
+
+         IHP_inv3(g,h,t)$(ord(h) > 1 and ord(t) = 1).. IH(g,h,t) =E=
+                                  IH_low(g,h) - sum(c, QC(c,g,h,t));
 
 
          demand_con(g,c,t).. sum(h, QC(c,g,h,t)) =L= D(c,g,t);
