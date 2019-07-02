@@ -6,7 +6,6 @@
 # Import nccessary packages
 import xlrd
 
-
 class SetInput():
     """
     This is an object that initialise the input sets
@@ -25,7 +24,7 @@ class ParaFixedInput():
     This is an object that initialise the fixed parameters
     """
     def __init__(self, p_min, p_max, PR, tao, miu, n, LT, IC_low, IH_low,
-    IC_upper, HC):
+    IC_upper, HC, PU_max, PU_min, S_max, S_min, FL_max, FL_min, IM, GJ):
         self.p_min = p_min
         self.p_max = p_max
         self.PR = PR
@@ -37,14 +36,23 @@ class ParaFixedInput():
         self.IH_low = IH_low
         self.IC_upper = IC_upper
         self.HC = HC
+        self.PU_max = PU_max
+        self.PU_min = PU_min
+        self.S_max = S_max
+        self.S_min = S_min
+        self.FL_max = FL_max
+        self.FL_min = FL_min
+        self.IM = IM
+        self.GJ = GJ
+
 
 class ParaVarInput():
     """
     This is an object that initialise the varying parameters
     """
-    def __init__(self, f, phi, D, SP, SO, PC, OC, OP,
-    IC_ini_level, S_ini_level):
-        self.f = f
+    def __init__(self, delta, phi, D, SP, SO, PC, OC, OP,
+    IC_ini_level, pie, Qtil):
+        self.delta = delta
         self.phi = phi
         self.D = D
         self.SP = SP
@@ -53,7 +61,9 @@ class ParaVarInput():
         self.OC = OC
         self.OP = OP
         self.IC_ini_level = IC_ini_level
-        self.S_ini_level = S_ini_level
+        self.pie = pie
+        self.Qtil = Qtil
+
 
 def result_data_load(optimisation_model, var_list):
     """
