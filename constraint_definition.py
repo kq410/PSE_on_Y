@@ -12,13 +12,16 @@ def constraint_definition(model):
         This constraint defines the objective function
         """
         return \
-          sum (model.QC[c, g, h, t] * model.SP[c, g, t] for g in model.g \
-          for c in model.c for h in model.h for t in model.t) \
+          sum (model.QC[g, c, t] * model.SP[c, g, t] for g in model.g \
+          for c in model.c for t in model.t) \
         + sum(model.S[m, t] * model.SO[m, t] for m in model.m for t in model.t)\
         - sum(model.PU[m, t] * model.PC[m,t] for m in model.m for t in model.t)\
-        - sum(model.PO[i, t] * model.OC[i] for i in model.i for t in model.t) \
-        - sum(model.PP[g, j, t] * model.OP[g, j] for g in model.g \
-          for j in model.j for t in model.t)
+        - sum(model.PM[i, m, t] * model.OC[i] for i in model.i
+        for m in model.m for t in model.t) \
+        - sum(model.PP[g, j, t] * model.OP[g, j] for g in model.g
+          for j in model.j for t in model.t) \
+        - sum(model.pie[c] * model.dell[c, g, t] for c in model.c
+        for g in model.g for t in model.t)
 
 
     def constraint_rule_1(model, g, j, t):
@@ -26,17 +29,22 @@ def constraint_definition(model):
         This constraint defines the minimal amount
         produced by each polymer plant
         """
-        return \
-        model.PP[g, j, t] >= model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
+        if model.GJ[g, j] != 1:
+            return pyo.Constraint.Skip
+        return model.PP[g, j, t] >= \
+            model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
+
+
 
     def constraint_rule_2(model, g, j, t):
         """
         This function defines the maximal amount
         produced by each polymer plant
         """
-        return \
-        model.PP[g, j, t] <= model.PR[g, j] * model.Y[g, j, t] \
-                           * model.f[t] * model.phi[j, t]
+        if model.GJ[g, j] != 1:
+            return pyo.Constraint.Skip
+        return model.PP[g, j, t] <= \
+            model.PR[g, j] * model.Y[g, j, t] * model.delta[t] * model.phi[j, t]
 
     def constraint_rule_3(model, j, t):
         """
@@ -46,7 +54,7 @@ def constraint_definition(model):
         return \
         sum(model.PP[g, j, t]/model.PR[g, j]
         for g in model.g if model.PR[g, j] != 0) <= \
-        model.f[t] * model.phi[j, t]
+        model.delta[t] * model.phi[j, t]
 
     def constraint_rule_4(model, m, t):
         """
@@ -56,20 +64,20 @@ def constraint_definition(model):
         if t == 1:
             return \
             model.IC[m, t] == model.IC_ini_level[m] \
-                    + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
-                    for i in model.i for mp in model.m) \
-                    - sum(model.PM[i, m, t] for i in model.i) \
-                    + model.PU[m, t] - model.S[m, t]  \
-                    - sum(model.n[m, g] * model.PP[g, j, t] \
-                    for g in model.g for j in model.j)
-        return \
-        model.IC[m, t] == model.IC[m, t-1] \
                 + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
-                for i in model.i for mp in model.m) \
+                for i in model.i for mp in model.m if model.IM[i, mp] == 1) \
                 - sum(model.PM[i, m, t] for i in model.i) \
                 + model.PU[m, t] - model.S[m, t]  \
                 - sum(model.n[m, g] * model.PP[g, j, t] \
-                for g in model.g for j in model.j)
+                for g in model.g for j in model.j if model.GJ[g, j] == 1)
+        return \
+        model.IC[m, t] == model.IC[m, t-1] \
+                + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
+                for i in model.i for mp in model.m if model.IM[i, mp] == 1) \
+                - sum(model.PM[i, m, t] for i in model.i) \
+                + model.PU[m, t] - model.S[m, t]  \
+                - sum(model.n[m, g] * model.PP[g, j, t] \
+                for g in model.g for j in model.j if model.GJ[g, j] == 1)
 
     def constraint_rule_5(model, g, h, t):
         """
@@ -79,55 +87,44 @@ def constraint_definition(model):
         if h == hsetlist[0] and t == 1:
             return \
             model.IH[g, h, t] == model.IH_low[g, h] - sum(model.Q[g, hp, t]
-            for hp in model.h if hp != h) - sum(model.QC[c, g, h, t]
-            for c in model.c)
+            for hp in model.h if hp != h) - sum(model.QC[g, c, t]
+            for c in model.c if model.HC[h, c] == 1)
 
         elif h != hsetlist[0] and t == 1:
             return \
-            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.QC[c, g, h, t]
-            for c in model.c)
+            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.QC[g, c, t]
+            for c in model.c if model.HC[h, c] == 1)
 
         elif h == hsetlist[0] and 1 < t and t <= model.LT[h]:
             return\
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
-            - sum(model.QC[c, g, h, t] for c in model.c)
+            - sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1)
 
         elif h != hsetlist[0] and 1 < t and t <= model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
-            - sum(model.QC[c, g, h, t] for c in model.c)
+            - sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1)
 
         elif h == hsetlist[0] and t > model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + sum(model.PP[g, j, t-model.LT[h]] for j in model.j) \
             - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
-            - sum(model.QC[c, g, h, t] for c in model.c) \
+            - sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1) \
 
         elif h != hsetlist[0] and t > model.LT[h]:
             return \
             model.IH[g, h, t] == model.IH[g, h, t-1] \
             + model.Q[g, h, t-model.LT[h]] \
-            - sum(model.QC[c, g, h, t] for c in model.c)
+            - sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1)
 
 
     def constraint_rule_6(model, g, c, t):
         """
         This constraint specifies the maximum demand that cannot be exceeded
         """
-        return \
-        sum(model.QC[c, g, h, t] for h in model.h) <= model.D[c, g, t]
-
-
-    def constraint_rule_7(model, i, t):
-        """
-        This constraint connects PM(i,m,t) with the capacity of the monomer
-        plants PO(i,t)
-        """
-        return \
-        sum(model.PM[i, m, t] for m in model.m) == model.PO[i, t]
-
+        return model.QC[g, c, t] == model.D[c, g, t] - model.dell[c, g, t]
 
 
     model.objective_function = pyo.Objective(
@@ -164,9 +161,4 @@ def constraint_definition(model):
     model.constraint6 = pyo.Constraint(
                         model.g, model.c, model.t, rule = constraint_rule_6,
                         doc = 'refer to constraint_rule_6'
-                        )
-
-    model.constraint7 = pyo.Constraint(
-                        model.i, model.t, rule = constraint_rule_7,
-                        doc = 'refer to constraint_rule_7'
                         )

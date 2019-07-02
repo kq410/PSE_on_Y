@@ -28,33 +28,40 @@ def data_construction(file_name):
 
     # load the parameters for the production of olefins
     p_min = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (5, 'C'), (6, 'H'), (0, 1))
+                'ProductionOlefins', (13, 'C'), (19, 'K'), (1, 1))
 
     p_max = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (10, 'C'), (11, 'H'), (0, 1))
+                'ProductionOlefins', (4, 'C'), (10, 'H'), (1, 1))
 
     OC = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (15, 'C'), (16, 'H'), (0, 1))
+                'ProductionOlefins', (22, 'C'), (23, 'H'), (0, 1))
 
     miu = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (22, 'C'), (70, 'L'), (2, 1))
+                'ProductionOlefins', (27, 'C'), (75, 'L'), (2, 1))
 
     IC_upper = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (74, 'C'), (75, 'J'), (0, 1))
+                'ProductionOlefins', (78, 'C'), (79, 'J'), (0, 1))
+
+    IC_low = faux.read_par_from_excel(file_name,
+                'ProductionOlefins', (83, 'C'), (84, 'J'), (0, 1))
+
+    IC_ini_level = faux.read_par_from_excel(file_name,
+                'ProductionOlefins', (88, 'C'), (89, 'J'), (0, 1))
+
 
 
     # load the parameters for the production of polyolefins
     PR = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (4, 'D'), (14, 'O'), (1, 1))
+                'ProductionPolyolefins', (4, 'C'), (14, 'N'), (1, 1))
 
     tao = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (18, 'D'), (28, 'O'), (1, 1))
+                'ProductionPolyolefins', (18, 'C'), (28, 'N'), (1, 1))
 
     n = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (32, 'D'), (37, 'N'), (1, 1))
+                'ProductionPolyolefins', (32, 'C'), (37, 'M'), (1, 1))
 
     OP = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (47, 'D'), (57, 'O'), (1, 1))
+                'ProductionPolyolefins', (47, 'C'), (57, 'N'), (1, 1))
 
 
     # Load the parameters for the warehouse shipping
@@ -65,11 +72,11 @@ def data_construction(file_name):
                 'WarehousesShipping', (9, 'C'), (19, 'F'), (1, 1))
 
     # Load the parameters for availability scenarios
-    f = faux.read_par_from_excel(file_name,
-                'ScenarioAvailability', (15, 'D'), (16, 'I'), (0, 1))
+    delta = faux.read_par_from_excel(file_name,
+                'ScenarioAvailability', (4, 'D'), (5, 'I'), (0, 1))
 
     phi = faux.read_par_from_excel(file_name,
-                'ScenarioAvailability', (19, 'D'), (30, 'J'), (1, 1))
+                'ScenarioAvailability', (8, 'D'), (19, 'J'), (1, 1))
 
 
     # Load the parameters for sales scenarios
@@ -82,34 +89,63 @@ def data_construction(file_name):
     SO = faux.read_par_from_excel(file_name,
                 'ScenarioSales', (137, 'D'), (145, 'J'), (1, 1))
 
-    # Loead the parameters for purchases scenarios
+    # Load the parameters for purchases scenarios
     PC = faux.read_par_from_excel(file_name,
-                'ScenarioPurchases', (26, 'D'), (34, 'J'), (1, 1))
+                'ScenarioPurchases', (5, 'D'), (13, 'J'), (1, 1))
 
-    IC_ini_level = faux.read_par_from_excel(file_name,
-                'ScenarioPurchases', (38, 'D'), (39, 'K'), (0, 1))
+    PU_max = faux.read_par_from_excel(file_name,
+                'ScenarioPurchases', (16, 'D'), (17, 'K'), (0, 1))
+
+    PU_min = faux.read_par_from_excel(file_name,
+                'ScenarioPurchases', (20, 'D'), (21, 'K'), (0, 1))
 
 
-    # initialise HC
-    HCYES = faux.read_par_from_excel(file_name,
+    # Load the additional parameters
+
+    IH_upper = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (3, 'C'), (13, 'F'), (1, 1))
+
+    pie = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (16, 'C'), (17, 'H'), (0, 1))
+
+    S_max = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (21, 'C'), (22, 'J'), (0, 1))
+
+    S_min = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (26, 'C'), (27, 'J'), (0, 1))
+
+    FL_max = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (31, 'C'), (32, 'J'), (0, 1))
+
+    FL_min = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (36, 'C'), (37, 'J'), (0, 1))
+
+    Qtil = faux.read_par_from_excel(file_name,
+                'AdditionalParameters', (41, 'C'), (71, 'J'), (2, 1))
+
+    # initialise set mapping
+    HC = faux.read_par_from_excel(file_name,
                 'set', (25, 'E'), (28, 'K'), (1, 1))
 
-    HC = {keys : 1 if values == 'yes' else 0
-          for keys, values in HCYES.items()}
+    IM = faux.read_par_from_excel(file_name,
+                'set', (31, 'E'), (37, 'M'), (1, 1))
+
+    GJ = faux.read_par_from_excel(file_name,
+                'set', (40, 'E'), (50, 'P'), (1, 1))
+
 
     # Initialise other parameters
-    IC_low = {
-    material : 0 for material in m
-    }
+
     S_ini_level = {
     material : 0 for material in m
     }
 
-    fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu,
-                                    n, LT, IC_low, IH_low, IC_upper, HC)
+    fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu, n, LT,
+    IC_low, IH_low, IC_upper, IH_upper, HC, PU_max, PU_min, S_max, S_min,
+    FL_max, FL_min, IM, GJ)
 
-    variable_par = faux.ParaVarInput(f, phi, D, SP, SO, PC, OC, OP,
-                                     IC_ini_level, S_ini_level)
+    variable_par = faux.ParaVarInput(delta, phi, D, SP, SO, PC, OC, OP,
+    IC_ini_level, pie, Qtil)
 
     return set_input, fixed_var, variable_par
 
@@ -123,10 +159,9 @@ def main():
     PSE_model = ConcreteModel()
 
     # get the data input as objects
-    Excel_file = 'Borouge_Data_Scott_Demo.xlsx'
+    Excel_file = 'Borouge_Data_Final_PYTHON.xlsx'
     set_input, fixed_par, variable_par = data_construction(Excel_file)
-    #print(fixed_par.IH_low)
-    #print(variable_par.SP)
+
     # set initialisation
     fset.set_initialisation(PSE_model, set_input)
 
@@ -152,7 +187,7 @@ def main():
 
     # for m in PSE_model.m:
     #     for t in PSE_model.t:
-    print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
+    '''print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
     for g in PSE_model.g for c in PSE_model.c
     for h in PSE_model.h for t in PSE_model.t))
     print(sum(PSE_model.S[m, t].value * PSE_model.SO[m, t]
@@ -164,7 +199,7 @@ def main():
     for h in PSE_model.h for t in PSE_model.t))
 
     print(sum(PSE_model.tao[g, j]
-                for g in PSE_model.g for j in PSE_model.j))
+                for g in PSE_model.g for j in PSE_model.j))'''
     #total_Psale = PSE_model.QC#['KSC (UAE)', 'gPE1', 'UAE', '3'].value
     # total_Psale = sum (
     # PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t].value \
