@@ -140,9 +140,9 @@ def data_construction(file_name):
     material : 0 for material in m
     }
 
-    fixed_var = faux.ParaFixedInput(self, p_min, p_max, PR, tao, miu, n, LT,
-    IC_low, IH_low, IC_upper, HC, PU_max, PU_min, S_max, S_min, FL_max,
-    FL_min, IM, GJ)
+    fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu, n, LT,
+    IC_low, IH_low, IC_upper, IH_upper, HC, PU_max, PU_min, S_max, S_min,
+    FL_max, FL_min, IM, GJ)
 
     variable_par = faux.ParaVarInput(delta, phi, D, SP, SO, PC, OC, OP,
     IC_ini_level, pie, Qtil)
@@ -187,7 +187,7 @@ def main():
 
     # for m in PSE_model.m:
     #     for t in PSE_model.t:
-    print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
+    '''print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
     for g in PSE_model.g for c in PSE_model.c
     for h in PSE_model.h for t in PSE_model.t))
     print(sum(PSE_model.S[m, t].value * PSE_model.SO[m, t]
@@ -199,7 +199,7 @@ def main():
     for h in PSE_model.h for t in PSE_model.t))
 
     print(sum(PSE_model.tao[g, j]
-                for g in PSE_model.g for j in PSE_model.j))
+                for g in PSE_model.g for j in PSE_model.j))'''
     #total_Psale = PSE_model.QC#['KSC (UAE)', 'gPE1', 'UAE', '3'].value
     # total_Psale = sum (
     # PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t].value \

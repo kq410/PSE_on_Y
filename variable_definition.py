@@ -15,13 +15,15 @@ def variable_initialisation(optimisation_model):
         if optimisation_model.IM[i, m] == 1:
             return (optimisation_model.p_min[i, m]*optimisation_model.delta[t],
             optimisation_model.p_max[i, m] * optimisation_model.delta[t])
+        else:
+            return (None, None)
 
     def Sbounds(optimisation_model, m, t):
         """
         This function defines the bounds for the sale of m
         """
-        return (optimisation_model.S_max[m] * optimisation_model.delta[t],
-        optimisation_model.S_min[m] * optimisation_model.delta[t])
+        return (optimisation_model.S_min[m] * optimisation_model.delta[t],
+        optimisation_model.S_max[m] * optimisation_model.delta[t])
 
     def FLbounds(optimisation_model, m, t):
         """
@@ -124,7 +126,7 @@ def variable_initialisation(optimisation_model):
                             doc = 'amount of material m flared at period t'
                             )
 
-    optimisation_model.del = pyo.Var(
+    optimisation_model.dell = pyo.Var(
                             optimisation_model.c, optimisation_model.g,
                             optimisation_model.t,
                             within = pyo.NonNegativeReals,

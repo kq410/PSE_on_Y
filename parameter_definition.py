@@ -32,7 +32,7 @@ def parameter_initialisation(optimisation_model,
 
     optimisation_model.delta = pyo.Param(
                            optimisation_model.t,
-                           initialize = var_par_input.f,
+                           initialize = var_par_input.delta,
                            doc = 'length of time period t'
                            )
 
@@ -144,31 +144,31 @@ def parameter_initialisation(optimisation_model,
 
     optimisation_model.pie = pyo.Param(
                         optimisation_model.c,
-                        initialize = var_par_input.pie
+                        initialize = var_par_input.pie,
                         doc = 'penalty cost for demand not satisfied for c'
     )
 
     optimisation_model.S_max = pyo.Param(
                         optimisation_model.m,
-                        initialize = fixed_par_input.S_max
+                        initialize = fixed_par_input.S_max,
                         doc = 'maximum sale rate per day of material m'
     )
 
     optimisation_model.S_min = pyo.Param(
                         optimisation_model.m,
-                        initialize = fixed_par_input.S_min
+                        initialize = fixed_par_input.S_min,
                         doc = 'minimum sale rate per day of material m'
     )
 
     optimisation_model.FL_max = pyo.Param(
                         optimisation_model.m,
-                        initialize = fixed_par_input.FL_max
+                        initialize = fixed_par_input.FL_max,
                         doc = 'maximum flare rate per day of material m'
     )
 
     optimisation_model.FL_min = pyo.Param(
                         optimisation_model.m,
-                        initialize = fixed_par_input.FL_min
+                        initialize = fixed_par_input.FL_min,
                         doc = 'minimum flare rate per day of material m'
     )
 

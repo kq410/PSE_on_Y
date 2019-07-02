@@ -24,7 +24,8 @@ class ParaFixedInput():
     This is an object that initialise the fixed parameters
     """
     def __init__(self, p_min, p_max, PR, tao, miu, n, LT, IC_low, IH_low,
-    IC_upper, HC, PU_max, PU_min, S_max, S_min, FL_max, FL_min, IM, GJ):
+    IC_upper, IH_upper, HC, PU_max, PU_min, S_max, S_min,
+    FL_max, FL_min, IM, GJ):
         self.p_min = p_min
         self.p_max = p_max
         self.PR = PR
@@ -35,6 +36,7 @@ class ParaFixedInput():
         self.IC_low = IC_low
         self.IH_low = IH_low
         self.IC_upper = IC_upper
+        self.IH_upper = IH_upper
         self.HC = HC
         self.PU_max = PU_max
         self.PU_min = PU_min
