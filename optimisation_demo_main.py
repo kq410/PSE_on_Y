@@ -15,6 +15,7 @@ def data_construction(file_name):
     """
     This function constructs the input data object
     """
+    print('Loading data......')
     # load the sets
     i = faux.read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J'))
     j = faux.read_set_from_excel(file_name, 'set', (6, 'E'), (6, 'O'))
@@ -174,6 +175,8 @@ def main():
     # constraint initialisation
     fcon.constraint_definition(PSE_model)
 
+
+    print('Solving......')
     # set up the model
     opt = SolverFactory('cplex')
     #opt.options['mipgap'] = 0.001

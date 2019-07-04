@@ -126,6 +126,29 @@ def constraint_definition(model):
         """
         return model.QC[g, c, t] == model.D[c, g, t] - model.dell[c, g, t]
 
+    def auxiliary_rule_1(model, i, m, t):
+        """
+        This auxiliary rule defines the amount of monomers produced
+        """
+        return model.PM_produced[i, m, t] == \
+        sum(model.miu[i, mp, m] * model.PM[i, mp, t]
+        for i in model.i for mp in model.m if model.IM[i, mp] == 1)
+
+    def auxiliary_rule_2(model, g, j, t):
+        """This auxiliary rule defines the maximum amount of g can be
+        produced in plant j over t
+        """
+        return model.PP_max[g, j, t] == \
+        model.PR[g, j] * model.Y[g, j, t] * model.delta[t] * model.phi[j, t]
+
+    def auxiliary_rule_3(model, g, j, t):
+        """This auxiliary rule defines the minimum amount of g can be
+        produced in plant j over t
+        """
+        return model.PP_min[g, j, t] == \
+        model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
+
+    Print('Reading constraints and the objective function......')
 
     model.objective_function = pyo.Objective(
                                rule = objective_rule,
@@ -162,3 +185,18 @@ def constraint_definition(model):
                         model.g, model.c, model.t, rule = constraint_rule_6,
                         doc = 'refer to constraint_rule_6'
                         )
+
+    model.auxiliary1 = Pyo.Constraint(
+                       model.i, model.m, model.t, rule = auxiliary_rule_1,
+                       doc = 'refer to auxiliary_rule_1'
+                       )
+
+    model.auxiliary2 = Pyo.Constraint(
+                       model.g, model.j, model.t, rule = auxiliary_rule_2,
+                       doc = 'refer to auxiliary_rule_2'
+                       )
+
+    model.auxiliary3 = Pyo.Constraint(
+                       model.g, model.j, model.t, rule = auxiliary_rule_3,
+                       doc = 'refer to auxiliary_rule_3'
+                       )
