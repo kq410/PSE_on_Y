@@ -6,7 +6,7 @@ def parameter_initialisation(optimisation_model,
     This function takes the model input (optimisation_model) and the
     parameter input objects to initialise the model's parameters
     """
-    print('Reading parameters......')
+    print('Initialising model parameters......')
     optimisation_model.p_min = pyo.Param(
                                optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_min,

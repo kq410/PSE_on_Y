@@ -15,11 +15,11 @@ def data_construction(file_name):
     """
     This function constructs the input data object
     """
-    print('Loading data......')
+    print('Loading sets data......')
     # load the sets
     i = faux.read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J'))
     j = faux.read_set_from_excel(file_name, 'set', (6, 'E'), (6, 'O'))
-    t = faux.read_set_from_excel(file_name, 'set', (9, 'E'), (9, 'J'))
+    t = faux.read_set_from_excel(file_name, 'set', (9, 'E'), (9, 'P'))
     h = faux.read_set_from_excel(file_name, 'set', (12, 'E'), (3, 'G'))
     c = faux.read_set_from_excel(file_name, 'set', (15, 'E'), (15, 'J'))
     g = faux.read_set_from_excel(file_name, 'set', (18, 'E'), (18, 'N'))
@@ -27,6 +27,7 @@ def data_construction(file_name):
 
     set_input = faux.SetInput(i, j, g, t, m, c, h)
 
+    print('Loading olefin production data......')
     # load the parameters for the production of olefins
     p_min = faux.read_par_from_excel(file_name,
                 'ProductionOlefins', (13, 'C'), (19, 'K'), (1, 1))
@@ -50,7 +51,7 @@ def data_construction(file_name):
                 'ProductionOlefins', (88, 'C'), (89, 'J'), (0, 1))
 
 
-
+    print('Loading polymer production data......')
     # load the parameters for the production of polyolefins
     PR = faux.read_par_from_excel(file_name,
                 'ProductionPolyolefins', (4, 'C'), (14, 'N'), (1, 1))
@@ -65,6 +66,7 @@ def data_construction(file_name):
                 'ProductionPolyolefins', (47, 'C'), (57, 'N'), (1, 1))
 
 
+    print('Loading scenario data......')
     # Load the parameters for the warehouse shipping
     LT = faux.read_par_from_excel(file_name,
                 'WarehousesShipping', (5, 'C'), (6, 'E'), (0, 1))
@@ -74,25 +76,25 @@ def data_construction(file_name):
 
     # Load the parameters for availability scenarios
     delta = faux.read_par_from_excel(file_name,
-                'ScenarioAvailability', (4, 'D'), (5, 'I'), (0, 1))
+                'ScenarioAvailability', (4, 'D'), (5, 'O'), (0, 1))
 
     phi = faux.read_par_from_excel(file_name,
-                'ScenarioAvailability', (8, 'D'), (19, 'J'), (1, 1))
+                'ScenarioAvailability', (8, 'D'), (19, 'P'), (1, 1))
 
 
     # Load the parameters for sales scenarios
     D = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (7, 'D'), (67, 'K'), (2, 1))
+                'ScenarioSales', (7, 'D'), (67, 'Q'), (2, 1))
 
     SP = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (74, 'D'), (134, 'K'), (2, 1))
+                'ScenarioSales', (74, 'D'), (134, 'Q'), (2, 1))
 
     SO = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (137, 'D'), (145, 'J'), (1, 1))
+                'ScenarioSales', (137, 'D'), (145, 'P'), (1, 1))
 
     # Load the parameters for purchases scenarios
     PC = faux.read_par_from_excel(file_name,
-                'ScenarioPurchases', (5, 'D'), (13, 'J'), (1, 1))
+                'ScenarioPurchases', (5, 'D'), (13, 'P'), (1, 1))
 
     PU_max = faux.read_par_from_excel(file_name,
                 'ScenarioPurchases', (16, 'D'), (17, 'K'), (0, 1))
@@ -102,7 +104,7 @@ def data_construction(file_name):
 
 
     # Load the additional parameters
-
+    print('Loading additional data......')
     IH_upper = faux.read_par_from_excel(file_name,
                 'AdditionalParameters', (3, 'C'), (13, 'F'), (1, 1))
 
@@ -122,7 +124,7 @@ def data_construction(file_name):
                 'AdditionalParameters', (36, 'C'), (37, 'J'), (0, 1))
 
     Qtil = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (41, 'C'), (71, 'J'), (2, 1))
+                'AdditionalParameters', (41, 'C'), (71, 'P'), (2, 1))
 
     # initialise set mapping
     HC = faux.read_par_from_excel(file_name,
@@ -161,7 +163,7 @@ def main():
     PSE_model = ConcreteModel()
 
     # get the data input as objects
-    Excel_file = 'Borouge_Data_Final_PYTHON.xlsx'
+    Excel_file = 'Borouge_Data_12T_PYTHON.xlsx'
     set_input, fixed_par, variable_par = data_construction(Excel_file)
 
     # set initialisation
@@ -189,28 +191,5 @@ def main():
     PSE_model.solutions.store_to(results)
     results.write(filename = 'solution.yml')
 
-    # for m in PSE_model.m:
-    #     for t in PSE_model.t:
-    '''print(sum (PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t]
-    for g in PSE_model.g for c in PSE_model.c
-    for h in PSE_model.h for t in PSE_model.t))
-    print(sum(PSE_model.S[m, t].value * PSE_model.SO[m, t]
-        for m in PSE_model.m
-        for t in PSE_model.t))
-
-    print(sum (PSE_model.QC[c, g, h, t].value
-    for g in PSE_model.g for c in PSE_model.c
-    for h in PSE_model.h for t in PSE_model.t))
-
-    print(sum(PSE_model.tao[g, j]
-                for g in PSE_model.g for j in PSE_model.j))'''
-    #total_Psale = PSE_model.QC#['KSC (UAE)', 'gPE1', 'UAE', '3'].value
-    # total_Psale = sum (
-    # PSE_model.QC[c, g, h, t].value * PSE_model.SP[c, g, t].value \
-    # for g in PSE_model.g for c in PSE_model.c
-    # for h in PSE_model.h for t in PSE_model.t)
-    #print(total_Psale)
-    # result_dict = faux.result_data_load(PSE_model, ['PP'])
-    # print(result_dict)
 if __name__ == '__main__':
     main()

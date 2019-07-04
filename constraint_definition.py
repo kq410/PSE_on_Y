@@ -148,7 +148,7 @@ def constraint_definition(model):
         return model.PP_min[g, j, t] == \
         model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
 
-    print('Reading constraints and the objective function......')
+    print('Initialising model constraints and the objective function......')
 
     model.objective_function = pyo.Objective(
                                rule = objective_rule,

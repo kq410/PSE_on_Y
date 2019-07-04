@@ -62,7 +62,7 @@ def variable_initialisation(optimisation_model):
             optimisation_model.PP[g, j, t].fixed = True
             return 0
 
-    print('Reading variables......')
+    print('Initialising model variables......')
 
     optimisation_model.PM = pyo.Var(
                             optimisation_model.i, optimisation_model.m,
