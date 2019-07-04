@@ -148,7 +148,7 @@ def constraint_definition(model):
         return model.PP_min[g, j, t] == \
         model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
 
-    Print('Reading constraints and the objective function......')
+    print('Reading constraints and the objective function......')
 
     model.objective_function = pyo.Objective(
                                rule = objective_rule,
@@ -186,17 +186,17 @@ def constraint_definition(model):
                         doc = 'refer to constraint_rule_6'
                         )
 
-    model.auxiliary1 = Pyo.Constraint(
+    model.auxiliary1 = pyo.Constraint(
                        model.i, model.m, model.t, rule = auxiliary_rule_1,
                        doc = 'refer to auxiliary_rule_1'
                        )
 
-    model.auxiliary2 = Pyo.Constraint(
+    model.auxiliary2 = pyo.Constraint(
                        model.g, model.j, model.t, rule = auxiliary_rule_2,
                        doc = 'refer to auxiliary_rule_2'
                        )
 
-    model.auxiliary3 = Pyo.Constraint(
+    model.auxiliary3 = pyo.Constraint(
                        model.g, model.j, model.t, rule = auxiliary_rule_3,
                        doc = 'refer to auxiliary_rule_3'
                        )

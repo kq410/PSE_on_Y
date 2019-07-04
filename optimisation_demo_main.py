@@ -156,6 +156,7 @@ def main():
     This is the main function which calls all other functions to solve the
     optimisation model
     """
+    print('Start building the model......')
     # initialise the concreteModel
     PSE_model = ConcreteModel()
 
