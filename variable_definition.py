@@ -62,6 +62,8 @@ def variable_initialisation(optimisation_model):
             optimisation_model.PP[g, j, t].fixed = True
             return 0
 
+    print('Reading variables......')
+
     optimisation_model.PM = pyo.Var(
                             optimisation_model.i, optimisation_model.m,
                             optimisation_model.t,
@@ -138,3 +140,24 @@ def variable_initialisation(optimisation_model):
                            optimisation_model.t, within = pyo.Binary,
                            doc = 'supply of g from h to customer c at period t'
                            )
+
+    optimisation_model.PM_produced = pyo.Var(
+                            optimisation_model.i, optimisation_model.m,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'amount of monomers produced'
+                            )
+
+    optimisation_model.PP_max = pyo.Var(
+                            optimisation_model.g, optimisation_model.j,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'maximum amount of g produced in plant j in t'
+                            )
+
+    optimisation_model.PP_min = pyo.Var(
+                            optimisation_model.g, optimisation_model.j,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'minimum amount of g produced in plant j in t'
+                            )
