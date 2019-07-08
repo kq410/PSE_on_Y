@@ -6,14 +6,15 @@ def parameter_initialisation(optimisation_model,
     This function takes the model input (optimisation_model) and the
     parameter input objects to initialise the model's parameters
     """
+    print('Initialising model parameters......')
     optimisation_model.p_min = pyo.Param(
-                               optimisation_model.i,
+                               optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_min,
                                doc = 'minimum operation for plant i'
                                )
 
     optimisation_model.p_max = pyo.Param(
-                               optimisation_model.i,
+                               optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_max,
                                doc = 'maximum operation for plant i'
                                )
@@ -30,9 +31,9 @@ def parameter_initialisation(optimisation_model,
                              doc = 'minimum runtime for g to be produced in j'
                              )
 
-    optimisation_model.f = pyo.Param(
+    optimisation_model.delta = pyo.Param(
                            optimisation_model.t,
-                           initialize = var_par_input.f,
+                           initialize = var_par_input.delta,
                            doc = 'length of time period t'
                            )
 
@@ -117,22 +118,82 @@ def parameter_initialisation(optimisation_model,
                                 doc = 'lower bound for IHP inventory of g in h'
                                 )
 
+    optimisation_model.IH_upper = pyo.Param(
+                                  optimisation_model.g, optimisation_model.h,
+                                  initialize = fixed_par_input.IH_upper,
+                                  doc = 'upper bound for plant inventory of o'
+                                )
+
     optimisation_model.IC_ini_level = pyo.Param(
-                                optimisation_model.m,
-                                initialize = var_par_input.IC_ini_level,
-                                default = 0,
-                                doc = 'initial level of plant inventory of o'
+                                      optimisation_model.m,
+                                      initialize = var_par_input.IC_ini_level,
+                                      default = 0, doc = \
+                                      'initial level of plant inventory of m'
                                 )
 
+    optimisation_model.PU_max = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.PU_max,
+                        doc = 'maximum purchase rate of material m'
+    )
 
-    optimisation_model.S_ini_level = pyo.Param(
-                                optimisation_model.m,
-                                initialize = var_par_input.S_ini_level,
-                                doc = 'initial level of sale of product o'
-                                )
+    optimisation_model.PU_min = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.PU_min,
+                        doc = 'minimum purchase rate of material m'
+    )
+
+    optimisation_model.pie = pyo.Param(
+                        optimisation_model.c,
+                        initialize = var_par_input.pie,
+                        doc = 'penalty cost for demand not satisfied for c'
+    )
+
+    optimisation_model.S_max = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.S_max,
+                        doc = 'maximum sale rate per day of material m'
+    )
+
+    optimisation_model.S_min = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.S_min,
+                        doc = 'minimum sale rate per day of material m'
+    )
+
+    optimisation_model.FL_max = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.FL_max,
+                        doc = 'maximum flare rate per day of material m'
+    )
+
+    optimisation_model.FL_min = pyo.Param(
+                        optimisation_model.m,
+                        initialize = fixed_par_input.FL_min,
+                        doc = 'minimum flare rate per day of material m'
+    )
+
+    optimisation_model.Qtil = pyo.Param(
+                        optimisation_model.g, optimisation_model.h,
+                        optimisation_model.t,
+                        initialize = var_par_input.Qtil, doc = \
+    'amount of grade g that arrives at IHP h over t because of preceding order'
+    )
 
     optimisation_model.HC = pyo.Param(
                                 optimisation_model.h, optimisation_model.c,
                                 initialize = fixed_par_input.HC,
                                 doc = 'HC pair parameter'
+                                )
+
+    optimisation_model.IM = pyo.Param(
+                                optimisation_model.i, optimisation_model.m,
+                                initialize = fixed_par_input.IM,
+                                doc = 'IM pair parameter'
+                                )
+
+    optimisation_model.GJ = pyo.Param(
+                                optimisation_model.g, optimisation_model.j,
+                                initialize = fixed_par_input.GJ,
+                                doc = 'GJ pair parameter'
                                 )

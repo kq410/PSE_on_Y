@@ -8,12 +8,30 @@ def variable_initialisation(optimisation_model):
     # get the set of time period as a list
     hsetlist = list(optimisation_model.h)
 
-    def PObounds(optimisation_model, i, t):
+    def PMbounds(optimisation_model, i, m, t):
         """
         This function defines the bounds for PO(i)
         """
-        #return (20, 30)
-        return (optimisation_model.p_min[i], optimisation_model.p_max[i])
+        if optimisation_model.IM[i, m] == 1:
+            return (optimisation_model.p_min[i, m]*optimisation_model.delta[t],
+            optimisation_model.p_max[i, m] * optimisation_model.delta[t])
+        else:
+            return (None, None)
+
+    def Sbounds(optimisation_model, m, t):
+        """
+        This function defines the bounds for the sale of m
+        """
+        return (optimisation_model.S_min[m] * optimisation_model.delta[t],
+        optimisation_model.S_max[m] * optimisation_model.delta[t])
+
+    def FLbounds(optimisation_model, m, t):
+        """
+        This function defines the bounds for the flare of m
+        """
+        return (optimisation_model.FL_max[m] * optimisation_model.delta[t],
+        optimisation_model.FL_min[m] * optimisation_model.delta[t])
+
 
     def ICbounds(optimisation_model, m, t):
         """
@@ -25,40 +43,40 @@ def variable_initialisation(optimisation_model):
         """
         This function defines the bounds for IH
         """
-        return (optimisation_model.IH_low[g, h], None)
-        #return (optimisation_model.IH_low[g, h], None)
+        return (optimisation_model.IH_low[g, h],
+                optimisation_model.IH_upper[g, h])
 
-
-    def QCfx(optimisation_model, c, g, h, t):
-        """This function fix the QC value of any customer/region pairs
-        that is not feasible to zero
+    def Qfx(optimisation_model, g, h, t):
         """
-        if optimisation_model.HC[h, c] != 1:
-            optimisation_model.QC[c, g, h, t].fixed = True
+        This fix the Q value for ord(h) = 1 to zero
+        """
+        if h == hsetlist[0]:
+            optimisation_model.Q[g, h, t].fixed = True
             return 0
 
-        else:
-            return None
+    def PPfx(optimisation_model, g, j, t):
+        """
+        This fix the Q value for ord(h) = 1 to zero
+        """
+        if optimisation_model.GJ[g, j] != 1:
+            optimisation_model.PP[g, j, t].fixed = True
+            return 0
 
+    print('Initialising model variables......')
 
     optimisation_model.PM = pyo.Var(
                             optimisation_model.i, optimisation_model.m,
                             optimisation_model.t,
                             within = pyo.NonNegativeReals,
+                            bounds = PMbounds,
                             doc = 'amount of m consumed in unit i over t'
-                            )
-
-    optimisation_model.PO = pyo.Var(
-                            optimisation_model.i, optimisation_model.t,
-                            within = pyo.NonNegativeReals,
-                            bounds = PObounds,
-                            doc = 'production amount of plant i in period t'
                             )
 
     optimisation_model.PP = pyo.Var(
                             optimisation_model.g, optimisation_model.j,
                             optimisation_model.t,
                             within = pyo.NonNegativeReals,
+                            initialize = PPfx,
                             doc = 'amount of grade g produced in plant j in t'
                             )
 
@@ -77,13 +95,14 @@ def variable_initialisation(optimisation_model):
     optimisation_model.S = pyo.Var(
                            optimisation_model.m, optimisation_model.t,
                            within = pyo.NonNegativeReals,
+                           bounds = Sbounds,
                            doc = 'amount of olefin sold by export at period t'
                            )
-
 
     optimisation_model.Q = pyo.Var(
                            optimisation_model.g, optimisation_model.h,
                            optimisation_model.t, within = pyo.NonNegativeReals,
+                           initialize = Qfx,
                            doc = 'shipment of g from UAE to h at period t'
                            )
 
@@ -96,14 +115,49 @@ def variable_initialisation(optimisation_model):
                             )
 
     optimisation_model.QC = pyo.Var(
-                           optimisation_model.c, optimisation_model.g,
-                           optimisation_model.h, optimisation_model.t,
+                           optimisation_model.g, optimisation_model.c,
+                           optimisation_model.t,
                            within = pyo.NonNegativeReals,
-                           initialize = QCfx,
                            doc = 'supply of g from h to customer c at period t'
                            )
+
+    optimisation_model.FL = pyo.Var(
+                            optimisation_model.m, optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            bounds = FLbounds,
+                            doc = 'amount of material m flared at period t'
+                            )
+
+    optimisation_model.dell = pyo.Var(
+                            optimisation_model.c, optimisation_model.g,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'amount of g short for customer c over t'
+                            )
+
     optimisation_model.Y = pyo.Var(
                            optimisation_model.g, optimisation_model.j,
                            optimisation_model.t, within = pyo.Binary,
                            doc = 'supply of g from h to customer c at period t'
                            )
+
+    optimisation_model.PM_produced = pyo.Var(
+                            optimisation_model.i, optimisation_model.m,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'amount of monomers produced'
+                            )
+
+    optimisation_model.PP_max = pyo.Var(
+                            optimisation_model.g, optimisation_model.j,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'maximum amount of g produced in plant j in t'
+                            )
+
+    optimisation_model.PP_min = pyo.Var(
+                            optimisation_model.g, optimisation_model.j,
+                            optimisation_model.t,
+                            within = pyo.NonNegativeReals,
+                            doc = 'minimum amount of g produced in plant j in t'
+                            )
