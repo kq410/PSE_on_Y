@@ -1,4 +1,5 @@
 ## Import built packages ##
+import os
 import pandas as pd
 from pyomo.environ import *
 from pyomo.opt import SolverStatus, TerminationCondition
@@ -163,7 +164,8 @@ def main():
     PSE_model = ConcreteModel()
 
     # get the data input as objects
-    Excel_file = 'Borouge_Data_12T_PYTHON.xlsx'
+    workingDirectory = os.environ.get('PSE_BOROUGE_WORKING_DIR')
+    Excel_file = os.path.join(workingDirectory, 'Borouge_Data_Final_Demo.xlsm')
     set_input, fixed_par, variable_par = data_construction(Excel_file)
 
     # set initialisation
@@ -189,7 +191,10 @@ def main():
     symbolic_solver_labels = True)
 
     PSE_model.solutions.store_to(results)
-    results.write(filename = 'solution.yml')
+    results_file = os.path.join(workingDirectory, 'solution.yml')
+    #print(results_file)
+
+    results.write(filename = results_file)
 
 if __name__ == '__main__':
     main()
