@@ -161,9 +161,8 @@ def main():
     PSE_model = ConcreteModel()
 
     # get the data input as objects
-    #workingDirectory = os.environ.get('PSE_BOROUGE_WORKING_DIR')
-    Excel_file = 'Borouge_Data_Final_Demo.xlsm'
-    #os.path.join(workingDirectory, 'Borouge_Data_Final_Demo.xlsm')
+    workingDirectory = os.environ.get('PSE_BOROUGE_WORKING_DIR')
+    Excel_file = os.path.join(workingDirectory, 'Borouge_Data_Final_Demo.xlsm')
     set_input, fixed_par, variable_par = data_construction(Excel_file)
 
     print(fixed_par.p_max)
@@ -185,7 +184,7 @@ def main():
 
     print('Solving......')
     # set up the model
-    opt = SolverFactory('cplex')
+    opt = SolverFactory('CBC.exe')
     #opt.options['mipgap'] = 0.001
     #opt.options['threads'] = 0
 
@@ -193,7 +192,7 @@ def main():
     symbolic_solver_labels = True)
 
     PSE_model.solutions.store_to(results)
-    results_file = os.path.join('solution_fi.yml')
+    results_file = os.path.join(workingDirectory, 'solution_fi.yml')
     #print(results_file)
 
     results.write(filename = results_file)
