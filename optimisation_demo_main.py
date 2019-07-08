@@ -3,6 +3,8 @@ import os
 import pandas as pd
 from pyomo.environ import *
 from pyomo.opt import SolverStatus, TerminationCondition
+import getopt
+import sys
 
 ## Import model components ##
 import set_definition as fset
@@ -160,15 +162,18 @@ def main():
     # initialise the concreteModel
     PSE_model = ConcreteModel()
 
+    # get the input scenario
+    opts,args = getopt.gnu_getopt(sys.argv[1:], '', ['scenariofile='])
+    # process all the options
+    for opt,arg in opts :
+        if opt == '--scenariofile':
+            scenario_file = arg
+
     # get the data input as objects
     workingDirectory = os.environ.get('PSE_BOROUGE_WORKING_DIR')
-    Excel_file = os.path.join(workingDirectory, 'Borouge_Data_Final_Demo.xlsm')
+    Excel_file = os.path.join(workingDirectory, scenario_file)
     set_input, fixed_par, variable_par = data_construction(Excel_file)
 
-    print(fixed_par.p_max)
-    print(fixed_par.p_min)
-
-    #print(fixed_par.)
     # set initialisation
     fset.set_initialisation(PSE_model, set_input)
 
@@ -184,7 +189,7 @@ def main():
 
     print('Solving......')
     # set up the model
-    opt = SolverFactory('CBC.exe')
+    opt = SolverFactory('CBC')
     #opt.options['mipgap'] = 0.001
     #opt.options['threads'] = 0
 
@@ -192,7 +197,7 @@ def main():
     symbolic_solver_labels = True)
 
     PSE_model.solutions.store_to(results)
-    results_file = os.path.join(workingDirectory, 'solution_fi.yml')
+    results_file = os.path.join(workingDirectory, 'solution.yml')
     #print(results_file)
 
     results.write(filename = results_file)
