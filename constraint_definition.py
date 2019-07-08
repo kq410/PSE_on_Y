@@ -67,15 +67,15 @@ def constraint_definition(model):
                 + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
                 for i in model.i for mp in model.m if model.IM[i, mp] == 1) \
                 - sum(model.PM[i, m, t] for i in model.i) \
-                + model.PU[m, t] - model.S[m, t]  \
-                - sum(model.n[m, g] * model.PP[g, j, t] \
+                + model.PU[m, t] - model.S[m, t] - model.FL[m, t] \
+                - sum(model.n[m, g] * model.PP[g, j, t]\
                 for g in model.g for j in model.j if model.GJ[g, j] == 1)
         return \
         model.IC[m, t] == model.IC[m, t-1] \
                 + sum(model.miu[i, mp, m] * model.PM[i, mp, t] \
                 for i in model.i for mp in model.m if model.IM[i, mp] == 1) \
                 - sum(model.PM[i, m, t] for i in model.i) \
-                + model.PU[m, t] - model.S[m, t]  \
+                + model.PU[m, t] - model.S[m, t] - model.FL[m, t] \
                 - sum(model.n[m, g] * model.PP[g, j, t] \
                 for g in model.g for j in model.j if model.GJ[g, j] == 1)
 
