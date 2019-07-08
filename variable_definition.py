@@ -10,13 +10,11 @@ def variable_initialisation(optimisation_model):
 
     def PMbounds(optimisation_model, i, m, t):
         """
-        This function defines the bounds for PO(i)
+        This function defines the bounds for PM(i, t)
         """
-        if optimisation_model.IM[i, m] == 1:
-            return (optimisation_model.p_min[i, m]*optimisation_model.delta[t],
-            optimisation_model.p_max[i, m] * optimisation_model.delta[t])
-        else:
-            return (None, None)
+        return (optimisation_model.p_min[i, m]*optimisation_model.delta[t],
+        optimisation_model.p_max[i, m] * optimisation_model.delta[t])
+
 
     def Sbounds(optimisation_model, m, t):
         """
@@ -29,8 +27,8 @@ def variable_initialisation(optimisation_model):
         """
         This function defines the bounds for the flare of m
         """
-        return (optimisation_model.FL_max[m] * optimisation_model.delta[t],
-        optimisation_model.FL_min[m] * optimisation_model.delta[t])
+        return (optimisation_model.FL_min[m] * optimisation_model.delta[t],
+        optimisation_model.FL_max[m] * optimisation_model.delta[t])
 
 
     def ICbounds(optimisation_model, m, t):

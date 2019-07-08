@@ -132,7 +132,7 @@ def constraint_definition(model):
         """
         return model.PM_produced[i, m, t] == \
         sum(model.miu[i, mp, m] * model.PM[i, mp, t]
-        for i in model.i for mp in model.m if model.IM[i, mp] == 1)
+        for mp in model.m if model.IM[i, mp] == 1)
 
     def auxiliary_rule_2(model, g, j, t):
         """This auxiliary rule defines the maximum amount of g can be

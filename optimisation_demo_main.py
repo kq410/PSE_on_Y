@@ -22,9 +22,9 @@ def data_construction(file_name):
     j = faux.read_set_from_excel(file_name, 'set', (6, 'E'), (6, 'O'))
     t = faux.read_set_from_excel(file_name, 'set', (9, 'E'), (9, 'P'))
     h = faux.read_set_from_excel(file_name, 'set', (12, 'E'), (3, 'G'))
-    c = faux.read_set_from_excel(file_name, 'set', (15, 'E'), (15, 'J'))
+    m = faux.read_set_from_excel(file_name, 'set', (15, 'E'), (15, 'L'))
     g = faux.read_set_from_excel(file_name, 'set', (18, 'E'), (18, 'N'))
-    m = faux.read_set_from_excel(file_name, 'set', (21, 'E'), (21, 'L'))
+    c = faux.read_set_from_excel(file_name, 'set', (21, 'E'), (21, 'J'))
 
     set_input = faux.SetInput(i, j, g, t, m, c, h)
 
@@ -34,7 +34,7 @@ def data_construction(file_name):
                 'ProductionOlefins', (13, 'C'), (19, 'K'), (1, 1))
 
     p_max = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (4, 'C'), (10, 'H'), (1, 1))
+                'ProductionOlefins', (4, 'C'), (10, 'K'), (1, 1))
 
     OC = faux.read_par_from_excel(file_name,
                 'ProductionOlefins', (22, 'C'), (23, 'H'), (0, 1))
@@ -48,9 +48,6 @@ def data_construction(file_name):
     IC_low = faux.read_par_from_excel(file_name,
                 'ProductionOlefins', (83, 'C'), (84, 'J'), (0, 1))
 
-    IC_ini_level = faux.read_par_from_excel(file_name,
-                'ProductionOlefins', (88, 'C'), (89, 'J'), (0, 1))
-
 
     print('Loading polymer production data......')
     # load the parameters for the production of polyolefins
@@ -61,20 +58,28 @@ def data_construction(file_name):
                 'ProductionPolyolefins', (18, 'C'), (28, 'N'), (1, 1))
 
     n = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (32, 'C'), (37, 'M'), (1, 1))
+                'ProductionPolyolefins', (32, 'C'), (40, 'M'), (1, 1))
 
     OP = faux.read_par_from_excel(file_name,
-                'ProductionPolyolefins', (47, 'C'), (57, 'N'), (1, 1))
+                'ProductionPolyolefins', (44, 'C'), (54, 'N'), (1, 1))
 
 
-    print('Loading scenario data......')
+    print('Loading IHP data......')
     # Load the parameters for the warehouse shipping
     LT = faux.read_par_from_excel(file_name,
-                'WarehousesShipping', (5, 'C'), (6, 'E'), (0, 1))
+                'IHPs', (6, 'C'), (7, 'E'), (0, 1))
 
     IH_low = faux.read_par_from_excel(file_name,
-                'WarehousesShipping', (9, 'C'), (19, 'F'), (1, 1))
+                'IHPs', (10, 'C'), (20, 'F'), (1, 1))
 
+    IH_upper = faux.read_par_from_excel(file_name,
+                'IHPs', (23, 'C'), (33, 'F'), (1, 1))
+
+    pie = faux.read_par_from_excel(file_name,
+                'IHPs', (36, 'C'), (37, 'H'), (0, 1))
+
+
+    print('Loading Scenario data......')
     # Load the parameters for availability scenarios
     delta = faux.read_par_from_excel(file_name,
                 'ScenarioAvailability', (4, 'D'), (5, 'O'), (0, 1))
@@ -88,10 +93,17 @@ def data_construction(file_name):
                 'ScenarioSales', (7, 'D'), (67, 'Q'), (2, 1))
 
     SP = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (74, 'D'), (134, 'Q'), (2, 1))
+                'ScenarioSales', (72, 'D'), (132, 'Q'), (2, 1))
 
     SO = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (137, 'D'), (145, 'P'), (1, 1))
+                'ScenarioSales', (135, 'D'), (143, 'P'), (1, 1))
+
+    S_max = faux.read_par_from_excel(file_name,
+                'ScenarioSales', (146, 'D'), (147, 'K'), (0, 1))
+
+    S_min = faux.read_par_from_excel(file_name,
+                'ScenarioSales', (151, 'D'), (152, 'K'), (0, 1))
+
 
     # Load the parameters for purchases scenarios
     PC = faux.read_par_from_excel(file_name,
@@ -103,29 +115,20 @@ def data_construction(file_name):
     PU_min = faux.read_par_from_excel(file_name,
                 'ScenarioPurchases', (20, 'D'), (21, 'K'), (0, 1))
 
+    IC_ini_level = faux.read_par_from_excel(file_name,
+                'ScenarioPurchases', (24, 'C'), (25, 'J'), (0, 1))
 
     # Load the additional parameters
     print('Loading additional data......')
-    IH_upper = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (3, 'C'), (13, 'F'), (1, 1))
-
-    pie = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (16, 'C'), (17, 'H'), (0, 1))
-
-    S_max = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (21, 'C'), (22, 'J'), (0, 1))
-
-    S_min = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (26, 'C'), (27, 'J'), (0, 1))
 
     FL_max = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (31, 'C'), (32, 'J'), (0, 1))
+                'AdditionalParameters', (3, 'C'), (4, 'J'), (0, 1))
 
     FL_min = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (36, 'C'), (37, 'J'), (0, 1))
+                'AdditionalParameters', (8, 'C'), (9, 'J'), (0, 1))
 
     Qtil = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (41, 'C'), (71, 'P'), (2, 1))
+                'AdditionalParameters', (13, 'C'), (43, 'P'), (2, 1))
 
     # initialise set mapping
     HC = faux.read_par_from_excel(file_name,
@@ -137,12 +140,6 @@ def data_construction(file_name):
     GJ = faux.read_par_from_excel(file_name,
                 'set', (40, 'E'), (50, 'P'), (1, 1))
 
-
-    # Initialise other parameters
-
-    S_ini_level = {
-    material : 0 for material in m
-    }
 
     fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu, n, LT,
     IC_low, IH_low, IC_upper, IH_upper, HC, PU_max, PU_min, S_max, S_min,
@@ -168,6 +165,10 @@ def main():
     Excel_file = os.path.join(workingDirectory, 'Borouge_Data_Final_Demo.xlsm')
     set_input, fixed_par, variable_par = data_construction(Excel_file)
 
+    print(fixed_par.p_max)
+    print(fixed_par.p_min)
+
+    #print(fixed_par.)
     # set initialisation
     fset.set_initialisation(PSE_model, set_input)
 
@@ -183,7 +184,7 @@ def main():
 
     print('Solving......')
     # set up the model
-    opt = SolverFactory('cplex')
+    opt = SolverFactory('CBC.exe')
     #opt.options['mipgap'] = 0.001
     #opt.options['threads'] = 0
 
@@ -191,7 +192,7 @@ def main():
     symbolic_solver_labels = True)
 
     PSE_model.solutions.store_to(results)
-    results_file = os.path.join(workingDirectory, 'solution.yml')
+    results_file = os.path.join(workingDirectory, 'solution_fi.yml')
     #print(results_file)
 
     results.write(filename = results_file)

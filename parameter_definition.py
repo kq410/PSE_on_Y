@@ -10,12 +10,14 @@ def parameter_initialisation(optimisation_model,
     optimisation_model.p_min = pyo.Param(
                                optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_min,
+                               default = 0, 
                                doc = 'minimum operation for plant i'
                                )
 
     optimisation_model.p_max = pyo.Param(
                                optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_max,
+                               default = 0,
                                doc = 'maximum operation for plant i'
                                )
 
