@@ -163,11 +163,14 @@ def main():
     PSE_model = ConcreteModel()
 
     # get the input scenario
-    opts,args = getopt.gnu_getopt(sys.argv[1:], '', ['scenariofile='])
+    opts, args = getopt.gnu_getopt(sys.argv[1:], '',
+    ['scenariofile=', 'solver='])
     # process all the options
-    for opt,arg in opts :
+    for opt, arg in opts :
         if opt == '--scenariofile':
             scenario_file = arg
+        elif opt =='--solver':
+            solver_choice = arg
 
     # get the data input as objects
     workingDirectory = os.environ.get('PSE_BOROUGE_WORKING_DIR')
@@ -189,7 +192,7 @@ def main():
 
     print('Solving......')
     # set up the model
-    opt = SolverFactory('CBC')
+    opt = SolverFactory(solver_choice)
     #opt.options['mipgap'] = 0.001
     #opt.options['threads'] = 0
 
