@@ -20,13 +20,20 @@ def data_construction(file_name):
     """
     print('Loading sets data......')
     # load the sets
-    i = faux.read_set_from_excel(file_name, 'set', (3, 'E'), (3, 'J'))
-    j = faux.read_set_from_excel(file_name, 'set', (6, 'E'), (6, 'O'))
-    t = faux.read_set_from_excel(file_name, 'set', (9, 'E'), (9, 'P'))
-    h = faux.read_set_from_excel(file_name, 'set', (12, 'E'), (3, 'G'))
-    m = faux.read_set_from_excel(file_name, 'set', (15, 'E'), (15, 'L'))
-    g = faux.read_set_from_excel(file_name, 'set', (18, 'E'), (18, 'N'))
-    c = faux.read_set_from_excel(file_name, 'set', (21, 'E'), (21, 'J'))
+    i = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (3, 'E'), (3, 'J'))
+    j = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (6, 'E'), (6, 'O'))
+    t = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (9, 'E'), (9, 'P'))
+    h = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (12, 'E'), (3, 'G'))
+    m = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (15, 'E'), (15, 'L'))
+    g = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (18, 'E'), (18, 'N'))
+    c = faux.read_set_from_excel(
+    file_name, 'NetworkStructure', (21, 'E'), (21, 'J'))
 
     set_input = faux.SetInput(i, j, g, t, m, c, h)
 
@@ -124,23 +131,23 @@ def data_construction(file_name):
     print('Loading additional data......')
 
     FL_max = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (3, 'C'), (4, 'J'), (0, 1))
+                'Miscellaneous', (3, 'C'), (4, 'J'), (0, 1))
 
     FL_min = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (8, 'C'), (9, 'J'), (0, 1))
+                'Miscellaneous', (8, 'C'), (9, 'J'), (0, 1))
 
     Qtil = faux.read_par_from_excel(file_name,
-                'AdditionalParameters', (13, 'C'), (43, 'P'), (2, 1))
+                'Miscellaneous', (13, 'C'), (43, 'P'), (2, 1))
 
     # initialise set mapping
     HC = faux.read_par_from_excel(file_name,
-                'set', (25, 'E'), (28, 'K'), (1, 1))
+                'NetworkStructure', (25, 'E'), (28, 'K'), (1, 1))
 
     IM = faux.read_par_from_excel(file_name,
-                'set', (31, 'E'), (37, 'M'), (1, 1))
+                'NetworkStructure', (31, 'E'), (37, 'M'), (1, 1))
 
     GJ = faux.read_par_from_excel(file_name,
-                'set', (40, 'E'), (50, 'P'), (1, 1))
+                'NetworkStructure', (40, 'E'), (50, 'P'), (1, 1))
 
 
     fixed_var = faux.ParaFixedInput(p_min, p_max, PR, tao, miu, n, LT,
