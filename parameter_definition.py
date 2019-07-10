@@ -58,11 +58,18 @@ def parameter_initialisation(optimisation_model,
                            doc = 'consumption coefficient of o producing g'
                            )
 
-    optimisation_model.D = pyo.Param(
+    optimisation_model.D_max = pyo.Param(
                            optimisation_model.c, optimisation_model.g,
                            optimisation_model.t,
-                           initialize = var_par_input.D,
-                           doc = 'demand of grade g of customer c in period t'
+                           initialize = var_par_input.D_max,
+                           doc = 'maximum demand of grade g of customer c in t'
+                           )
+
+    optimisation_model.D_min = pyo.Param(
+                           optimisation_model.c, optimisation_model.g,
+                           optimisation_model.t,
+                           initialize = var_par_input.D_min,
+                           doc = 'minimum demand of grade g of customer c in t'
                            )
 
     optimisation_model.SP = pyo.Param(

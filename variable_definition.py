@@ -44,6 +44,12 @@ def variable_initialisation(optimisation_model):
         return (optimisation_model.IH_low[g, h],
                 optimisation_model.IH_upper[g, h])
 
+    def QCbounds(optimisation_model, g, c, t):
+        """
+        This function defines the lower bound for QC
+        """
+        return(optimisation_model.D_min[c, g, t], None)
+
     def Qfx(optimisation_model, g, h, t):
         """
         This fix the Q value for ord(h) = 1 to zero
@@ -116,6 +122,7 @@ def variable_initialisation(optimisation_model):
                            optimisation_model.g, optimisation_model.c,
                            optimisation_model.t,
                            within = pyo.NonNegativeReals,
+                           bounds = QCbounds,
                            doc = 'supply of g from h to customer c at period t'
                            )
 

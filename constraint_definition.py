@@ -124,7 +124,7 @@ def constraint_definition(model):
         """
         This constraint specifies the maximum demand that cannot be exceeded
         """
-        return model.QC[g, c, t] == model.D[c, g, t] - model.dell[c, g, t]
+        return model.QC[g, c, t] == model.D_max[c, g, t] - model.dell[c, g, t]
 
     def auxiliary_rule_1(model, i, m, t):
         """

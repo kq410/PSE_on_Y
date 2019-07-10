@@ -87,8 +87,7 @@ def data_construction(file_name):
     pie = faux.read_par_from_excel(file_name,
                 'IHPs', (36, 'C'), (37, 'H'), (0, 1))
 
-    IH_ini_level = faux.read_par_from_excel(file_name,
-                'IHPs', (41, 'C'), (51, 'F'), (1, 1))
+
 
 
     print('Loading Scenario data......')
@@ -101,20 +100,23 @@ def data_construction(file_name):
 
 
     # Load the parameters for sales scenarios
-    D = faux.read_par_from_excel(file_name,
+    D_max = faux.read_par_from_excel(file_name,
                 'ScenarioSales', (7, 'D'), (67, 'Q'), (2, 1))
 
+    D_min = faux.read_par_from_excel(file_name,
+                'ScenarioSales', (70, 'D'), (130, 'Q'), (2, 1))
+
     SP = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (72, 'D'), (132, 'Q'), (2, 1))
+                'ScenarioSales', (134, 'D'), (194, 'Q'), (2, 1))
 
     SO = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (135, 'D'), (143, 'P'), (1, 1))
+                'ScenarioSales', (197, 'D'), (205, 'P'), (1, 1))
 
     S_max = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (146, 'D'), (147, 'K'), (0, 1))
+                'ScenarioSales', (208, 'D'), (209, 'K'), (0, 1))
 
     S_min = faux.read_par_from_excel(file_name,
-                'ScenarioSales', (151, 'D'), (152, 'K'), (0, 1))
+                'ScenarioSales', (213, 'D'), (214, 'K'), (0, 1))
 
 
     # Load the parameters for purchases scenarios
@@ -139,8 +141,11 @@ def data_construction(file_name):
     FL_min = faux.read_par_from_excel(file_name,
                 'Miscellaneous', (8, 'C'), (9, 'J'), (0, 1))
 
+    IH_ini_level = faux.read_par_from_excel(file_name,
+                'Miscellaneous', (13, 'C'), (23, 'F'), (1, 1))
+
     Qtil = faux.read_par_from_excel(file_name,
-                'Miscellaneous', (13, 'C'), (43, 'P'), (2, 1))
+                'Miscellaneous', (26, 'C'), (56, 'P'), (2, 1))
 
     # initialise set mapping
     HC = faux.read_par_from_excel(file_name,
@@ -157,8 +162,8 @@ def data_construction(file_name):
     IC_low, IH_low, IC_upper, IH_upper, HC, PU_max, PU_min, S_max, S_min,
     FL_max, FL_min, IM, GJ)
 
-    variable_par = faux.ParaVarInput(delta, phi, D, SP, SO, PC, OC, OP,
-    IC_ini_level, pie, Qtil, IH_ini_level)
+    variable_par = faux.ParaVarInput(delta, phi, D_max, D_min, SP, SO, PC, OC,
+    OP, IC_ini_level, pie, Qtil, IH_ini_level)
 
     return set_input, fixed_var, variable_par
 
