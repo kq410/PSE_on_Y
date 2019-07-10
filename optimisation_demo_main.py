@@ -87,6 +87,9 @@ def data_construction(file_name):
     pie = faux.read_par_from_excel(file_name,
                 'IHPs', (36, 'C'), (37, 'H'), (0, 1))
 
+    IH_ini_level = faux.read_par_from_excel(file_name,
+                'IHPs', (41, 'C'), (51, 'F'), (1, 1))
+
 
     print('Loading Scenario data......')
     # Load the parameters for availability scenarios
@@ -155,7 +158,7 @@ def data_construction(file_name):
     FL_max, FL_min, IM, GJ)
 
     variable_par = faux.ParaVarInput(delta, phi, D, SP, SO, PC, OC, OP,
-    IC_ini_level, pie, Qtil)
+    IC_ini_level, pie, Qtil, IH_ini_level)
 
     return set_input, fixed_var, variable_par
 

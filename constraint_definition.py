@@ -86,14 +86,14 @@ def constraint_definition(model):
         """
         if h == hsetlist[0] and t == 1:
             return \
-            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.Q[g, hp, t]
-            for hp in model.h if hp != h) - sum(model.QC[g, c, t]
-            for c in model.c if model.HC[h, c] == 1)
+            model.IH[g, h, t] == model.IH_ini_level[g, h] \
+            - sum(model.Q[g, hp, t] for hp in model.h if hp != h) \
+            - sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1)
 
         elif h != hsetlist[0] and t == 1:
             return \
-            model.IH[g, h, t] == model.IH_low[g, h] - sum(model.QC[g, c, t]
-            for c in model.c if model.HC[h, c] == 1)
+            model.IH[g, h, t] == model.IH_ini_level[g, h] - \
+            sum(model.QC[g, c, t] for c in model.c if model.HC[h, c] == 1)
 
         elif h == hsetlist[0] and 1 < t and t <= model.LT[h]:
             return\

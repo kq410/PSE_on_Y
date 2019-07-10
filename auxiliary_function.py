@@ -53,7 +53,7 @@ class ParaVarInput():
     This is an object that initialise the varying parameters
     """
     def __init__(self, delta, phi, D, SP, SO, PC, OC, OP,
-    IC_ini_level, pie, Qtil):
+    IC_ini_level, pie, Qtil, IH_ini_level):
         self.delta = delta
         self.phi = phi
         self.D = D
@@ -65,6 +65,7 @@ class ParaVarInput():
         self.IC_ini_level = IC_ini_level
         self.pie = pie
         self.Qtil = Qtil
+        self.IH_ini_level = IH_ini_level
 
 
 def result_data_load(optimisation_model, var_list):

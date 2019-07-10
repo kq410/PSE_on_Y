@@ -10,7 +10,7 @@ def parameter_initialisation(optimisation_model,
     optimisation_model.p_min = pyo.Param(
                                optimisation_model.i, optimisation_model.m,
                                initialize = fixed_par_input.p_min,
-                               default = 0, 
+                               default = 0,
                                doc = 'minimum operation for plant i'
                                )
 
@@ -124,6 +124,12 @@ def parameter_initialisation(optimisation_model,
                                   optimisation_model.g, optimisation_model.h,
                                   initialize = fixed_par_input.IH_upper,
                                   doc = 'upper bound for plant inventory of o'
+                                )
+
+    optimisation_model.IH_ini_level = pyo.Param(
+                                optimisation_model.g, optimisation_model.h,
+                                initialize = var_par_input.IH_ini_level,
+                                doc = 'Initial level of IHP inventory of g in h'
                                 )
 
     optimisation_model.IC_ini_level = pyo.Param(
