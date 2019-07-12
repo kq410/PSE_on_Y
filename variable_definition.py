@@ -168,31 +168,37 @@ def variable_initialisation(optimisation_model):
                             )
 
     optimisation_model.psale = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'sale revenue of polymers'
                             )
 
     optimisation_model.msale = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'sale revenue of materials'
                             )
 
     optimisation_model.pucost = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'purchase cost'
                             )
 
     optimisation_model.mpcost = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'material production operational cost'
                             )
 
     optimisation_model.ppcost = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'polymer production operational cost'
                             )
 
     optimisation_model.penalty_cost = pyo.Var(
+                            optimisation_model.t,
                             within = pyo.NonNegativeReals,
                             doc = 'penalty cost'
                             )
