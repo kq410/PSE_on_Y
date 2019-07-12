@@ -16,6 +16,14 @@ def variable_initialisation(optimisation_model):
         optimisation_model.p_max[i, m] * optimisation_model.delta[t])
 
 
+    def PUbounds(optimisation_model, m, t):
+        """
+        This function defines the bounds for PU(m, t)
+        """
+        return (optimisation_model.PU_min[m]*optimisation_model.delta[t],
+        optimisation_model.PU_max[m] * optimisation_model.delta[t])
+
+
     def Sbounds(optimisation_model, m, t):
         """
         This function defines the bounds for the sale of m
@@ -66,6 +74,8 @@ def variable_initialisation(optimisation_model):
             optimisation_model.PP[g, j, t].fixed = True
             return 0
 
+
+
     print('Initialising model variables......')
 
     optimisation_model.PM = pyo.Var(
@@ -92,7 +102,7 @@ def variable_initialisation(optimisation_model):
 
     optimisation_model.PU = pyo.Var(
                             optimisation_model.m, optimisation_model.t,
-                            within = pyo.NonNegativeReals,
+                            within = pyo.NonNegativeReals, bounds = PUbounds,
                             doc = 'amount of olefin o purchased at period t'
                             )
 
