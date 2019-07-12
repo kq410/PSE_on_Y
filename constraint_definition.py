@@ -148,6 +148,36 @@ def constraint_definition(model):
         return model.PP_min[g, j, t] == \
         model.PR[g, j] * model.Y[g, j, t] * model.tao[g, j]
 
+    def financial_output_1(model):
+        """This returns the sale revenue of polymers"""
+        return model.psale == sum (model.QC[g, c, t] * model.SP[c, g, t]
+        for g in model.g for c in model.c for t in model.t)
+
+    def financial_output_2(model):
+        """This returns the sale revenue of materials"""
+        return model.msale == sum(model.S[m, t] * model.SO[m, t]
+        for m in model.m for t in model.t)
+
+    def financial_output_3(model):
+        """This returns the purchase cost of materials"""
+        return model.pucost == sum(model.PU[m, t] * model.PC[m,t]
+        for m in model.m for t in model.t)
+
+    def financial_output_4(model):
+        """This returns the operation cost of producing materials"""
+        return model.mpcost == sum(model.PM[i, m, t] * model.OC[i]
+        for i in model.i for m in model.m for t in model.t)
+
+    def financial_output_5(model):
+        """This returns the operation cost of producing polymers"""
+        return model.ppcost == sum(model.PP[g, j, t] * model.OP[g, j]
+        for g in model.g for j in model.j for t in model.t)
+
+    def financial_output_6(model):
+        """This returns the penalty cost for not fulfilling the demand"""
+        return model.penalty_cost == sum(model.pie[c] * model.dell[c, g, t]
+        for c in model.c for g in model.g for t in model.t)
+
     print('Initialising model constraints and the objective function......')
 
     model.objective_function = pyo.Objective(
@@ -200,3 +230,33 @@ def constraint_definition(model):
                        model.g, model.j, model.t, rule = auxiliary_rule_3,
                        doc = 'refer to auxiliary_rule_3'
                        )
+
+    model.financial1 = pyo.Constraint(
+                        rule = financial_output_1,
+                        doc = 'refer to financial_output_1'
+    )
+
+    model.financial2 = pyo.Constraint(
+                        rule = financial_output_2,
+                        doc = 'refer to financial_output_2'
+    )
+
+    model.financial3 = pyo.Constraint(
+                        rule = financial_output_3,
+                        doc = 'refer to financial_output_3'
+    )
+
+    model.financial4 = pyo.Constraint(
+                        rule = financial_output_4,
+                        doc = 'refer to financial_output_4'
+    )
+
+    model.financial5 = pyo.Constraint(
+                        rule = financial_output_5,
+                        doc = 'refer to financial_output_5'
+    )
+
+    model.financial6 = pyo.Constraint(
+                        rule = financial_output_6,
+                        doc = 'refer to financial_output_6'
+    )
